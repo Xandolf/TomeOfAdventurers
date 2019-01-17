@@ -1,0 +1,21 @@
+{
+    "class": "Fighter",
+    "hasSubclass": "True",
+    "subClass": ["Champion", "Battle Master", "Eldritch Knight"],
+    "description": "A human in clanging plate armor holds her shield before her as she runs toward the massed goblins. An elf behind her, clad in studded leather armor, peppers the goblins with arrows loosed from his exquisite bow. The half-orc nearby shouts orders, helping the two combatants coordinate their assault to the best advantage. A dwarf in chain mail interposes his shield between the ogre's club and his companion, knocking the deadly blow aside. His companion, a half-elf in scale armor, swings two scimitars in a blinding whirl as she circles the ogre, looking for a blind spot in its defenses. A gladiator fights for sport in an arena, a master with his trident and net, skilled at toppling foes and moving them around for the crowd's delight - and his own tactical advantage. His opponent's sword flares with blue light an instant beforc she sends lightning flashing forth to smite him. All of these heroes are fighters, perhaps the most diverse class of characters in the worlds of DUNGEONS & DRAGONS. Questing knights, conquering overlords, royal champions, elite foot soldiers, hardened mercenaries, and bandit kings - as fighters, they all share an unparalleled mastery with weapons and armor, and a thorough knowledge of the skills of combat. And they are well acquainted with death, both meting it out and staring it defiantly in the face.",
+    "creating_a_class": "As you build your fighter, think about two related elements of your character's background: Where did you get your combat training, and what set you apart from the mundane warriors around you? Were you particularly ruthless? Did you get extra help from a mentor, perhaps because of your exceptional dedication? What drove you to this training in the first place? A threat to your homeland, a thirst for revenge, or a need to prove yourself might all have been factors. You might have enjoyed formal training in a noble's army or in a local militia. Perhaps you trained in a war academy, learning strategy, tactics, and military history. Or you might be self-taught-unpolished but well tested. Did you take up the sword as a way to escape the limits of life on a farm, or are you following a proud family tradition? Where did you acquire your weapons and armor? They might have been military issue ar family heirlooms. ar perhaps you scrimped and saved for years to buy them. Your armaments are now among your most important possessions-the only things that stand between you and death's embrace.",
+    "HP_Hit_Dice": "1d10",
+    "HP_HP_LVL1": "10",
+    "HP_HP_HighLVL": "1d10 (or 6) + your Constitution Modifier per Fighter level after 1st",
+    "Proficiencies_Armor": ["All", "Armor", "Shield"],
+    "Proficiencies_Weapons": ["Simple Weapon", "Marial Weapon"],
+    "Proficiencies_Tools": ["None"],
+    "Proficiencies_SavingThrows": ["Strength", "Charisma"],
+    "Proficiencies_Skills": ["2","Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"],
+    "Equipment": [
+        {"EQ_Choice": [["Chain Mail"], ["Leather", "Longbow", "20", "Arrow"]]},
+        {"EQ_Choice": [["Martial Weapon", "Shield"], ["2", "Martial Weapon"]]},
+        {"EQ_Choice": [["Light Crossbow", "20", "Bolt"], ["2", "Handaxe"]]},
+        {"EQ_Choice": [["Dungeoneer Pack"], ["Explorer Pack"]]}
+    ]
+  }

@@ -1,0 +1,21 @@
+{
+    "class": "Sorcerer",
+    "hasSubclass": "True",
+    "subClass": ["Draconic Bloodline", "Wild Magic"],
+    "description": "Golden eyes flashing, a human stretches out her hand and unleashes the dragonfire that burns in her veins. As an inferno rages around her foes, leathery wings spread from her back and she takes to the air. Long hair whipped by a conjured wind, a half-elf spreads his arms wide and throws his head back. Lifting him momentarily off the ground, a wave of magic surges up in him, through him, and out from him in a mighty blast of lightning. Crouching behind a stalagmite, a halfling points a finger at a charging troglodyte. A blast of fire springs from her finger to strike the creature. She ducks back behind the rock formation with a grin, unaware that her wild magic has turned her skin bright blue. Sorcerers carry a magical birthright conferred upon them by an exotic bloodline, some otherworldly influence, or exposure to unknown cosmic forces. One can't study sorcery as one learns a language, any more than one can learn to live a legendary life. No one chooses sorcery; the power chooses the sorcerer.",
+    "creating_a_class": "The most important question to consider when creating your sorcerer is the origin of your power. As a starting character, you'lI choose an origin that ties to a draconic bloodline or the influence of wild magic, but the exact source of your power is up to you to decide. Is it a family curse, passed down to you from distant ancestors? ar did some extraordinary event leave you blessed with inherent magic but perhaps scarred as well? How do you feel about the magical power coursing through you? Do you embrace it, try to master it, or revel in its unpredictable nature? Is it a blessing or a curse? Did you seek it out, or did it find you? Did you have the option to refuse it, and do you wish you had? What do you intend to do with it? Perhaps you feellike you've been given this power for some lofty purpose, or you might decide that the power gives you the right to do what you want, to take what you want from those who lack such power. Perhaps your power links you to a powerful individual in the world - the fey creature that blessed you at birth, the dragon who put a drop of its blood into your veins, the lich who created you as an experiment, or the deity who chose you to carry this power.",
+    "HP_Hit_Dice": "1d6",
+    "HP_HP_LVL1": "6",
+    "HP_HP_HighLVL": "1d6 (or 4) + your Constitution Modifier per Sorcerer level after 1st",
+    "Proficiencies_Armor": ["None"],
+    "Proficiencies_Weapons": ["Dagger", "Dart", "Sling", "Quarterstaff", "Light Crossbow"],
+    "Proficiencies_Tools": ["None"],
+    "Proficiencies_SavingThrows": ["Constitution", "Charisma"],
+    "Proficiencies_Skills": ["2","Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"],
+    "Equipment": [
+        {"EQ_Choice": [["Light Crossbow", "20", "Bolt"], ["Any", "Simple Weapon"]]},
+        {"EQ_Choice": [["Component Pouch"], ["Arcane Focus"]]},
+        {"EQ_Choice": [["Dungeoneer Pack"], ["Explorer Pack"]]},
+        {"EQ_Choice": [["2", "Dagger"]]}
+    ]
+  }

@@ -1,0 +1,21 @@
+{
+    "class": "Bard",
+    "hasSubclass": "True",
+    "subClass": ["College of Lore", "College of Valor"],
+    "description": "Humming as she traces her fingers over an ancient monument in a long-forgotten ruin, a half-elf in rugged leathers finds knowledge springing into her mind, conjured forth by the magic of her song-knowledge of the people who constructed the monument and the mythic saga it depicts. A stern human warrior bangs his sword rhythmically against his scale mai!, setting the tempo for his war chant and exhorting his companions to bravery and heroismo The magic of his song fortifies and emboldens them. Laughing as she tunes her cittern, a gnome weaves her subtle magic over the assembled nobles, ensuring that her companions' words will be well received. Whether scholar, skald, ar scoundrel, a bard weaves magic through words and music to inspire allies, demoralize foes, manipulate minds, create illusions, and even heal wounds.",
+    "creating_a_class": "Bards thrive on stories, whether those stories are true or not. Your character's background and motivations are not as important as the stories that he or she tells about them. Perhaps you had a secure and mundane childhood. There's no good story to be told about that, so you might paint yourself as an orphan raised by a hag in a dismal swamp. ar your childhood might be worthy of a story. Some bards acquire their magical music through extraordinary means, including the inspiration of fey or other supernatural creatures. Did you serve an apprenticeship, studying under a mas ter, following the more experienced bard until you were ready to strike out on your own? ar did you attend a college where you studied bardic lore and practiced your musical magic? Perhaps you were a young runaway or orphan, befriended by a wandering bard who became your mentor. ar you might have been a spoiled noble child tutored by a master. Perhaps you stumbled into the clutches of a hag, making a bargain for a musical gift in addition to your life and freedom, but at what cost?",
+    "HP_Hit_Dice": "1d8",
+    "HP_HP_LVL1": "8",
+    "HP_HP_HighLVL": "1d8 (or 5) + your Constitution Modifier per Bard level after 1st",
+    "Proficiencies_Armor": ["Light Armor"],
+    "Proficiencies_Weapons": ["Simple Weapons", "Hand Crossbows", "Longsword", "Rapier", "Short Sword"],
+    "Proficiencies_Tools": ["Muiscal Instrument", "Musical Instrument", "Musical Instrument"],
+    "Proficiencies_SavingThrows": ["Dexterity", "Charisma"],
+    "Proficiencies_Skills": ["3", "Any"],
+    "Equipment": [
+        {"EQ_Choice": [["Rapier"], ["Longsword"], ["Simple Weapon"]]},
+        {"EQ_Choice": [["Diplomat Pack"], ["Entertainer Pack"]]},
+        {"EQ_Choice": [["Lute"], ["Any", "Instrument"]]},
+        {"EQ_Choice": [["Leather Armor", "Dagger"]]}
+    ]
+  }

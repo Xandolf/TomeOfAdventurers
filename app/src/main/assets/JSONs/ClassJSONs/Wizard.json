@@ -1,0 +1,21 @@
+{
+    "class": "Wizard",
+    "hasSubclass": "True",
+    "subClass": ["School of Illusion", "Wchol of Enchantment"],
+    "description": "Clad in the silver robes that denote her station, an elf closes her eyes to shut out the distractions of the battlefield and begins her quiet chant. Fingers weaving in front of her, she completes her spell and launches a tiny bead of fire toward the enemy ranks, where it erupts into a confiagration that engulfs the soldiers. Checking and rechecking his work, a human scribes an intricate magic circle in chalk on the bare stone fioor, then sprinkles powdered iron along every line and graceful curve. When the circle is complete, he drones a long incantation. A hole opens in space inside the circle, bringing a whiff of brimstone from the otherworldly plane beyond. Crouching on the floor in a dungeon intersection, a gnome tosses a handful of small bones inscribed with mystic symbols, muttering a few words of power over them. Closing his eyes to see the visions more clearly, he nods slowly, then opens his eyes and points down the passage to his left. Wizards are supreme magic-users, detined and united as a class by the spells they cast. Drawing on the subtle weave of magic that permeates the cosmos, wizards cast spells of explosive fire, arcing lightning, subtle deception, and brute-force mind control. Their magic conjures monsters from other planes of existence, glimpses the future, or turns slain foes into zombies. Their mightiest spel1s change one substance into another, call meteors down from the sky, or open portaIs to other worlds.",
+    "creating_a_class": "Creating a wizard character demands a backstory dominated by at least one extraordinary event. How did your character first come into contact with magic? How did you discover you had an aptitude for it? Do you have a natural talent, or did you simply study hard and practice incessantly? Did you encounter a magical creature or an ancient tome that taught you the basics of magic? What drew you forth from your life of study? Did your first taste of magical knowledge leave you hungry for more? Have you received word of a secret repository of knowledge not yet plundered by any other wizard? Perhaps you're simply eager to put your newfound magical skills to the test in the face of danger.",
+    "HP_Hit_Dice": "1d6",
+    "HP_HP_LVL1": "6",
+    "HP_HP_HighLVL": "1d6 (or 4) + your Constitution Modifier per Wizard level after 1st",
+    "Proficiencies_Armor": ["None"],
+    "Proficiencies_Weapons": ["Dagger", "Dart", "Sling", "Quaterstaff", "Light Crossbow"],
+    "Proficiencies_Tools": ["None"],
+    "Proficiencies_SavingThrows": ["Intelligence", "Wisdom"],
+    "Proficiencies_Skills": ["2", "Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"],
+    "Equipment": [
+        {"EQ_Choice": [["Quarterstaff"], ["Dagger"]]},
+        {"EQ_Choice": [["Component Pouch"], ["Arcane Focus"]]},
+        {"EQ_Choice": [["Scholar Pack"], ["Explorer Pack"]]},
+        {"EQ_Choice": [["Spellbook"]]}
+    ]
+  }

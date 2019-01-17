@@ -1,0 +1,22 @@
+{
+  "race": "Human",
+  "isSubrace": "false",
+  "subRace": "null",
+  "Description": "In the reckonings of most worlds, humans are the youngest of the common races. Late to arrive on the world scene and short-lived in comparison to dwarves, elves, and dragons. Perhaps it is because of their shorter lives that they strive to achieve as much as they can in the years they are given. Or maybe they feel they have something to prove to the elder races, and that's why they build their mighty empires on the foundation of conquest and trade. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
+  "SubRaceDescription": "null",
+  "AbilityScore_Strength": "1",
+  "AbilityScore_Dexterity": "1",
+  "AbilityScore_Constitution": "1",
+  "AbilityScore_Intelligence": "1",
+  "AbilityScore_Wisdom": "1",
+  "AbilityScore_Charisma": "1",
+  "Alignment": ["Lawful Good", "Lawful Neutral", "Lawful Evil", "True Good", "True Neutral", "True Evil", "Chaotic Good", "Chaotic Neutral", "Chaotic Evil"],
+  "Speed": "30",
+  "Abilities": [
+    {
+      "AbilityName": "none",
+      "AbilityDescription": "none"
+    }
+  ],
+  "Languages": ["Common","Extra"]
+}

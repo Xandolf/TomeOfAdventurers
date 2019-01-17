@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="220dp"
+    android:layout_gravity="top|center_horizontal"
+    android:layout_marginTop="20dp"
+    android:background="@color/colorTan"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/areYouSureTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/areYouSure"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/yesAreYouSureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/yes" />
+
+    <Button
+        android:id="@+id/noAreYouSureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no" />
+
+    <TextView
+        android:id="@+id/deleteDisclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:gravity="center_horizontal"
+        android:text="@string/deleteWarning" />
+</LinearLayout>

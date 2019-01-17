@@ -1,0 +1,22 @@
+{
+    "class": "Cleric",
+    "hasSubclass": "True",
+    "subClass": ["Knowledge Domain", "Life Domain", "Light Domain", "Nature Domain", "Tempest Domain", "Trickery Domain", "War Domain"],
+    "description": "Arms and eyes upraised toward the sun and a prayer on his lips, an elf begins to glow with an inner light that spills out to heal his battle-worn companions. Chanting a song of glory, a dwarf swings his axe in wide swaths to cut through the ranks of orcs arrayed against him, shouting praise to the gods with every foe's fall. Calling down a curse upon the forces of undeath, a human lifts her holy symbol as light pours from it to drive back the zombies crowding in on her companions. Clerics are intermediaries between the mortal world and the distant planes of the gods. As varied as the gods they serve, clerics strive to embody the handiwork of their deities. No ordinary priest, a cleric is imbued with divine magic.",
+    "creating_a_class": "As you create a cleric, the most important question to consider is which deity to serve and what principies you want your character to embody, Appendix B includes lists of many of the gods of the multiverse, Check with your DM to learn which deities are in your campaign. Once you've chosen a deity, consider your cleric's relationship to that god. Did you enter this service willingly? Or did the god choose you, impelling you into service with no regard for your wishes? How do the temple priests of your faith regard you: as a champion or a troublemaker? What are your ultimate goals? Does your deity have a special task in mind for you? Or are you striving to prove yourself worthy of a great quest?",
+    "HP_Hit_Dice": "1d8",
+    "HP_HP_LVL1": "8",
+    "HP_HP_HighLVL": "1d8 (or 5) + your Constitution Modifier per Cleric level after 1st",
+    "Proficiencies_Armor": ["Light Armor", "Medium Armor", "Shields"],
+    "Proficiencies_Weapons": ["All", "Simple Weapons"],
+    "Proficiencies_Tools": ["None"],
+    "Proficiencies_SavingThrows": ["Wisdom", "Charisma"],
+    "Proficiencies_Skills": ["2", "History", "Insight", "Medicine", "Persuasion", "Religion"],
+    "Equipment": [
+        {"EQ_Choice": [["Mace"], ["Warhammer"]]},
+        {"EQ_Choice": [["Scale Mail"], ["Leather Armor"], ["Chain Mail"]]},
+        {"EQ_Choice": [["Light Crossbow", "20", "Bolt"], ["Any", "Simple Weapon"]]},
+        {"EQ_Choice": [["Priest Pack"], ["Explorer Pack"]]},
+        {"EQ_Choice": [["Shield", "Holy Symbol"]]}
+    ]
+  }

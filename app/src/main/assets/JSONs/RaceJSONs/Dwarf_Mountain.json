@@ -1,0 +1,30 @@
+{
+  "race": "Dwarf",
+  "isSubrace": "true",
+  "subRace": "Mountain Dwarf",
+  "Description": "Kingdoms rich in ancient grandeur, halls carved into the roots of mountains, the echoing of picks and hammers in deep mines and blazing forges, a commitment to clan and tradition, and a burning hatred of goblins and orcs - These common threads unite all dwarves. Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human slanding nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk. Dwarven skin ranges from deep brown to a paler hue tinged with red, but lhe most common shades are light brown or deep tan, like certain tones of earth. Their hair, worn long bul in simple styles, is usually black, gray, or brown, though paler dwarves often have red hair. Male dwarves value their beards highly and groom them carefully.",
+  "SubRaceDescription": "As a mountain dwarf, you're strong and hardy, accustomed to a difficult life in rugged terrain. You're probably on the tall side (for a dwarf), and tend toward lighter coloration, The shield dwarves of northern Faerun, as well as the ruling Hylar clan and the noble Oaewar clan of Oragonlance, are mountain dwarves.",
+  "AbilityScore_Strength": "2",
+  "AbilityScore_Dexterity": "0",
+  "AbilityScore_Constitution": "2",
+  "AbilityScore_Intelligence": "0",
+  "AbilityScore_Wisdom": "0",
+  "AbilityScore_Charisma": "0",
+  "Alignment": ["Lawful Good", "Lawful Neutral", "Lawful Evil"],
+  "Speed": "25",
+  "Abilities": [
+    {"AbilityName": "Darkvision",
+      "AbilityDescription": "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."},
+    {"AbilityName": "Dwarven Resilience",
+      "AbilityDescription": "You have advantage on saving throws against poison, and you have resistance against poison damage"},
+    {"AbilityName": "Dwarven Combat Training",
+      "AbilityDescription": "You have proficiency with the battleaxe, handaxe, throwing hammer, and warhammer."},
+    {"AbilityName": "Tool Proficiency",
+      "AbilityDescription": "You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools"},
+    {"AbilityName": "Stonecutting",
+      "AbilityDescription": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus."},
+    {"AbilityName": "Dwarven Armor Training",
+      "AbilityDescription": "You have proficiency with light and medium armor"}
+  ],
+  "Languages": ["Common","Dwarvish"]
+}

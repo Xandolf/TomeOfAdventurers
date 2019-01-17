@@ -1,0 +1,32 @@
+{
+  "race": "Elf",
+  "isSubrace": "true",
+  "subRace": "Wood Elf",
+  "Description": "Elves are a magical people of otherworldly grace, living in the world but not entirely part of it. They live in places of ethereal beauty, in the midst of ancient forests or in silvery spires glittering with faerie light, where soft music drifts through the air and gentle fragrances waft on the breeze. Elves love nature and magic, art and artistry, music and poetry, and the good things of the world.",
+  "SubRaceDescription": "As a wood elf, you have keen senses and intuition, and your fleet feel carry you quickly and stealthily through your native forests. This category includes the wild elves (grugach) of Greyhawk and the Kagonesli of Dragonlance, as well as the races called wood elves in Greyhawk and the Forgotten Realms. In Faerûn, wood elves (also called wild elves. green elves, or forest elves) are reclusive and distrusting of non-elves. Wood elves' skin tends to be copperish in hue, sometimes wilh traces of green. Their hair tends toward browns and blacks, but it is occasionally blond or copper-colored. Their eyes are green, brown, or hazel.",
+  "AbilityScore_Strength": "0",
+  "AbilityScore_Dexterity": "2",
+  "AbilityScore_Constitution": "0",
+  "AbilityScore_Intelligence": "0",
+  "AbilityScore_Wisdom": "1",
+  "AbilityScore_Charisma": "0",
+  "Alignment": ["Lawful Good", "Lawful Neutral", "Lawful Evil", "True Good", "True Neutral", "True Evil", "Chaotic Good", "Chaotic Neutral", "Chaotic Evil"],
+  "Speed": "35",
+  "Abilities": [
+    {"AbilityName": "Darkvision",
+      "AbilityDescription": "Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."},
+    {"AbilityName": "Keen Senses",
+      "AbilityDescription": "You have proficiency in the Perception skill"},
+    {"AbilityName": "Fey Ancestry",
+      "AbilityDescription": "You have advantage on saving throws against being charmed, and magic can't put you to sleep."},
+    {"AbilityName": "Trance",
+      "AbilityDescription": "Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is 'trance'.) While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep."},
+    {"AbilityName": "Elf Weapon Training",
+      "AbilityDescription": "You have proficiency with the longsword, shortsword, shortbow, and longbow"},
+    {"AbilityName": "Fleet of Foot",
+      "AbilityDescription": "Your base walking speed increases to 35"},
+    {"AbilityName": "Mask of the Wild",
+      "AbilityDescription": "You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena."}
+  ],
+  "Languages": ["Common","Elvish"]
+}

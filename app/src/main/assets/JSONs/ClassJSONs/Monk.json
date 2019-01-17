@@ -1,0 +1,20 @@
+{
+    "class": "Monk",
+    "hasSubclass": "True",
+    "subClass": ["Way of the Open Hand", "Way of Shadow", "Way of the Four Elements"],
+    "description": "Her fists a blur as they detlect an incoming hail of arrows, a half-elf springs over a barricade and throws herself into the massed ranks of hobgoblins on the other side. She whirls among them, knocking their blows aside and sending them reeling. until at last she stands alone. Taking a deep breath, a human covered in tattoos settles into a battle stance. As the first charging orcs reach him, he exhales and a blast of fire roars from his mouth, engulfing his foes. Moving with the silence of the night, a black-clad halfling steps into a shadow beneath an arch and emerges from another inky shadow on a balcony a stone's throw away. She slides her blade free of its c1othwrapped seabbard and peers through the open window at the tyrant prince, so vulnerable in the grip of sleep. Whatever their discipline, monks are united in their abilily to magically harness the energy that flows in their bodies. Whether channeled as a striking display of combat prowess or a subtler focus of defensive ability and speed, this energy infuses all that a monk does.",
+    "creating_a_class": "As you make your monk character, think about your connection to the monastery where you learned your skills and spent your formative years. Were you an orphan or a child left on the monastery's threshold? Did your parents promise you to the monastery in gratitude for a service performed by the Monks? Did you enter this secluded life to hide from a crime you committed? Or did you choose the monaslic life for yourself? Consider why you left. Did the head of your monastery choose you for a parlicularly important mission beyond the cloister? Perhaps you were cast out because of some violalion of the community's rules. Did you dread leaving, or were you happy to go? ls there something you hope to accomplish oulside the monastery? Are you eager to return to your home? As a result of the structured life of a monastic community and the discipline required to harness ki, monks are almost always lawful in alignment.",
+    "HP_Hit_Dice": "1d8",
+    "HP_HP_LVL1": "8",
+    "HP_HP_HighLVL": "1d8 (or 5) + your Constitution Modifier per Monk level after 1st",
+    "Proficiencies_Armor": ["None"],
+    "Proficiencies_Weapons": ["Simple Weapon", "Shortsword"],
+    "Proficiencies_Tools": ["1", "Artisian Tool", "Musical Instrument"],
+    "Proficiencies_SavingThrows": ["Strength", "Dexterity"],
+    "Proficiencies_Skills": ["2","Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"],
+    "Equipment": [
+        {"EQ_Choice": [["Shortsword"], ["Any", "Simple Weapon"]]},
+        {"EQ_Choice": [["Dungeoneer Pack"], ["Explorer Pack"]]},
+        {"EQ_Choice": [["10", "Dart"]]}
+    ]
+  }

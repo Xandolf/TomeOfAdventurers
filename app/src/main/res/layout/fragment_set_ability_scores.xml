@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.SetAbilityScoresFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSetAbilityScoresHeader">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewAbilityScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AbilityScoreName"
+                tools:layout_width="126dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewAbilityScoreValueHeader"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                android:text="    Score"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewAbilityScoreModifierHeader"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                android:text="Modifier"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewStrHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Strength"
+                tools:layout_width="126dp"
+                tools:padding="8dp" />
+
+            <EditText
+                android:id="@+id/editTextStrScore"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="41dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewStrModifier"
+                android:layout_width="55dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewDexHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Dexterity"
+                tools:layout_width="126dp"
+                tools:padding="8dp" />
+
+            <EditText
+                android:id="@+id/editTextDexScore"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="41dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewDexModifier"
+                android:layout_width="55dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewConHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Constitution"
+                tools:layout_width="126dp"
+                tools:padding="8dp" />
+
+            <EditText
+                android:id="@+id/editTextConScore"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="41dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewConModifier"
+                android:layout_width="55dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewIntHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Intelligence"
+                tools:layout_width="126dp"
+                tools:padding="8dp" />
+
+            <EditText
+                android:id="@+id/editTextIntScore"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="41dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewIntModifier"
+                android:layout_width="55dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewWisHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Wisdom"
+                tools:layout_width="126dp"
+                tools:padding="8dp" />
+
+            <EditText
+                android:id="@+id/editTextWisScore"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="41dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewWisModifier"
+                android:layout_width="55dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewChaHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Charisma"
+                tools:layout_width="126dp"
+                tools:padding="8dp" />
+
+            <EditText
+                android:id="@+id/editTextChaScore"
+                android:layout_width="33dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                tools:layout_editor_absoluteX="118dp"
+                tools:layout_editor_absoluteY="41dp"
+                tools:padding="8dp" />
+
+            <TextView
+                android:id="@+id/textViewChaModifier"
+                android:layout_width="55dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="44dp"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                tools:layout_editor_absoluteY="111dp"
+                tools:padding="8dp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/buttonCalculateModifiers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Calculate Modifiers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <Button
+        android:id="@+id/buttonGoToEnterName"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/right_arrow_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSetAbilityScoresHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewSetAbilityScoresHeader" />
+
+    <TextView
+        android:id="@+id/textViewSetAbilityScoresHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:text="Enter Your Ability Scores"
+        app:layout_constraintEnd_toStartOf="@+id/buttonGoToEnterName"
+        app:layout_constraintHorizontal_bias="0.614"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,22 @@
+{
+  "race": "Gnome",
+  "isSubrace": "false",
+  "subRace": "null",
+  "Description": "A constant hum of busy activity pervades the warrens and neighborhoods where gnomes form their closeknit communities. Louder sounds punctuate the hum: a crunch of grinding gears here, a minor explosion there, a yelp of surprise or triumph, and especially bursts of laughter. Gnomes take delight in life, enjoying every moment of invention, exploration, investigation, creation, and play",
+  "SubRaceDescription": "null",
+  "AbilityScore_Strength": "0",
+  "AbilityScore_Dexterity": "0",
+  "AbilityScore_Constitution": "0",
+  "AbilityScore_Intelligence": "2",
+  "AbilityScore_Wisdom": "0",
+  "AbilityScore_Charisma": "0",
+  "Alignment": ["Lawful Good", "Lawful Neutral", "Lawful Evil", "True Good", "True Neutral", "True Evil"],
+  "Speed": "25",
+  "Abilities": [
+    {"AbilityName": "Darkvision",
+      "AbilityDescription": "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern colar in darkness, only shades of gray."},
+    {"AbilityName": "Gnome Cunning",
+      "AbilityDescription": "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."}
+  ],
+  "Languages": ["Common","Gnomish"]
+}

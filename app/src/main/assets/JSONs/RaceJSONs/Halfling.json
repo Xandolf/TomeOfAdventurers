@@ -1,0 +1,24 @@
+{
+  "race": "Halfling",
+  "isSubrace": "false",
+  "subRace": "null",
+  "Description": "The comforts of home are the goals of most halflings' lives: a place to settle in peace and quiet, far from marauding monsters and clashing armies; a blazing fire and a generous meal; fine drink and fine conversation. Though some halflings live out their days in remote agricultural communities, others form nomadic bands that travel constantly, lured by the open road and the wide horizon to discover the wonders of new lands and peoples. But even these wanderers love peace, food, hearth, and home, though home might be a wagon jostling along an dirt road or a raft floating downriver.",
+  "SubRaceDescription": "null",
+  "AbilityScore_Strength": "0",
+  "AbilityScore_Dexterity": "2",
+  "AbilityScore_Constitution": "0",
+  "AbilityScore_Intelligence": "0",
+  "AbilityScore_Wisdom": "0",
+  "AbilityScore_Charisma": "0",
+  "Alignment": ["Lawful Good"],
+  "Speed": "25",
+  "Abilities": [
+    {"AbilityName": "Lucky",
+      "AbilityDescription": "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll."},
+    {"AbilityName": "Brave",
+      "AbilityDescription": "You have advantage on saving throws against being frightened"},
+    {"AbilityName": "Halfling Nimbleness",
+      "AbilityDescription": "You can move through the space of any creature that is of a size larger than yours."}
+  ],
+  "Languages": ["Common","Halfling"]
+}

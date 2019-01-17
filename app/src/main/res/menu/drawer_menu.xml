@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_24dp"
+            android:title="@string/home" />
+
+        <item
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/ic_exposure_plus_1_black_24dp"
+            android:title="@string/stats" />
+        <item
+            android:id="@+id/nav_inventory"
+            android:icon="@drawable/shopping_cart_24dp"
+            android:title="@string/inv" />
+
+        <item
+            android:id="@+id/nav_spellbook"
+            android:icon="@drawable/ic_whatshot_black_24dp"
+            android:title="@string/spellBook" />
+
+        <item
+            android:id="@+id/nav_dice"
+            android:icon="@drawable/ic_widgets_black_24dp"
+            android:title="@string/rollDice" />
+    </group>
+    <item android:title="@string/database">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_items"
+                    android:icon="@drawable/ic_local_library_black_24dp"
+                    android:title="@string/items" />
+                <item
+                    android:id="@+id/nav_spells"
+                    android:icon="@drawable/ic_local_library_black_24dp"
+                    android:title="@string/spells" />
+            </group>
+        </menu>
+    </item>
+
+
+</menu>

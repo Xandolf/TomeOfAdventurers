@@ -1,0 +1,21 @@
+{
+    "class": "Warlock",
+    "hasSubclass": "True",
+    "subClass": ["Pact of the Chain", "Pact of the Blade", "Pact of the Tome"],
+    "description": "With a pseudodragon curled on his shoulder, a young elf in golden robes smiles warmly, weaving a magical charm into his honeyed words and bending the palace sentinel to his will. As flames spring to life in her hands, a wizened human whispers the secret name of her demonic patron, infusing her spell with fiendish magic. Shifting his gaze between a battered tome and the odd alignment of the stars overhead, a wild-eyed tiefiing chants the mystic ritual that will open a doorway to a distant world. Warlocks are seekers of the knowledge that lies hidden in the fabric of the multiverse, Through pacts made with mysterious beings of supernatural power, warlocks unlock magical effects both subtle and spectacular. Drawing on the ancient knowledge of beings such as fey nobles, demons, devils, hags, and alien entities of the Far Realm, warlocks piece together arcane secrets to bolster their own power,",
+    "creating_a_class": "As you make your warlock character, spend some time thinking about your patron and the obligations that your pact imposes upon you. What led you to make the pact, and how did you make contact with your patron? Were you seduced into summoning a devil, or did you seek out the ritual thal would allow you to make contact with an alien elder god? Did you search for your patron, or did your patron find and choose you? Do you chafe under the obligations of your pact or serve joyfully in anticipation of the rewards promised to you? Work with your DM to determine how big a part your pact will play in your character's adventuring career. Your patron's demands might drive you into adventures, or they might consist entirely of small favors you can do between adventures. What kind of relationship do you have with your patron? Is it friendly, antagonistic, uneasy, or romantic? How important does your patron consider you to be? What part do you play in your patron's plans? Do you know other servants of your patron? How does your patron communicate with you? If you have a familiar, it might occasionally speak with your patron's voice. Some warlocks find messages from their patrons etched on trees, mingled among tea leaves, or adrift in the clouds-messages that only the warlock can see. Other warlocks converse with their patrons in dreams or waking visions, or deal only with intermediaries.",
+    "HP_Hit_Dice": "1d8",
+    "HP_HP_LVL1": "8",
+    "HP_HP_HighLVL": "1d8 (or 5) + your Constitution Modifier per Warlock level after 1st",
+    "Proficiencies_Armor": ["Light Armor"],
+    "Proficiencies_Weapons": ["Simple Weapon"],
+    "Proficiencies_Tools": ["None"],
+    "Proficiencies_SavingThrows": ["Wisdom", "Charisma"],
+    "Proficiencies_Skills": ["2","Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"],
+    "Equipment": [
+        {"EQ_Choice": [["Light Crossbow", "20", "Bolt"], ["Any", "Simple Weapon"]]},
+        {"EQ_Choice": [["Component Pouch"], ["Arcane Focus"]]},
+        {"EQ_Choice": [["Scholar Pack"], ["Dungeoneer Pack"]]},
+        {"EQ_Choice": [["Leather Armor", "Any", "Simple Weapon", "2", "Dagger"]]}
+    ]
+  }

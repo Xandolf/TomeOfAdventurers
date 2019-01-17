@@ -1,0 +1,21 @@
+{
+    "class": "Rogue",
+    "hasSubclass": "True",
+    "subClass": ["Thief", "Assassin", "Arcane Trickster"],
+    "description": "Signaling for her companions to wait, a halfling creeps forward through the dungeon hall. She presses an ear to the door, then pulls out a set of tools and picks the lock in the blink of an eye. Then she disappears into the shadows as her fighter friend moves forward to kick the door open. A human lurks in the shadows of an alley while his accomplice prepares for her part in the ambush. When their target - a notorious slaver - passes the alleyway, the accomplice cries out, the slaver comes to investigate, and the assassin's blade cuts his throat before he can make a sound. Suppressing a giggle, a gnome waggles her fingers and magically lifts the key ring from the guard's belt. In a moment, the keys are in her hand, the cell door is open, and she and her companions are free to make their escape. Rogues rely on skill, stealth, and their foes' vulnerabilities to get the upper hand in any situation. They have a knack for finding the solution to just about any problem, demonstrating a resourcefulness and versatility that is the cornerstone of any successful adventuring party.",
+    "creating_a_class": "As you create your rogue character, consider the character's relationship to the law. Do you have a criminal past-or present? Are you on the run from the law or from an angry thieves' guild master? Or did you leave your guild in search of bigger risks and bigger rewards? Is it greed that drives you in your adventures, or some other desire or ideal? What was the trigger that led you away from your previous life? Did a great con or heist gone terribly wrong cause you to reevaluate your career? Maybe you were lucky and a successful robbery gave you the coin you needed to escape the squalor ofyour life. Did wanderlust finally call you away from your home? Perhaps you suddenly found yourself cut off from your family or your mentor, and you had to find a new means of support. Or maybe you made a new friend - another member of your adventuring party - who showed you new possibilities for earning a living and employing your particular talents.",
+    "HP_Hit_Dice": "1d8",
+    "HP_HP_LVL1": "8",
+    "HP_HP_HighLVL": "1d8 (or 5) + your Constitution Modifier per Rogue level after 1st",
+    "Proficiencies_Armor": ["Light Armor"],
+    "Proficiencies_Weapons": ["Simple Weapon", "Hand Crossbow", "Longsword", "Rapier", "Shortsword"],
+    "Proficiencies_Tools": ["Thieves Tools"],
+    "Proficiencies_SavingThrows": ["Dexterity", "Intelligence"],
+    "Proficiencies_Skills": ["4","Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth"],
+    "Equipment": [
+        {"EQ_Choice": [["Rapier"], ["Shortsword"]]},
+        {"EQ_Choice": [["Shortbow", "20", "Arrow", "Quiver"], ["Shortsword"]]},
+        {"EQ_Choice": [["Burglar Pack"], ["Dungeoner Pack"], ["Explorer Pack"]]},
+        {"EQ_Choice": [["Leather Armor", "2", "Dagger", "Thieves Tools"]]}
+    ]
+  }

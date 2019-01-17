@@ -1,0 +1,19 @@
+{
+    "class": "",
+    "description": "",
+    "creating_a_class": "",
+    "HP_Hit_Dice": "1d# per class level",
+    "HP_HP_LVL1": "0 + Constitution Modifier",
+    "HP_HP_HighLVL": "1d# (or #) + your Constitution Modifier per class level after 1st",
+    "Proficiencies_Armor": [],
+    "Proficiencies_Weapons": [],
+    "Proficiencies_Tools": [],
+    "Proficiencies_SavingThrows": [],
+    "Proficiencies_Skills": ["#","skill"],
+    "Equipment": [
+        {"EQ_Choice": [[], []]},
+        {"EQ_Choice": [[], []]},
+        {"EQ_Choice": [[], []]},
+        {"EQ_Choice": [[], []]}
+    ]
+  }

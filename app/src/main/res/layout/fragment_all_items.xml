@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/parchment1">
+
+<!--android:background="@color/colorTan">-->
+
+    <Button
+        android:id="@+id/createItemBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createItem" />
+
+    <ListView
+        android:id="@+id/listViewItembook"
+        style="@style/Widget.AppCompat.Light.ListView.DropDown"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:divider="@color/colorPrimaryDark"
+        android:dividerHeight="1dp" />
+</LinearLayout>

@@ -1,0 +1,24 @@
+{
+  "race": "Tiefling",
+  "isSubrace": "false",
+  "subRace": "null",
+  "Description": "To be greeted with stares and whispers, to suffer violence and insult on the street, to see mistrust and fear in every eye: this is the lot of the tiefling. And to twist the knife, tieflings know that this is because a pact struck generations ago infused the essence of Asmodeus - overlord of the Nine Hells - into their bloodline. Their appearance and their nature are not their fault but the result of an ancient sin, for which they and their children and their children's children will always be held accountable.",
+  "SubRaceDescription": "null",
+  "AbilityScore_Strength": "0",
+  "AbilityScore_Dexterity": "0",
+  "AbilityScore_Constitution": "0",
+  "AbilityScore_Intelligence": "1",
+  "AbilityScore_Wisdom": "0",
+  "AbilityScore_Charisma": "2",
+  "Alignment": ["Lawful Neutral", "Lawful Evil", "True Neutral", "True Evil", "Chaotic Neutral", "Chaotic Evil"],
+  "Speed": "30",
+  "Abilities": [
+    {"AbilityName": "Darkvision",
+      "AbilityDescription": "Thanks to your infernal heritage, you have superior vision in dark and dim conditions. You can see in dim Iight within 60 feet of you as if it were bright 1ight. and in darkness as if it were dim light. You can't discern color in darkness. only shades of gray."},
+    {"AbilityName": "Hellish Resistance",
+      "AbilityDescription": "You have resistance to fire damage."},
+    {"AbilityName": "Infernal Legacy",
+      "AbilityDescription": "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell once per day as a 2nd-level spell. Once you reach 5th level, you can also cast the darkness spell once per day. Charisma is your spellcasting ability for these spells."}
+  ],
+  "Languages": ["Common","Infernal"]
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="380dp"
+    android:layout_gravity="center"
+    android:background="@color/colorTan"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <Button
+        android:id="@+id/closeCreateSpellBtn"
+        android:layout_width="44dp"
+        android:layout_height="38dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="2dp"
+        android:text="@string/close" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
+
+        <EditText
+            android:id="@+id/spellNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:hint="@string/enterName"
+            android:inputType="text"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/spellTypeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:hint="@string/enterType"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/spellSourceTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:hint="@string/enterSource"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/spellDescTextView"
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:gravity="center_horizontal"
+        android:hint="@string/enterDesc"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/spellCreateAddBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addSpell" />
+</LinearLayout>

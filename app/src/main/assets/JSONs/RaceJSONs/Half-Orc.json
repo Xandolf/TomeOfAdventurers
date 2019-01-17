@@ -1,0 +1,26 @@
+{
+  "race": "Half-Orc",
+  "isSubrace": "false",
+  "subRace": "null",
+  "Description": "Whether united under the leadership of a mighty warlock or having fought to a standstill after years of confliet, orc and human tribes sometimes form alliances, joining forces into a larger horde to the terror of civilized lands nearby. When these alliances are sealed by marriages, half-orcs are born. Some half-orcs rise to become proud chiefs of orc tribes, their human blood giving them an edge over their full-blooded ore rivals. Some venture into the world to prove their worth among humans and other more civilized races. Many of these become adventurers, achieving greatness for their mighly deeds and notoriety for their barbaric customs and savage fury",
+  "SubRaceDescription": "null",
+  "AbilityScore_Strength": "2",
+  "AbilityScore_Dexterity": "0",
+  "AbilityScore_Constitution": "1",
+  "AbilityScore_Intelligence": "0",
+  "AbilityScore_Wisdom": "0",
+  "AbilityScore_Charisma": "0",
+  "Alignment": ["Lawful Evil", "True Neutral", "True Evil", "Chaotic Neutral", "Chaotic Evil"],
+  "Speed": "30",
+  "Abilities": [
+    {"AbilityName": "Darkvision",
+      "AbilityDescription": "Thanks to your orc blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."},
+    {"AbilityName": "Menacing",
+      "AbilityDescription": "You gain proficiency in the Intimidation skill"},
+    {"AbilityName": "Relentless Endurance",
+      "AbilityDescription": "When you are reduced to O hit points but not killed outright. you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest."},
+    {"AbilityName": "Savage Attacks",
+      "AbilityDescription": "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit."}
+  ],
+  "Languages": ["Common","Orc"]
+}

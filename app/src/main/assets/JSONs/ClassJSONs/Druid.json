@@ -1,0 +1,20 @@
+{
+    "class": "Druid",
+    "hasSubclass": "True",
+    "subClass": ["Circle of the Land", "Circle of the Moon"],
+    "description": "Holding high a gnarled staff wreathed wilh holly, an elf summons the fury of the storm and calls down explosive bolts of lightning to smite the torch-carrying orcs who threalen her forest. Crouching out of sight on a high tree branch in the form of a leopard, a human peers oul of the jungle aI the slrange conslruclion of a lemple of Evil Elemenlal Air, keeping a close eye on the cullists' activities, Swinging a blade formed of pure fire, a half-elf charges inlo a mass of skeletal soldiers, sundering the unnalural magic that gives the foul creatures the mocking semblance of life, Whether calling on the elemental forces of nature or emulating the creatures of the animal world, druids are an embodiment of nature's resilience, cunning, and fury, They claim no mastery over nalure. Instead, they see themselves as extensions of nature's indomitable will.",
+    "creating_a_class": "When making a druid, consider why your character has such a close bond with nature. Perhaps your character lives in a society where the Old Faith still thrives, or was raised by a druid after being abandoned in the depths of a forest. Perhaps your character had a dramatic encounter with the spirits of nature, coming face to face with a giant eagle or dire wolf and surviving the experience. Maybe your character was born during an epic storm or a volcanic eruption, which was interpreted as a sign that becoming a druid was part of your character's destiny. Have you always been an adventurer as part of your druidic calling, or did you first spend time as a caretaker of a sacred grove or spring? Perhaps your homeland was befouled by evil, and you took up an adventuring life in hopes of finding a new home or purpose.",
+    "HP_Hit_Dice": "1d8",
+    "HP_HP_LVL1": "8",
+    "HP_HP_HighLVL": "1d8 (or 5) + your Constitution Modifier per Druid level after 1st",
+    "Proficiencies_Armor": ["Light Armor", "Medium Armor", "Shield"],
+    "Proficiencies_Weapons": ["Club", "Dagger", "Dart", "Javelin", "Mace", "Quarterstaff", "Scimitar", "Sickle", "Sling", "Spear"],
+    "Proficiencies_Tools": ["Herbalism Kit"],
+    "Proficiencies_SavingThrows": ["Intelligence", "Wisdon"],
+    "Proficiencies_Skills": ["2","Arcana", "Animal", "Handling", "Insight", "Meedicine", "Nature", "Perception", "Religion", "Survival"],
+    "Equipment": [
+        {"EQ_Choice": [["Wood Shield"], ["Any", "Simple Weapon"]]},
+        {"EQ_Choice": [["Scimitar"], ["Any", "Simple Melee Weapon"]]},
+        {"EQ_Choice": [["Leather Armor", "Explorer Pack", "Druidic Focus"]]}
+    ]
+  }

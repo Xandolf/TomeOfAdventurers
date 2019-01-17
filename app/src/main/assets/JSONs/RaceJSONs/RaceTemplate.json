@@ -1,0 +1,24 @@
+{
+  "race": "",
+  "isSubrace": "",
+  "subRace": "",
+  "Description": "",
+  "SubRaceDescription": "",
+  "AbilityScore_Strength": "0",
+  "AbilityScore_Dexterity": "0",
+  "AbilityScore_Constitution": "0",
+  "AbilityScore_Intelligence": "0",
+  "AbilityScore_Wisdom": "0",
+  "AbilityScore_Charisma": "0",
+  "Alignment": ["TN"],
+  "Speed": "0",
+  "Abilities": [
+    {"AbilityName": "",
+      "AbilityDescription": ""},
+    {"AbilityName": "",
+      "AbilityDescription": ""},
+    {"AbilityName": "",
+      "AbilityDescription": ""}
+  ],
+  "Languages": ["Common"]
+}

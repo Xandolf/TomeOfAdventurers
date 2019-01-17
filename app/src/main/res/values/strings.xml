@@ -1,0 +1,143 @@
+<resources>
+    <string name="app_name">Tome Of Adventurers</string>
+    <string name="teamEmailAddress">TomeOfAdventurers@gmail.com</string>
+    <string name="charCreat">Create Character</string>
+    <string name="selChar">Select Character</string>
+    <string name="diceRoll">Roll Dice</string>
+
+
+    <string name="stats">Stats</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string-array name="AbilityScores">
+        <item>Str</item>
+        <item>Dex</item>
+        <item>Con</item>
+        <item>Int</item>
+        <item>Wis</item>
+        <item>Cha</item>
+    </string-array>
+
+    <string name="AbilityScoreName">Ability Score Name</string>
+    <string name = "Strength">Strength</string>
+    <string name = "Dexterity">Dexterity</string>
+    <string name = "Constitution">Constitution</string>
+    <string name = "Intelligence">Intelligence</string>
+    <string name = "Wisdom">Wisdom</string>
+    <string name = "Charisma">Charisma</string>
+
+    <string-array name="Skills">
+        <item>Acrobatics</item>
+        <item>Animal Handling</item>
+        <item>Arcana</item>
+        <item>Athletics</item>
+        <item>Deception</item>
+        <item>History</item>
+        <item>Insight</item>
+        <item>Intimidation</item>
+        <item>Investigation</item>
+        <item>Medicine</item>
+        <item>Nature</item>
+        <item>Perception</item>
+        <item>Performance</item>
+        <item>Persuasion</item>
+        <item>Religion</item>
+        <item>Slight of Hand</item>
+        <item>Stealth</item>
+        <item>Survival</item>
+    </string-array>
+
+    <string-array name="RaceList">
+        <item>Nothing Selected</item>
+        <item>Hill Dwarf</item>
+        <item>Mountain Dwarf</item>
+        <item>High Elf</item>
+        <item>Wood Elf</item>
+        <item>Dark Elf (Drow)</item>
+        <item>Lightfoot Halfling</item>
+        <item>Stout Halfling</item>
+        <item>Human</item>
+        <item>Dragonborn</item>
+        <item>Forest Gnome</item>
+        <item>Rock Gnome</item>
+        <item>Half-Elf</item>
+        <item>Half-Orc</item>
+        <item>Tiefling</item>
+    </string-array>
+
+    <string-array name="ClassList">
+        <item>Nothing Selected</item>
+        <item>Barbarian</item>
+        <item>Bard</item>
+        <item>Cleric</item>
+        <item>Druid</item>
+        <item>Fighter</item>
+        <item>Monk</item>
+        <item>Paladin</item>
+        <item>Ranger</item>
+        <item>Rogue</item>
+        <item>Sorcerer</item>
+        <item>Warlock</item>
+        <item>Wizard</item>
+    </string-array>
+
+    <string-array name="LanguageList">
+        <item>Common</item>
+        <item>Dwarvish</item>
+        <item>Elvish</item>
+        <item>Giant</item>
+        <item>Gnomish</item>
+        <item>Goblin</item>
+        <item>Halfling</item>
+        <item>Orc</item>
+        <item>Abyssal</item>
+        <item>Celestial</item>
+        <item>Draconic</item>
+        <item>Deep Speech</item>
+        <item>Infernal</item>
+        <item>Primordial</item>
+        <item>Sylvan</item>
+        <item>Undercommon</item>
+    </string-array>
+
+    <string name="home">Home</string>
+
+
+    <string name="rollDice">Roll Dice</string>
+    <string name="database">Database</string>
+
+
+    <string name="close">(X)</string>
+
+    <string name="enterName">enter name</string>
+    <string name="enterType">enter type</string>
+
+    <string name="items">Items</string>
+    <string name="inv">Inventory</string>
+    <string name="itemBook">Item Book</string>
+    <string name="addItem">Add Item to inventory</string>
+    <string name="createItem">Create Item</string>
+    <string name="removeItem">Remove Item from db</string>
+    <string name="viewItem">View Item</string>
+
+    <string name="spells">Spells</string>
+    <string name="spellBook">Spell Book</string>
+
+
+    <string name="areYouSure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="removeItemFromInventory">Remove Item from inventory</string>
+    <string name="removeSpellFromSpellbook">Remove Spell from spellbook</string>
+    <string name="deleteWarning">WARNING! This will permanently delete this item/spell from the entire phone for all characters.</string>
+    <string name="enterSource">enter source</string>
+    <string name="enterDesc">enter description</string>
+    <string name="createSpell">Create Spell</string>
+    <string name="addSpell">Add Spell</string>
+    <string name="removeSpell">Remove Spell</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
