@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.victor.tomeofadventurers" >
+    package="com.at.gmail.tomeofadventurers" >
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.victor.tomeofadventurers.Activities.MainActivity"
+        <activity android:name="com.at.gmail.tomeofadventurers.Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.victor.tomeofadventurers.Activities.CreateCharacterActivity"></activity>
+        <activity android:name="com.at.gmail.tomeofadventurers.Activities.CreateCharacterActivity"></activity>
     </application>
 
 </manifest>
