@@ -41,7 +41,7 @@ public class CharacterSheetFragment extends Fragment {
     int [] abilityScoreModifiers={0,0,0,0,0,0};
     String name = "NA";
     String className="Bard";//TODO FIX ME
-    //FIXME WOW
+
     boolean skillProficiencies[];
 
 
@@ -63,7 +63,7 @@ public class CharacterSheetFragment extends Fragment {
         BUS = BusProvider.getInstance();
         BUS.register(this);
 
-//        toastMessage("Im in");
+
         textViewCharacterName = view.findViewById(R.id.textViewCharacterName);
         textViewCharacterName.setText(name);
 
@@ -144,7 +144,7 @@ public class CharacterSheetFragment extends Fragment {
         //set the appropriate values
         if(currentPlayerCharacter!=null){
             textViewSpeedValue.setText(String.valueOf(speedValue));
-            textViewHitDiceValue.setText(String.valueOf(hitDiceValue));
+            //textViewHitDiceValue.setText(String.valueOf(hitDiceValue));
         }
 
 
@@ -174,7 +174,7 @@ public class CharacterSheetFragment extends Fragment {
 
         //Alex Code
         speedValue = 30;
-        hitDiceValue = currentPlayerCharacter.getMyHitDice();
+       // hitDiceValue = currentPlayerCharacter.getMyHitDice();
 
     }
 
