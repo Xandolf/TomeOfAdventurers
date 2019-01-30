@@ -240,6 +240,166 @@ public class Character
     //Setters................................................................................
 
 
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setClassName(String className)
+    {
+        this.className = className;
+    }
+
+    public void setRaceName(String raceName)
+    {
+        this.raceName = raceName;
+    }
+
+    public void setBackground(Background background)
+    {
+        this.background = background;
+    }
+
+    public void setCurrentLevel(int currentLevel)
+    {
+        this.currentLevel = currentLevel;
+    }
+
+    public void setCurrentExperiencePoints(int currentExperiencePoints)
+    {
+        this.currentExperiencePoints = currentExperiencePoints;
+    }
+
+    public void setProficiencyBonus(int proficiencyBonus)
+    {
+        this.proficiencyBonus = proficiencyBonus;
+    }
+
+    public void setArmorClass(int armorClass)
+    {
+        this.armorClass = armorClass;
+    }
+
+    public void setInitiative(int initiative)
+    {
+        this.initiative = initiative;
+    }
+
+    public void setSpeed(int speed)
+    {
+        this.speed = speed;
+    }
+
+    public void setCurrentDeathSaveSuccesses(int currentDeathSaveSuccesses)
+    {
+        this.currentDeathSaveSuccesses = currentDeathSaveSuccesses;
+    }
+
+    public void setCurrentDeathSaveFailures(int currentDeathSaveFailures)
+    {
+        this.currentDeathSaveFailures = currentDeathSaveFailures;
+    }
+
+    public void setCurrentHitDice(int[] currentHitDice)
+    {
+        this.currentHitDice = currentHitDice;
+    }
+
+    public void setMaxHitDice(int[] maxHitDice)
+    {
+        this.maxHitDice = maxHitDice;
+    }
+
+    public void setAlignment(String alignment)
+    {
+        this.alignment = alignment;
+    }
+
+    public void setPersonalityTraits(String personalityTraits)
+    {
+        this.personalityTraits = personalityTraits;
+    }
+
+    public void setIdeals(String ideals)
+    {
+        this.ideals = ideals;
+    }
+
+    public void setBonds(String bonds)
+    {
+        this.bonds = bonds;
+    }
+
+    public void setFlaws(String flaws)
+    {
+        this.flaws = flaws;
+    }
+
+    public void setCurrentSpellSlots(int currentSpellSlots)
+    {
+        this.currentSpellSlots = currentSpellSlots;
+    }
+
+    public void setMaxSpellSlots(int[] maxSpellSlots)
+    {
+        this.maxSpellSlots = maxSpellSlots;
+    }
+
+    public void setCurrentHitPoints(int currentHitPoints)
+    {
+        this.currentHitPoints = currentHitPoints;
+    }
+
+    public void setMaxHitPoints(int maxHitPoints)
+    {
+        this.maxHitPoints = maxHitPoints;
+    }
+
+    public void setTemporaryHitPoints(int temporaryHitPoints)
+    {
+        this.temporaryHitPoints = temporaryHitPoints;
+    }
+
+    public void setHasInspiration(boolean hasInspiration)
+    {
+        this.hasInspiration = hasInspiration;
+    }
+
+    public void setAbilityScores(int[] abilityScores)
+    {
+        this.abilityScores = abilityScores;
+    }
+
+    public void setSavingThrowProficiences(boolean[] savingThrowProficiences)
+    {
+        this.savingThrowProficiences = savingThrowProficiences;
+    }
+
+    public void setSavingThrows(int[] savingThrows)
+    {
+        this.savingThrows = savingThrows;
+    }
+
+    public void setSkillProficiencies(boolean[] skillProficiencies)
+    {
+        this.skillProficiencies = skillProficiencies;
+    }
+
+    public void setSkills(int[] skills)
+    {
+        this.skills = skills;
+    }
+
+    public void setSpellBookTable(int spellBookTable)
+    {
+        this.spellBookTable = spellBookTable;
+    }
+
+    public void setInventoryTable(int inventoryTable)
+    {
+        this.inventoryTable = inventoryTable;
+    }
+
     //Functional.............................................................................
     public void increaseCurrentHitPoints(int hitPointsGained)
     {
@@ -252,11 +412,17 @@ public class Character
         currentHitPoints -= hitPointsLost;
         if (currentHitPoints <= 0)
         {
-
             currentHitPoints = 0;
             //TODO Add death handler
         }
     }
-
+    public void increaseMaxHitPoints(int hitPointsGained)
+    {
+        this.maxHitPoints+=hitPointsGained;
+    }
+    public void dencreaseMaxHitPoints(int hitPointsLost)
+    {
+        this.maxHitPoints-=hitPointsLost;
+    }
 
 }
