@@ -1,5 +1,7 @@
 package com.at.gmail.tomeofadventurers.Classes;
 
+import android.widget.Switch;
+
 public class Character
 {
     private String name;
@@ -73,7 +75,6 @@ public class Character
     private boolean skillProficiencies[] = {true, false, true, false, false, true, true, true,
             false, true, false, true, false, true, true, false, true, false};
     private int skills[] = new int[18];
-
 
     //Database Keys
     private int spellBookTable;
@@ -231,6 +232,33 @@ public class Character
         return abilityScoreModifiers;
     }
 
+    public int getAbilityScoreModifier(String abilityScoreName)
+    {
+        int abilityScoreModifier = 0;
+        int [] abilityScoreModifiers = getAllAbilityScoreModifiers();
+        switch (abilityScoreName){
+            case "Strength":
+                abilityScoreModifier=abilityScoreModifiers[0];
+                break;
+            case "Dexterity":
+                abilityScoreModifier=abilityScoreModifiers[1];
+                break;
+            case "Constitution":
+                abilityScoreModifier=abilityScoreModifiers[2];
+                break;
+            case "Intelligence":
+                abilityScoreModifier=abilityScoreModifiers[3];
+                break;
+            case "Wisdom":
+                abilityScoreModifier=abilityScoreModifiers[4];
+                break;
+            case "Charisma":
+                abilityScoreModifier=abilityScoreModifiers[5];
+                break;
+        }
+        return abilityScoreModifier;
+    }
+
     //Skill proficiencies and modifiers
 
     public boolean[] getSkillProficiencies()
@@ -279,6 +307,11 @@ public class Character
         return hasInspiration;
     }
 
+    public int getCurrentLevel()
+    {
+        return currentLevel;
+    }
+
     public int getProficiencyBonus()
     {
         return proficiencyBonus;
@@ -302,11 +335,6 @@ public class Character
     public int[] getSavingThrows()
     {
         return savingThrows;
-    }
-
-    public int getCurrentLevel()
-    {
-        return currentLevel;
     }
 
     //Setters................................................................................
