@@ -3,6 +3,9 @@ package com.at.gmail.tomeofadventurers.Classes;
 public class Character
 {
     private String name;
+    private DnDClass dnDClass;
+    private Race race;
+
     private String className;
     private String raceName;
     private Background background;
@@ -126,6 +129,63 @@ public class Character
         return speed;
     }
 
+    public DnDClass getDnDClass()
+    {
+        return dnDClass;
+    }
+
+    public Race getRace()
+    {
+        return race;
+    }
+
+    public String getAlignment()
+    {
+        return alignment;
+    }
+
+    public String getPersonalityTraits()
+    {
+        return personalityTraits;
+    }
+
+    public String getIdeals()
+    {
+        return ideals;
+    }
+
+    public String getBonds()
+    {
+        return bonds;
+    }
+
+    public String getFlaws()
+    {
+        return flaws;
+    }
+
+    public int getCurrentSpellSlots()
+    {
+        return currentSpellSlots;
+    }
+
+    public int[] getMaxSpellSlots()
+    {
+        return maxSpellSlots;
+    }
+
+
+
+
+    public int getSpellBookTable()
+    {
+        return spellBookTable;
+    }
+
+    public int getInventoryTable()
+    {
+        return inventoryTable;
+    }
     //HitPoints
 
     public int getCurrentHitPoints()
@@ -154,6 +214,7 @@ public class Character
     }
 
     //Ability Scores
+    //TODO DECIDE HOW WE WANT TO NAME THESE Functions (ALL?)
 
     public int[] getAbilityScores()
     {
@@ -171,6 +232,16 @@ public class Character
     }
 
     //Skill proficiencies and modifiers
+
+    public boolean[] getSkillProficiencies()
+    {
+        return skillProficiencies;
+    }
+
+    public int[] getSkills()
+    {
+        return skills;
+    }
 
     public boolean[] getAllSkillProficiencies()
     {
@@ -237,6 +308,7 @@ public class Character
     {
         return currentLevel;
     }
+
     //Setters................................................................................
 
 
