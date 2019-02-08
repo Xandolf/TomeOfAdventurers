@@ -15,6 +15,7 @@ import com.at.gmail.tomeofadventurers.Fragments.AllItemsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.AllSpellsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.CharacterSheetFragment;
 import com.at.gmail.tomeofadventurers.Fragments.DiceFragment;
+import com.at.gmail.tomeofadventurers.Fragments.FirebaseFragment;
 import com.at.gmail.tomeofadventurers.Fragments.HomeFragment;
 import com.at.gmail.tomeofadventurers.Fragments.InventoryFragment;
 import com.at.gmail.tomeofadventurers.Fragments.SpellbookFragment;
@@ -94,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new AllSpellsFragment()).commit();
                 break;
+            case R.id.nav_firebase:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new FirebaseFragment()).commit();
+
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

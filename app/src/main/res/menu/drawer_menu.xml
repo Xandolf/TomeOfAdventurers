@@ -42,6 +42,16 @@
             </group>
         </menu>
     </item>
+    <item android:title="Online Connectivity">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_firebase"
+                    android:icon="@drawable/ic_local_library_black_24dp"
+                    android:title="Firebase" />
+            </group>
+        </menu>
+    </item>
 
 
 </menu>
