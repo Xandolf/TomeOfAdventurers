@@ -1,5 +1,7 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.app.Fragment;
 //import android.support.v4.app.FragmentManager;
 //import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +21,7 @@ import com.at.gmail.tomeofadventurers.R;
 
 public class HomeFragment extends Fragment {
 
-    private Button charCreateBtn;
+    private Button charCreateBtn, selCharBtn;
 
     @Nullable
     @Override
@@ -27,6 +30,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         charCreateBtn = view.findViewById(R.id.creatCharBtn);
+        selCharBtn = view.findViewById(R.id.selCharBtn);
 
         getActivity().setRequestedOrientation(
                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -50,6 +54,14 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), CreateCharacterActivity.class);
                 startActivity(intent);
 
+            }
+        });
+        selCharBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction manager = getActivity().getFragmentManager().beginTransaction();
+                manager.replace(R.id.fragment_container, new SelectCharacterFragment());
+                manager.commit();
             }
         });
 
