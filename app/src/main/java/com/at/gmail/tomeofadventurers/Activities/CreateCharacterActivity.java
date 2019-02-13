@@ -1,8 +1,9 @@
 package com.at.gmail.tomeofadventurers.Activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.at.gmail.tomeofadventurers.Fragments.SelectRaceFragment;
@@ -18,9 +19,14 @@ public class CreateCharacterActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
 
-        Fragment frag = new SelectRaceFragment();
-        FragmentManager fragManager = getFragmentManager();
-        fragManager.beginTransaction().replace(R.id.fragment_container, frag).commit();
+//        Fragment frag = new SelectRaceFragment();
+//        FragmentManager fragManager = getFragmentManager();
+//        fragManager.beginTransaction().replace(R.id.fragment_container, frag).commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+        SelectRaceFragment frag = new SelectRaceFragment();
+        fragTrans.replace(R.id.fragment_container, frag);
+        fragTrans.commit();
 
     }
 }

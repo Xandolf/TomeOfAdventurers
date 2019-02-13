@@ -1,11 +1,12 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +114,7 @@ public class SelectClassFragment extends Fragment {
         //Register the BUS
         BUS.register(this);
 
-        buttonToClassProperties = (Button) view.findViewById(R.id.btnToClassPropertiesFragment);
+        buttonToClassProperties = view.findViewById(R.id.btnToClassPropertiesFragment);
         buttonToClassProperties.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -126,9 +127,15 @@ public class SelectClassFragment extends Fragment {
 //                BUS.unregister(this);
 
                 //go to class properties fragment
-                Fragment frag = new SelectClassPropertiesFragment();
-                FragmentManager fragManager = getFragmentManager();
-                android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
+                //Fragment frag = new SelectClassPropertiesFragment();
+                //FragmentManager fragManager = getFragmentManager();
+                //android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+                SelectClassFragment frag = new SelectClassFragment();
+                fragTrans.replace(R.id.fragment_container, frag);
+                fragTrans.commit();
 
                 //Set the Bundle
                 Bundle sendData = new Bundle();
@@ -136,8 +143,8 @@ public class SelectClassFragment extends Fragment {
                 sendData.putStringArray("subClasses", subClasses);
 
                 frag.setArguments(sendData);
-                fragTrans.replace(R.id.fragment_container, frag);
-                fragTrans.commit();
+//                fragTrans.replace(R.id.fragment_container, frag);
+//                fragTrans.commit();
 
                 //fragManager.beginTransaction().replace(R.id.fragment_container, new SelectClassPropertiesFragment()).commit();
             }
@@ -153,7 +160,7 @@ public class SelectClassFragment extends Fragment {
         disableButton(buttonMoreInfo);
 
         //********************TESTING POPUP*************************
-        testDialog = new Dialog(getContext());
+        //testDialog = new Dialog(getContext());
 
        return view;
    }

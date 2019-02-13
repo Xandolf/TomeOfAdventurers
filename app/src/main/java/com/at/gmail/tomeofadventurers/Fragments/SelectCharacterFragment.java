@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +29,24 @@ public class SelectCharacterFragment extends Fragment implements View.OnClickLis
     private static final String FILE_NAME = "example.txt";
     private Button button_save, button_load;
     EditText mEditText;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
+            container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_select_character, container, false);
+        super.onCreate(savedInstanceState);
+        mEditText = view.findViewById(R.id.edit_text);
+
+        button_save = view.findViewById(R.id.button_save); //Assigns id d4 from fragment_diceroller.xml to local
+        // button d4
+        button_save.setOnClickListener(this);
+
+        button_load = view.findViewById(R.id.button_load);
+        button_load.setOnClickListener(this);
+
+        return view;
+    }
 
     @Override
     public void onClick(View v) {
@@ -93,30 +111,4 @@ public class SelectCharacterFragment extends Fragment implements View.OnClickLis
 
     }
 
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup
-            container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_character, container, false);
-        super.onCreate(savedInstanceState);
-        mEditText = view.findViewById(R.id.edit_text);
-
-        button_save = view.findViewById(R.id.button_save); //Assigns id d4 from fragment_diceroller.xml to local
-        // button d4
-        button_save.setOnClickListener(this);
-
-        button_load = view.findViewById(R.id.button_load);
-        button_load.setOnClickListener(this);
-
-        return view;
-    }
-
-    public void save(View v) {
-
-    }
-
-    public void load(View v) {
-
-    }
 }

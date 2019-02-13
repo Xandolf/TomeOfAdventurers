@@ -1,11 +1,12 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,9 +123,15 @@ public class SelectRaceFragment extends Fragment {
 
 
                 //Set the fragment before the move is made
-                Fragment frag = new SelectRacePropertiesFragment();
-                FragmentManager fragManager = getFragmentManager();
-                android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
+//                Fragment frag = new SelectRacePropertiesFragment();
+//                FragmentManager fragManager = getFragmentManager();
+//                android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
+
+                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+                SelectRacePropertiesFragment frag = new SelectRacePropertiesFragment();
+                fragTrans.replace(R.id.fragment_container, frag);
+                fragTrans.commit();
 
                 //set the bundles
                 Bundle sendData = new Bundle();
@@ -139,9 +146,9 @@ public class SelectRaceFragment extends Fragment {
 
                 //begin transaction with arguments
                 frag.setArguments(sendData);
-                fragTrans.replace(R.id.fragment_container, frag);
-//                fragTrans.addToBackStack(null);
-                fragTrans.commit();
+//                fragTrans.replace(R.id.fragment_container, frag);
+////                fragTrans.addToBackStack(null);
+//                fragTrans.commit();
 
             }
         });
@@ -156,7 +163,7 @@ public class SelectRaceFragment extends Fragment {
         disableButton(buttonMoreInfo);
 
         //********************TESTING POPUP*************************
-        testDialog = new Dialog(getContext());
+        //testDialog = new Dialog(getContext());
 
         return view;
     }

@@ -1,9 +1,11 @@
 package com.at.gmail.tomeofadventurers.Activities;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -49,9 +51,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if(savedInstanceState == null) {
-            Fragment frag = new HomeFragment();
-            android.app.FragmentManager fragManager = getFragmentManager();
-            fragManager.beginTransaction().replace(R.id.fragment_container, frag).commit();
+//            Fragment frag = new HomeFragment();
+//            android.app.FragmentManager fragManager = getFragmentManager();
+//            fragManager.beginTransaction().replace(R.id.fragment_container, frag).commit();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+            HomeFragment frag = new HomeFragment();
+            fragTrans.replace(R.id.fragment_container, frag);
+            fragTrans.commit();
 
             //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
             //        new HomeFragment()).commit();
@@ -63,9 +71,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                Fragment frag = new HomeFragment();
-                android.app.FragmentManager fragManager = getFragmentManager();
-                fragManager.beginTransaction().replace(R.id.fragment_container, frag).commit();
+//                Fragment frag = new HomeFragment();
+//                android.app.FragmentManager fragManager = getFragmentManager();
+//                fragManager.beginTransaction().replace(R.id.fragment_container, frag).commit();
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+                HomeFragment frag = new HomeFragment();
+                fragTrans.replace(R.id.fragment_container, frag);
+                fragTrans.commit();
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 //        new HomeFragment()).commit();
                 break;
