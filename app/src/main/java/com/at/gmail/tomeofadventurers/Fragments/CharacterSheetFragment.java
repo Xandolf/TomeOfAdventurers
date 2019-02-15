@@ -23,7 +23,8 @@ import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-public class CharacterSheetFragment extends Fragment {
+public class CharacterSheetFragment extends Fragment
+{
 
     Character currentPlayerCharacter;
     ImageButton buttonLowerHitPoints, buttonIncreaseHitPoints;
@@ -31,22 +32,22 @@ public class CharacterSheetFragment extends Fragment {
     RecyclerView abilityScoreRecycler, skillsRecyclerView;
     AbilityScoreAdapter abilityScoreAdapter;
     SkillsListAdapter skillsListAdapter;
-    String [] abilityScoreNames,skillNames;
+    String[] abilityScoreNames, skillNames;
     TextView textViewHitPointValue, textViewClassName, textViewCharacterName;
     String displayHitPoints;
     View view;
     Bus BUS;
-    int skillModifiers[]= {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    int abilityScores[] = {10,10,10,10,10,10};
-    int [] abilityScoreModifiers={0,0,0,0,0,0};
+    int skillModifiers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int abilityScores[] = {10, 10, 10, 10, 10, 10};
+    int[] abilityScoreModifiers = {0, 0, 0, 0, 0, 0};
     String name = "NA";
-    String className="Bard";//TODO FIX ME
+    String className = "Bard"; //TODO FIX ME
 
     boolean skillProficiencies[];
 
 
     int currentHitPoints;
-    int maxHitPoints =0;
+    int maxHitPoints = 0;
 
     //Alex Code
     TextView textViewSpeedValue, textViewHitDiceValue;
@@ -55,7 +56,9 @@ public class CharacterSheetFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState)
+    {
 
         view = inflater.inflate(R.layout.fragment_character_sheet, container, false);
 
@@ -63,21 +66,24 @@ public class CharacterSheetFragment extends Fragment {
         BUS = BusProvider.getInstance();
         BUS.register(this);
 
-
         textViewCharacterName = view.findViewById(R.id.textViewCharacterName);
         textViewCharacterName.setText(name);
 
-        textViewClassName=view.findViewById(R.id.textViewClassName);
+        textViewClassName = view.findViewById(R.id.textViewClassName);
         textViewClassName.setText(className);
 
         //Load in the ability scores
-        if (currentPlayerCharacter!=null)  abilityScores = currentPlayerCharacter.getAbilityScores();
+        if (currentPlayerCharacter != null)
+            abilityScores = currentPlayerCharacter.getAbilityScores();
         abilityScoreRecycler = view.findViewById(R.id.recyclerViewAbilityScores);
         abilityScoreRecycler.setHasFixedSize(true);
-        abilityScoreRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.);
+        abilityScoreRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),
+                                                                      LinearLayoutManager.HORIZONTAL, false));
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
+// LinearLayoutManager.);
         abilityScoreNames = getResources().getStringArray(R.array.AbilityScores);
-        abilityScoreAdapter = new AbilityScoreAdapter(getContext(), abilityScoreNames,abilityScores,abilityScoreModifiers);
+        abilityScoreAdapter = new AbilityScoreAdapter(getContext(), abilityScoreNames,
+                                                      abilityScores, abilityScoreModifiers);
         abilityScoreRecycler.setAdapter(abilityScoreAdapter);
 
         //load in skills
@@ -86,36 +92,43 @@ public class CharacterSheetFragment extends Fragment {
         skillsRecyclerView.setNestedScrollingEnabled(false);
         skillsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         skillNames = getResources().getStringArray(R.array.Skills);
-        skillsListAdapter = new SkillsListAdapter(getContext(),skillNames, skillProficiencies,skillModifiers);
+        skillsListAdapter = new SkillsListAdapter(getContext(), skillNames, skillProficiencies,
+                                                  skillModifiers);
         skillsRecyclerView.setAdapter(skillsListAdapter);
 
         //Health bar ..............................................................................
-        textViewHitPointValue =view.findViewById(R.id.textViewHealthValue);
-        buttonLowerHitPoints =view.findViewById(R.id.buttonLowerHealth);
-        buttonIncreaseHitPoints =view.findViewById(R.id.buttonIncreaseHealth);
+        textViewHitPointValue = view.findViewById(R.id.textViewHealthValue);
+        buttonLowerHitPoints = view.findViewById(R.id.buttonLowerHealth);
+        buttonIncreaseHitPoints = view.findViewById(R.id.buttonIncreaseHealth);
 
         //Initialize Health Bar Values
-        if (currentPlayerCharacter!=null) {
+        if (currentPlayerCharacter != null)
+        {
             currentHitPoints = currentPlayerCharacter.getCurrentHitPoints();
             maxHitPoints = currentPlayerCharacter.getMaxHitPoints();
+        } else
+        {
+            currentHitPoints = maxHitPoints = 100;
         }
-        else{currentHitPoints=maxHitPoints=100;}
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setMax(maxHitPoints);
         progressBar.setProgress(currentHitPoints);
-        displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
+        displayHitPoints =
+                (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
 
         //these functions need to cause a pop-up that will ask the user for a value to heal/damage
         textViewHitPointValue.setText(displayHitPoints);
         buttonLowerHitPoints.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 if (progressBar != null)
                 {
                     progressBar.incrementProgressBy(-1);
-                    currentHitPoints =progressBar.getProgress();
-                    displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
+                    currentHitPoints = progressBar.getProgress();
+                    displayHitPoints =
+                            (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
                 }
             }
@@ -124,12 +137,14 @@ public class CharacterSheetFragment extends Fragment {
         buttonIncreaseHitPoints.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
-                if ( progressBar != null)
+            public void onClick(View v)
+            {
+                if (progressBar != null)
                 {
                     progressBar.incrementProgressBy(1);
-                    currentHitPoints =progressBar.getProgress();
-                    displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
+                    currentHitPoints = progressBar.getProgress();
+                    displayHitPoints =
+                            (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
                 }
 
@@ -142,7 +157,8 @@ public class CharacterSheetFragment extends Fragment {
         textViewSpeedValue = view.findViewById(R.id.textViewSpeedValue);
         textViewHitDiceValue = view.findViewById(R.id.textViewHitDiceValue);
         //set the appropriate values
-        if(currentPlayerCharacter!=null){
+        if (currentPlayerCharacter != null)
+        {
             textViewSpeedValue.setText(String.valueOf(speedValue));
             //textViewHitDiceValue.setText(String.valueOf(hitDiceValue));
         }
@@ -150,6 +166,7 @@ public class CharacterSheetFragment extends Fragment {
 
         return view;
     }//end OnCreate
+
     /*
 
      Subscription is the complement to event publishing—it lets you receive notification
@@ -164,26 +181,28 @@ public class CharacterSheetFragment extends Fragment {
     {
         currentPlayerCharacter = sampleCharacter;
         abilityScores = currentPlayerCharacter.getAbilityScores();
-        abilityScoreModifiers=currentPlayerCharacter.getAllAbilityScoreModifiers();
-        skillModifiers=currentPlayerCharacter.getAllSkillModifiers();
-        skillProficiencies=currentPlayerCharacter.getAllSkillProficiencies();
-        name=currentPlayerCharacter.getName();
-        maxHitPoints=currentPlayerCharacter.getMaxHitPoints();
-        currentHitPoints=currentPlayerCharacter.getCurrentHitPoints();
-        className=currentPlayerCharacter.getClassName();
+        abilityScoreModifiers = currentPlayerCharacter.getAllAbilityScoreModifiers();
+        skillModifiers = currentPlayerCharacter.getAllSkillModifiers();
+        skillProficiencies = currentPlayerCharacter.getAllSkillProficiencies();
+        name = currentPlayerCharacter.getName();
+        maxHitPoints = currentPlayerCharacter.getMaxHitPoints();
+        currentHitPoints = currentPlayerCharacter.getCurrentHitPoints();
+        className = currentPlayerCharacter.getClassName();
 
         //Alex Code
         speedValue = 30;
-       // hitDiceValue = currentPlayerCharacter.getMyHitDice();
+        // hitDiceValue = currentPlayerCharacter.getMyHitDice();
 
     }
 
     @Subscribe
-    public void getClass (DnDClass dnDClass)
+    public void getClass(DnDClass dnDClass)
     {
-        className=dnDClass.getClassName();
+        className = dnDClass.getClassName();
     }
-    private void toastMessage(String message) {
+
+    private void toastMessage(String message)
+    {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

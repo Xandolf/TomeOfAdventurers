@@ -21,7 +21,8 @@ import com.at.gmail.tomeofadventurers.R;
 
 import java.util.List;
 
-public class InventoryFragment extends Fragment {
+public class InventoryFragment extends Fragment
+{
 
     //General Listview Variables
     ListView inventoryListView;
@@ -41,16 +42,21 @@ public class InventoryFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
         super.onCreate(savedInstanceState);
 
         inventoryListView = (ListView) view.findViewById(R.id.listViewInventory);
         myDatabaseAccess = DatabaseAccess.getInstance(this.getContext());
         myDatabaseAccess.open();
+
+
         itemNames = myDatabaseAccess.fillInventory();
 
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
+                                           itemNames);
         inventoryListView.setAdapter(adapter);
 
         myDialog = new Dialog(getContext()); //for item infoinventory popup
@@ -60,7 +66,8 @@ public class InventoryFragment extends Fragment {
         return view;
     }
 
-    private void getItemInfo(String slug, Dialog myDialog) {
+    private void getItemInfo(String slug, Dialog myDialog)
+    {
         Cursor data = myDatabaseAccess.getItemsData();
 
         itemSource = (TextView) myDialog.findViewById(R.id.itemSourceTextView);
@@ -69,8 +76,10 @@ public class InventoryFragment extends Fragment {
         itemNameTextView = (TextView) myDialog.findViewById(R.id.itemNameTextView);
         itemCount = (TextView) myDialog.findViewById(R.id.itemCountTextView);
 
-        while (data.moveToNext()) {
-            if (slug.equals(data.getString(0))) {
+        while (data.moveToNext())
+        {
+            if (slug.equals(data.getString(0)))
+            {
                 itemSource.setText(data.getString(6));
                 itemType.setText(data.getString(2));
                 itemDesc.setText(data.getString(3));
@@ -83,23 +92,29 @@ public class InventoryFragment extends Fragment {
         itemCount.setText("QTY: " + Integer.toString(myDatabaseAccess.getExistingItemCount(slug)));
     }
 
-    private void getSlugFromListView() {
+    private void getSlugFromListView()
+    {
         //set an onItemClickListener to the ListView
-        inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l)
+            {
                 String name = adapterView.getItemAtPosition(i).toString();
 
-                Cursor data = myDatabaseAccess.getItemSlugitems(name); //get the slug associated with that name
+                Cursor data     = myDatabaseAccess.getItemSlugitems(name); //get the slug
+                // associated with that name
                 String itemSlug = "_";
 
-                while (data.moveToNext()) {
+                while (data.moveToNext())
+                {
                     itemSlug = data.getString(0);
                 }
 
                 data.close();
 
-                if (itemSlug != "_") {
+                if (itemSlug != "_")
+                {
 
                     myDialog.setContentView(R.layout.popup_iteminfoinventory);
 
@@ -108,25 +123,31 @@ public class InventoryFragment extends Fragment {
                     removeItemBttn = (Button) myDialog.findViewById(R.id.itemRemoveInventoryBtn);
                     closeBttn = (Button) myDialog.findViewById(R.id.closeBtn);
 
-                    closeBttn.setOnClickListener(new View.OnClickListener() {
+                    closeBttn.setOnClickListener(new View.OnClickListener()
+                    {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(View v)
+                        {
                             myDialog.dismiss();
                         }
                     });
 
                     final String finalItemSlug = itemSlug;
-                    removeItemBttn.setOnClickListener(new View.OnClickListener() {
+                    removeItemBttn.setOnClickListener(new View.OnClickListener()
+                    {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(View v)
+                        {
                             int itemCount = myDatabaseAccess.getExistingItemCount(finalItemSlug);
 
-                            if(itemCount > 1) {
-                                myDatabaseAccess.removeFromInventoriesCount(finalItemSlug, itemCount-1); //remove 1 from count
+                            if (itemCount > 1)
+                            {
+                                myDatabaseAccess.removeFromInventoriesCount(finalItemSlug,
+                                                                            itemCount - 1);
+                                //remove 1 from count
                                 getItemInfo(finalItemSlug, myDialog);
-                            }
-
-                            else {
+                            } else
+                            {
                                 myDatabaseAccess.deleteItemFromInv(finalItemSlug);
                                 adapter.remove(adapter.getItem(i));
                                 adapter.notifyDataSetChanged();
@@ -137,7 +158,8 @@ public class InventoryFragment extends Fragment {
                     });
 
                     myDialog.show();
-                } else {
+                } else
+                {
                     toastMessage("No ID associated with that name");
                 }
 
@@ -145,7 +167,8 @@ public class InventoryFragment extends Fragment {
         });
     }
 
-    private void toastMessage(String message) {
+    private void toastMessage(String message)
+    {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }
