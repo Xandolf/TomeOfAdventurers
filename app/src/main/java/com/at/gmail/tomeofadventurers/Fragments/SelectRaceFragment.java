@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Race;
 import com.at.gmail.tomeofadventurers.Classes.RaceDatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.SubraceDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -26,32 +27,31 @@ import com.squareup.otto.Produce;
 
 public class SelectRaceFragment extends Fragment
 {
-
-    String raceName = "NA";
-
-
     //variables
     Button buttonToClass;
     Button buttonMoreInfo;
-    TextView txtvwDisplayText;
-    Spinner spinnerRace;
+    TextView textViewDisplayText;
+    Spinner spinnerRace, spinnerSubRace;
     Bus BUS;
     String[] raceIds;
     String selectedRaceId;
 
+    SubraceDatabaseAccess subRaceDatabaseAccess;
+    String[] subRaceIds;
+    String[] subRaceNames;
+    String selectedSubRaceId;
+    ArrayAdapter<String> subRaceListAdapter;
+
+    RaceDatabaseAccess raceDatabaseAccess;
+
     //Dialog popupTest;
     Dialog testDialog;
-    TextView txtvwPassAttributes;
-    Button btnClosePopup;
-
+    TextView textViewPassAttributes;
+    Button buttonClosePopup;
 
     //string alternatives
     String[] stringRaceList;
     ArrayAdapter<String> raceListAdapter;
-
-    //define the bus Race object
-    String busRaceName = "NA";
-
 
     @Nullable
     @Override
@@ -65,13 +65,15 @@ public class SelectRaceFragment extends Fragment
         BUS = BusProvider.getInstance();
 
         //TextView variables
-        txtvwDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
-        txtvwDisplayText.setText("Initial Setting Text");
+        textViewDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
+        textViewDisplayText.setText("Initial Setting Text");
 
 
         //spinner variables
         spinnerRace = (Spinner) view.findViewById(R.id.spinnerRace);
         addItemsToSpinner();
+        spinnerSubRace = view.findViewById(R.id.spinnerSubRace);
+
         spinnerRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
 
@@ -84,7 +86,7 @@ public class SelectRaceFragment extends Fragment
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
-                txtvwDisplayText.setText("Nothing Selected");
+                textViewDisplayText.setText("Nothing Selected");
             }
         });
 
@@ -96,22 +98,13 @@ public class SelectRaceFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                //Alternate way to change fragment window
-                /*
-                Fragment frag = new SelectClassFragment();
-                FragmentManager fragManager = getFragmentManager();
-                fragManager.beginTransaction().replace(R.id.fragment_container, new
-                SelectClassFragment()).commit();
-                */
+
+
                 //Register the BUS
                 BUS.register(this);
 
                 //Send the Race Name to the BUS
-                raceName = busRaceName;
                 BUS.post(sendRace());
-
-                //Unregister the BUS
-//                BUS.unregister(this);
 
 
                 //Set the fragment before the move is made
@@ -121,7 +114,6 @@ public class SelectRaceFragment extends Fragment
 
 
                 fragTrans.replace(R.id.fragment_container, frag);
-//                fragTrans.addToBackStack(null);
                 fragTrans.commit();
 
             }
@@ -141,21 +133,18 @@ public class SelectRaceFragment extends Fragment
         return view;
     }
 
-
     //Function for quickly generating a toast message
     public void toastMessage(String message)
     {
-        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
-
 
     //Function that adds items to the spinner
     public void addItemsToSpinner()
     {
         //alternate way to make the spinner
 
-        RaceDatabaseAccess raceDatabaseAccess;
+
         raceDatabaseAccess = RaceDatabaseAccess.getInstance(this.getContext());
         raceDatabaseAccess.open();
 
@@ -173,7 +162,20 @@ public class SelectRaceFragment extends Fragment
     public void selectAndParse(AdapterView adapterView, int i)
     {
         selectedRaceId = raceIds[i];
-        txtvwDisplayText.setText(selectedRaceId);
+        String alignmentText = raceDatabaseAccess.getDescriptionOfRace(selectedRaceId);
+
+        textViewDisplayText.setText(alignmentText);
+        subRaceDatabaseAccess = SubraceDatabaseAccess.getInstance(this.getContext());
+        subRaceDatabaseAccess.open();
+        subRaceIds = subRaceDatabaseAccess.getSubraceIdsFor(selectedRaceId);
+        subRaceNames = subRaceDatabaseAccess.getSubraceNames(subRaceIds);
+        subRaceListAdapter = new ArrayAdapter<String>(this.getActivity(),
+                                                      android.R.layout.simple_spinner_item,
+                                                      subRaceNames);
+        subRaceListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerSubRace.setAdapter(subRaceListAdapter);
+
         //Add logic for populating the subraces spinner
     }
 
@@ -198,12 +200,12 @@ public class SelectRaceFragment extends Fragment
         testDialog.setContentView(R.layout.popup_moreinfo_race);
 
         //find the text view in the popup
-        txtvwPassAttributes = (TextView) testDialog.findViewById(R.id.txtvwMoreInfoRace);
+        textViewPassAttributes = (TextView) testDialog.findViewById(R.id.txtvwMoreInfoRace);
 
 
         //find and add the close button
-        btnClosePopup = (Button) testDialog.findViewById(R.id.btnClose);
-        btnClosePopup.setOnClickListener(new View.OnClickListener()
+        buttonClosePopup = (Button) testDialog.findViewById(R.id.btnClose);
+        buttonClosePopup.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -227,9 +229,7 @@ public class SelectRaceFragment extends Fragment
     {
         Race race = new Race();
         race.setRaceName(selectedRaceId);
-
         return race;
     }
-
 
 }

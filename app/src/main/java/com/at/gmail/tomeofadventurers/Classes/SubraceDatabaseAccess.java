@@ -8,24 +8,25 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RaceDatabaseAccess
+public class SubraceDatabaseAccess
 {
 
-    private static RaceDatabaseAccess instance;
+
+    private static SubraceDatabaseAccess instance;
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
 
     //General database functions -----------------------------------------------------------------
-    public RaceDatabaseAccess(Context context)
+    public SubraceDatabaseAccess (Context context)
     {
         this.openHelper = new DatabaseHelper(context);
     }
 
-    public static RaceDatabaseAccess getInstance(Context context)
+    public static SubraceDatabaseAccess getInstance(Context context)
     {
         if (instance == null)
         {
-            instance = new RaceDatabaseAccess(context);
+            instance = new SubraceDatabaseAccess(context);
         }
         return instance;
     }
@@ -56,12 +57,12 @@ public class RaceDatabaseAccess
     //getRaceNames function takes in an array of Strings containg race id's
     // and returns an array of strings of race names
     // where each index corresponds to the given id's name
-    public String[] getRaceNames(String[] ids)
+    public String[] getSubraceNames(String[] ids)
     {
         String [] raceNames= new String[ids.length];
         for (int i = 0; i < ids.length; i++)
         {
-            String query  = "SELECT name FROM races WHERE id='" + ids[i]+"'";
+            String query  = "SELECT name FROM subraces WHERE id='" + ids[i]+"'";
             Cursor cursor = database.rawQuery(query, null);
             cursor.moveToFirst();
             while (!cursor.isAfterLast())
@@ -74,19 +75,19 @@ public class RaceDatabaseAccess
         return raceNames;
     }
 
-    public String[] getRaceKeys()
+    public String[] getSubraceIdsFor(String primaryRaceId)
     {
-        String       query  = "SELECT id FROM races";
-        List<String> keys   = new ArrayList<String>();
+        String       query  = "SELECT id FROM subraces WHERE race_id = '"+primaryRaceId+"'";
+        List<String> ids   = new ArrayList<String>();
         Cursor       cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast())
         {
-            keys.add(cursor.getString(0));
+            ids.add(cursor.getString(0));
             cursor.moveToNext();
         }
         cursor.close();
-        String[] stringKeys = keys.toArray(new String[keys.size()]);
+        String[] stringKeys = ids.toArray(new String[ids.size()]);
 
 
         return stringKeys;
@@ -97,14 +98,14 @@ public class RaceDatabaseAccess
     public int[] getAbilityScoreBonuses(String id)
     {
         int [] abilityScoreBonuses = new int [6];
-        String query = "SELECT str_bonus, dex_bonus, con_bonus, int_bonus, wis_bonus, cha_bonus FROM races WHERE id='"+id+"'";
-        Cursor cursor = database.rawQuery(query,null);
+        String query               = "SELECT str_bonus, dex_bonus, con_bonus, int_bonus, wis_bonus, cha_bonus FROM races WHERE id='"+id+"'";
+        Cursor cursor              = database.rawQuery(query, null);
         cursor.moveToFirst();
         int i=0;
         while(!cursor.isAfterLast()&&i<6)
         {
-                abilityScoreBonuses[i]=cursor.getInt(i);
-                i++;
+            abilityScoreBonuses[i]=cursor.getInt(i);
+            i++;
         }
         cursor.close();
         return abilityScoreBonuses;
@@ -113,16 +114,16 @@ public class RaceDatabaseAccess
 
     public String getDescriptionOfRace(String id)
     {
-     String raceDescription="";
-     String query = "SELECT alignment FROM races WHERE id='"+id+"'";
-     Cursor cursor = database.rawQuery(query,null);
-    cursor.moveToFirst();
-    if(!cursor.isAfterLast())
-    {
-        raceDescription=cursor.getString(0);
-    }
+        String raceDescription="";
+        String query = "SELECT alignment FROM races WHERE id='"+id+"'";
+        Cursor cursor = database.rawQuery(query,null);
+        cursor.moveToFirst();
+        if(!cursor.isAfterLast())
+        {
+            raceDescription=cursor.getString(0);
+        }
 
-     return raceDescription;
+        return raceDescription;
     }
 
 
@@ -130,6 +131,7 @@ public class RaceDatabaseAccess
     //getting all info for a race/sub-race
     //getting all info for a race/sub-race
     //SELECT races.name,subraces.name,races.url from races,subraces where races.url=subraces.racekey
+
 
 
 }
