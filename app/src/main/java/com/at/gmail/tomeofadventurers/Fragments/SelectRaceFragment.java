@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Race;
 import com.at.gmail.tomeofadventurers.Classes.RaceDatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.SubraceDatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.SubRaceDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -36,7 +36,7 @@ public class SelectRaceFragment extends Fragment
     String[] raceIds;
     String selectedRaceId;
 
-    SubraceDatabaseAccess subRaceDatabaseAccess;
+    SubRaceDatabaseAccess subRaceDatabaseAccess;
     String[] subRaceIds;
     String[] subRaceNames;
     String selectedSubRaceId;
@@ -68,7 +68,6 @@ public class SelectRaceFragment extends Fragment
         textViewDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
         textViewDisplayText.setText("Initial Setting Text");
 
-
         //spinner variables
         spinnerRace = (Spinner) view.findViewById(R.id.spinnerRace);
         addItemsToSpinner();
@@ -76,7 +75,6 @@ public class SelectRaceFragment extends Fragment
 
         spinnerRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
@@ -90,8 +88,6 @@ public class SelectRaceFragment extends Fragment
             }
         });
 
-
-        //button variables
         buttonToClass = (Button) view.findViewById(R.id.btnToClassFragment);
         buttonToClass.setOnClickListener(new View.OnClickListener()
         {
@@ -99,20 +95,13 @@ public class SelectRaceFragment extends Fragment
             public void onClick(View v)
             {
 
-
-                //Register the BUS
-                BUS.register(this);
-
-                //Send the Race Name to the BUS
-                BUS.post(sendRace());
-
+                BUS.register(this); //Register the BUS (must unregister?)
+                BUS.post(sendRace());       //Send the Race Name to the BUS
 
                 //Set the fragment before the move is made
                 Fragment                        frag        = new SelectRacePropertiesFragment();
                 FragmentManager                 fragManager = getFragmentManager();
                 android.app.FragmentTransaction fragTrans   = fragManager.beginTransaction();
-
-
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
 
@@ -142,18 +131,15 @@ public class SelectRaceFragment extends Fragment
     //Function that adds items to the spinner
     public void addItemsToSpinner()
     {
-        //alternate way to make the spinner
-
-
         raceDatabaseAccess = RaceDatabaseAccess.getInstance(this.getContext());
         raceDatabaseAccess.open();
 
         raceIds = raceDatabaseAccess.getRaceKeys();
         String[] stringRaceList = raceDatabaseAccess.getRaceNames(raceIds);
 
-        raceListAdapter = new ArrayAdapter<String>(this.getActivity(),
-                                                   android.R.layout.simple_spinner_item,
-                                                   stringRaceList);
+        raceListAdapter = new ArrayAdapter<>(this.getActivity(),
+                                             android.R.layout.simple_spinner_item,
+                                             stringRaceList);
         raceListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRace.setAdapter(raceListAdapter);
     }
@@ -165,9 +151,9 @@ public class SelectRaceFragment extends Fragment
         String alignmentText = raceDatabaseAccess.getDescriptionOfRace(selectedRaceId);
 
         textViewDisplayText.setText(alignmentText);
-        subRaceDatabaseAccess = SubraceDatabaseAccess.getInstance(this.getContext());
+        subRaceDatabaseAccess = SubRaceDatabaseAccess.getInstance(this.getContext());
         subRaceDatabaseAccess.open();
-        subRaceIds = subRaceDatabaseAccess.getSubraceIdsFor(selectedRaceId);
+        subRaceIds = subRaceDatabaseAccess.getSubRaceIdsFor(selectedRaceId);
         subRaceNames = subRaceDatabaseAccess.getSubraceNames(subRaceIds);
         subRaceListAdapter = new ArrayAdapter<String>(this.getActivity(),
                                                       android.R.layout.simple_spinner_item,
@@ -175,8 +161,6 @@ public class SelectRaceFragment extends Fragment
         subRaceListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerSubRace.setAdapter(subRaceListAdapter);
-
-        //Add logic for populating the subraces spinner
     }
 
     //Function that makes a button invisible and disabled
@@ -217,7 +201,6 @@ public class SelectRaceFragment extends Fragment
         testDialog.show();
     }
 
-
     //Here is a function that will produce a race.
     // Pass it a string that holds the name of the race you are trying to pass.
     // You will want to call it in the format when you switch to the next stage
@@ -231,5 +214,4 @@ public class SelectRaceFragment extends Fragment
         race.setRaceName(selectedRaceId);
         return race;
     }
-
 }
