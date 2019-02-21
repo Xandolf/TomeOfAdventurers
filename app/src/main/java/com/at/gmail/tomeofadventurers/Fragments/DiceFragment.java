@@ -4,7 +4,7 @@ dice selected. If multiple dice are selected it will add them and display the su
 */
 
 package com.at.gmail.tomeofadventurers.Fragments;
-
+//Deleted Fragment import
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
