@@ -66,6 +66,24 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         itemListAdapterViewHolder.textViewItemName.setText(items.get(i).getItemName());
         itemListAdapterViewHolder.textViewQty.setText(itemQuantity);
 
+        myDatabaseAccess = DatabaseAccess.getInstance(myContext);
+        myDatabaseAccess.open();
+
+        String myItemName = items.get(i).getItemName();
+
+        final String myItemID = myDatabaseAccess.getIDFromItembook(myItemName); //get the id associated with that name
+
+        if((items.get(i).isItemEquipped()) == 1)
+        {
+            itemListAdapterViewHolder.itemEquipped.setSelected(true);
+            itemListAdapterViewHolder.itemEquipped.setChecked(true);
+        }
+        else
+        {
+            itemListAdapterViewHolder.itemEquipped.setSelected(false);
+            itemListAdapterViewHolder.itemEquipped.setChecked(false);
+        }
+
         itemListAdapterViewHolder.itemEquipped.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -73,11 +91,15 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
             {
                 if(itemListAdapterViewHolder.itemEquipped.isSelected())
                 {
+                    myDatabaseAccess.setEquipped(myItemID, 0);
+                    items.get(i).setItemEquipped(0);
                     itemListAdapterViewHolder.itemEquipped.setSelected(false);
                     itemListAdapterViewHolder.itemEquipped.setChecked(false);
                 }
                 else
                 {
+                    myDatabaseAccess.setEquipped(myItemID, 1);
+                    items.get(i).setItemEquipped(1);
                     itemListAdapterViewHolder.itemEquipped.setSelected(true);
                     itemListAdapterViewHolder.itemEquipped.setChecked(true);
                 }
@@ -89,19 +111,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
             @Override
             public void onClick(View view)
             {
-                myDatabaseAccess = DatabaseAccess.getInstance(myContext);
-                myDatabaseAccess.open();
-
                 String name = items.get(i).getItemName();
 
-                Cursor data = myDatabaseAccess.getIDFromItembook(name); //get the id associated with that name
-                String itemID = "_";
-
-                while (data.moveToNext()) {
-                    itemID = data.getString(0);
-                }
-
-                data.close();
+                String itemID = myDatabaseAccess.getIDFromItembook(name); //get the id associated with that name
 
                 if (myDatabaseAccess.isIteminInventories(itemID)) {
 

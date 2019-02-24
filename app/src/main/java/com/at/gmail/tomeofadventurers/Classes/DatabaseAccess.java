@@ -61,10 +61,19 @@ public class DatabaseAccess {
         return list;
     }
 
-    public Cursor getIDFromItembook(String listName){
+    public String getIDFromItembook(String listName){
         String query = "SELECT id FROM items WHERE name = '" + listName + "'";
         Cursor data = database.rawQuery(query, null);
-        return data;
+
+        String itemID = "_";
+
+        while (data.moveToNext()) {
+            itemID = data.getString(0);
+        }
+
+        data.close();
+
+        return itemID;
     }
 
     public void deleteItemFromItembook(String listID){
@@ -145,14 +154,28 @@ public class DatabaseAccess {
         return list;
     }
 
+    public List<Integer> fillInventoryEquipped() {
+        List<Integer> list = new ArrayList<>();
+        String query = "SELECT equip FROM inventories";
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            list.add(cursor.getInt(0));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
 
-    public boolean addToInventories(int idchar, String id, int myCount) {
+
+    public boolean addToInventories(int idchar, String id, int myCount, int isEquipped) {
 
         ContentValues contentValue = new ContentValues();
 
         contentValue.put("idchar", idchar);
         contentValue.put("id", id);
-        contentValue.put("count", myCount); //hard code to 1 for now need to add to count
+        contentValue.put("count", myCount);
+        contentValue.put("equip", isEquipped);
 
         Log.d(TAG, "addData: Adding " + id + " to " + "inventories");
 
@@ -212,6 +235,13 @@ public class DatabaseAccess {
         return finalCount;
     }
 
+    public void setEquipped(String idToCheck, int isEquipped) {
+
+        String query = "UPDATE " + "inventories" + " SET " + "equip" +
+                " = '" + isEquipped + "' WHERE " + "id" + " = '" + idToCheck + "'";
+
+        database.execSQL(query);
+    }
 
     //Spells database functions -----------------------------------------------------------------
     public List<String> getSpellNames() {

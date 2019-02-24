@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Adapters.ItemListAdapter;
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
@@ -25,6 +24,7 @@ public class InventoryFragment extends Fragment {
     DatabaseAccess myDatabaseAccess;
     List<String> itemNames;
     List<Integer> itemCounts;
+    List<Integer> isItemEquipped;
 
     List<Item> inventoryItems;
     ItemListAdapter adapter;
@@ -43,10 +43,11 @@ public class InventoryFragment extends Fragment {
 
         itemNames = myDatabaseAccess.fillInventoryNames();
         itemCounts = myDatabaseAccess.fillInventoryQty();
+        isItemEquipped = myDatabaseAccess.fillInventoryEquipped();
 
         for(int i = 0; i < itemCounts.size(); i++)
         {
-            Item myItem = new Item(itemNames.get(i), itemCounts.get(i), 0); //need to save equipped value in DB
+            Item myItem = new Item(itemNames.get(i), itemCounts.get(i), isItemEquipped.get(i)); //need to save equipped value in DB
             inventoryItems.add(myItem);
         }
 

@@ -15,31 +15,31 @@ public class Item {
 
     public String getItemName()
     {
-        return this.itemName;
+        return itemName;
     }
 
     public Integer getItemCount()
     {
-        return this.itemCount;
+        return itemCount;
     }
 
     public Integer isItemEquipped()
     {
-        return this.itemEquipped;
+        return itemEquipped;
     }
 
     public void setItemName(String aName)
     {
-        this.itemName = aName;
+        itemName = aName;
     }
 
     public void setItemCount(Integer aCount)
     {
-        this.itemCount = aCount;
+        itemCount = aCount;
     }
 
     public void setItemEquipped(Integer isEquipped)
     {
-        this.itemCount = isEquipped;
+        itemCount = isEquipped;
     }
 }
