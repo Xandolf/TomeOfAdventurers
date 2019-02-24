@@ -157,7 +157,7 @@ public class AllItemsFragment extends Fragment {
         while (data.moveToNext()) {
             if(slug.equals(data.getString(0)))
             {
-                itemSource.setText(data.getString(6));
+                itemSource.setText(data.getString(4));
                 itemType.setText(data.getString(2));
                 itemDesc.setText(data.getString(3));
                 itemNameTextView.setText(data.getString(1));
@@ -201,7 +201,7 @@ public class AllItemsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 String name = adapterView.getItemAtPosition(i).toString();
 
-                Cursor data = myDatabaseAccess.getItemSlugitems(name); //get the slug associated with that name
+                Cursor data = myDatabaseAccess.getIDFromItembook(name); //get the slug associated with that name
                 String itemSlug = "_";
 
                 while(data.moveToNext()){

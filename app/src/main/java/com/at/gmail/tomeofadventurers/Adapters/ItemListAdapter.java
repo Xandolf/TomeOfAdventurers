@@ -10,18 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.Item;
 import com.at.gmail.tomeofadventurers.R;
 
+import java.util.List;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemListAdapterViewHolder>
 {
     private Context myContext;
-    String[] itemNames;
     int itemNameArrayLength;
+
+    List<Item> items;
 
     DatabaseAccess myDatabaseAccess;
 
@@ -36,9 +40,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     TextView itemCount;
 
     //Constructor
-    public ItemListAdapter(Context myContext, String[] itemNameStrings, int length) {
+    public ItemListAdapter(Context myContext, List<Item> myItems, int length) {
         this.myContext = myContext;
-        itemNames = itemNameStrings;
+        this.items = myItems;
         itemNameArrayLength = length;
     }
 
@@ -56,7 +60,29 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     //i holds position
     @Override
     public void onBindViewHolder(@NonNull final ItemListAdapterViewHolder itemListAdapterViewHolder, final int i) {
-        itemListAdapterViewHolder.textViewItemName.setText(itemNames[i]);
+
+        String itemQuantity = items.get(i).getItemCount().toString();
+
+        itemListAdapterViewHolder.textViewItemName.setText(items.get(i).getItemName());
+        itemListAdapterViewHolder.textViewQty.setText(itemQuantity);
+
+        itemListAdapterViewHolder.itemEquipped.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(itemListAdapterViewHolder.itemEquipped.isSelected())
+                {
+                    itemListAdapterViewHolder.itemEquipped.setSelected(false);
+                    itemListAdapterViewHolder.itemEquipped.setChecked(false);
+                }
+                else
+                {
+                    itemListAdapterViewHolder.itemEquipped.setSelected(true);
+                    itemListAdapterViewHolder.itemEquipped.setChecked(true);
+                }
+            }
+        });
 
         itemListAdapterViewHolder.parentLayout.setOnClickListener(new View.OnClickListener()
         {
@@ -66,23 +92,23 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
                 myDatabaseAccess = DatabaseAccess.getInstance(myContext);
                 myDatabaseAccess.open();
 
-                String name = itemNames[i];
+                String name = items.get(i).getItemName();
 
-                Cursor data = myDatabaseAccess.getItemSlugitems(name); //get the slug associated with that name
-                String itemSlug = "_";
+                Cursor data = myDatabaseAccess.getIDFromItembook(name); //get the id associated with that name
+                String itemID = "_";
 
                 while (data.moveToNext()) {
-                    itemSlug = data.getString(0);
+                    itemID = data.getString(0);
                 }
 
                 data.close();
 
-                if (itemSlug != "_") {
+                if (myDatabaseAccess.isIteminInventories(itemID)) {
 
                     myDialog = new Dialog(myContext); //for item infoinventory popup
                     myDialog.setContentView(R.layout.popup_iteminfoinventory);
 
-                    getItemInfo(itemSlug, myDialog);
+                    getItemInfo(itemID, myDialog);
 
                     removeItemBttn = (Button) myDialog.findViewById(R.id.itemRemoveInventoryBtn);
 
@@ -97,21 +123,26 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
                     myDialog.show();
 
-                    final String finalItemSlug = itemSlug;
+                    final String finalItemID = itemID;
                     removeItemBttn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            int itemCount = myDatabaseAccess.getExistingItemCount(finalItemSlug);
+                            int itemCount = myDatabaseAccess.getExistingItemCount(finalItemID);
 
                             if(itemCount > 1) {
-                                myDatabaseAccess.removeFromInventoriesCount(finalItemSlug, itemCount-1); //remove 1 from count
-                                getItemInfo(finalItemSlug, myDialog);
+                                myDatabaseAccess.removeFromInventoriesCount(finalItemID, itemCount-1); //remove 1 from count
+                                getItemInfo(finalItemID, myDialog);
+
+                                items.get(i).setItemCount(itemCount-1);
+                                notifyItemChanged(i);
                             }
 
                             else {
-                                itemNameArrayLength--; //reduce by one item
+                                myDatabaseAccess.deleteItemFromInv(finalItemID);
 
-                                myDatabaseAccess.deleteItemFromInv(finalItemSlug);
+                                items.remove(i);
+                                itemNameArrayLength--;
+
                                 notifyItemRemoved(i);
                                 notifyItemRangeChanged(i, itemNameArrayLength);
                                 myDialog.dismiss();
@@ -133,7 +164,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         Toast.makeText(myContext, message, Toast.LENGTH_SHORT).show();
     }
 
-        private void getItemInfo(String slug, Dialog myDialog) {
+        private void getItemInfo(String id, Dialog myDialog) {
         Cursor data = myDatabaseAccess.getItemsData();
 
         itemSource = (TextView) myDialog.findViewById(R.id.itemSourceTextView);
@@ -143,8 +174,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         itemCount = (TextView) myDialog.findViewById(R.id.itemCountTextView);
 
         while (data.moveToNext()) {
-            if (slug.equals(data.getString(0))) {
-                itemSource.setText(data.getString(6));
+            if (id.equals(data.getString(0))) {
+                itemSource.setText(data.getString(4));
                 itemType.setText(data.getString(2));
                 itemDesc.setText(data.getString(3));
                 itemNameTextView.setText(data.getString(1));
@@ -153,7 +184,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
         data.close();
 
-        itemCount.setText("QTY: " + Integer.toString(myDatabaseAccess.getExistingItemCount(slug)));
+        itemCount.setText("QTY: " + Integer.toString(myDatabaseAccess.getExistingItemCount(id)));
     }
 
     @Override
@@ -163,12 +194,16 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     //The View holder is a single instance of the layout used in the recycler.
     public class ItemListAdapterViewHolder extends RecyclerView.ViewHolder {
+        RadioButton itemEquipped;
         TextView textViewItemName;
+        TextView textViewQty;
         LinearLayout parentLayout;
 
         public ItemListAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemEquipped = itemView.findViewById(R.id.itemRadioButton);
             textViewItemName = itemView.findViewById(R.id.ItemTextView);
+            textViewQty = itemView.findViewById(R.id.qtyTextView);
             parentLayout = itemView.findViewById(R.id.linearLayout);
         }
     }

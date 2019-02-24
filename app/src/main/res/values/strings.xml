@@ -110,7 +110,7 @@
     <string name="database">Database</string>
 
 
-    <string name="close">(X)</string>
+    <string name="close">X</string>
 
     <string name="enterName">enter name</string>
     <string name="enterType">enter type</string>
