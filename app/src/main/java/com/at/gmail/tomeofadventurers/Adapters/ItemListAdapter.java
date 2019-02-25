@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Adapters;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -139,6 +140,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
                     removeItemBttn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             int itemCount = myDatabaseAccess.getExistingItemCount(finalItemID);
 
                             if(itemCount > 1) {
@@ -160,9 +162,10 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
                                 myDialog.dismiss();
                                 toastMessage("Item removed from inventory!");
                             }
+
+                            updateInventoryWeight();
                         }
                     });
-
                 }
                 else
                 {
@@ -211,6 +214,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         TextView textViewQty;
         LinearLayout parentLayout;
 
+
         public ItemListAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             itemEquipped = itemView.findViewById(R.id.itemRadioButton);
@@ -218,6 +222,11 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
             textViewQty = itemView.findViewById(R.id.qtyTextView);
             parentLayout = itemView.findViewById(R.id.linearLayout);
         }
+    }
+
+    public void updateInventoryWeight(){
+        TextView txtView = (TextView) ((Activity)myContext).findViewById(R.id.textViewInventoryWeight);
+        txtView.setText(myDatabaseAccess.inventoryWeight());
     }
 }
 

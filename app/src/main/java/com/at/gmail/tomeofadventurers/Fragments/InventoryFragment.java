@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.at.gmail.tomeofadventurers.Adapters.ItemListAdapter;
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
@@ -28,6 +29,8 @@ public class InventoryFragment extends Fragment {
 
     List<Item> inventoryItems;
     ItemListAdapter adapter;
+
+    TextView weight;
 
     @Nullable
     @Override
@@ -55,6 +58,9 @@ public class InventoryFragment extends Fragment {
         inventoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         inventoryRecyclerView.setHasFixedSize(true);
         inventoryRecyclerView.setAdapter(adapter);
+
+        weight = view.findViewById(R.id.textViewInventoryWeight);
+        weight.setText(myDatabaseAccess.inventoryWeight());
 
         return view;
     }

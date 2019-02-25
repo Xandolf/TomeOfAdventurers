@@ -138,6 +138,7 @@
     <string name="createSpell">Create Spell</string>
     <string name="addSpell">Add Spell</string>
     <string name="removeSpell">Remove Spell</string>
+    <string name="weight">Total Weight:</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -243,6 +243,21 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
+    public String inventoryWeight()
+    {
+        String totalWeight = "0";
+        String query = "SELECT SUM(weight*count) FROM items, inventories WHERE items.id = inventories.id";
+        Cursor data = database.rawQuery(query, null);
+
+        while(data.moveToNext()) {
+            totalWeight = data.getString(0);
+        }
+
+        data.close();
+
+        return  totalWeight;
+    }
+
     //Spells database functions -----------------------------------------------------------------
     public List<String> getSpellNames() {
         List<String> list = new ArrayList<>();
