@@ -42,7 +42,8 @@ public class CharacterSheetFragment extends Fragment {
     String name = "NA";
     String className="Bard";//TODO FIX ME
     //FIXME WOW
-    boolean skillProficiencies[];
+    boolean skillProficiencies[] ={ true,false,true,false,false,true,true,true,false,true,false,true,false,true,true,false,true,false};
+
 
 
     int currentHitPoints;

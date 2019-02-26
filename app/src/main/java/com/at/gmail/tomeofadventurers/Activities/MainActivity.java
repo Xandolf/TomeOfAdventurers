@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
+import com.at.gmail.tomeofadventurers.Classes.Character;
 import com.at.gmail.tomeofadventurers.Fragments.AllItemsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.AllSpellsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.CharacterSheetFragment;
@@ -22,11 +24,14 @@ import com.at.gmail.tomeofadventurers.Fragments.HomeFragment;
 import com.at.gmail.tomeofadventurers.Fragments.InventoryFragment;
 import com.at.gmail.tomeofadventurers.Fragments.SpellbookFragment;
 import com.at.gmail.tomeofadventurers.R;
+import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     //public Bus BUS; // I declared it as a variable for easy reference. Not sure if it needs to be public or private
     public int [] abilityScores = {5,8,10,13,20,15};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,20 +134,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // a class registers with the Bus. They are required for dynamically created things
     // such as new fragments or activities.
 
-//    @Produce
-//    public Character sendCharacter ()
-//    {
-//        String name="Xanandorf";
-//        Character sampleCharacter = new Character(name,abilityScores,"raceName","className");
-//
-//        return sampleCharacter;
-//    }
-//
-//    @Subscribe
-//    void setAbilityScores(AbilityScoreSender abilityScoreSender)
-//    {
-//        abilityScores=abilityScoreSender.getAbilityScores();
-//    }
+    @Produce
+    public Character sendCharacter ()
+    {
+        String name="Xanandorf";
+        Character sampleCharacter = new Character(name, abilityScores, "raceName", "className", 13, 25, "1d4");
+
+        return sampleCharacter;
+    }
+
+    @Subscribe
+    void setAbilityScores(AbilityScoreSender abilityScoreSender)
+    {
+        abilityScores=abilityScoreSender.getAbilityScores();
+    }
 
 
     @Override

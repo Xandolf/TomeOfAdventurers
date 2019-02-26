@@ -133,7 +133,7 @@ public class SelectClassFragment extends Fragment {
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-                SelectClassFragment frag = new SelectClassFragment();
+                SelectClassPropertiesFragment frag = new SelectClassPropertiesFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
 

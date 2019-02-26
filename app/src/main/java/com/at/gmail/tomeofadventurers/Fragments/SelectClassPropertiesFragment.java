@@ -40,7 +40,7 @@ public class SelectClassPropertiesFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                SelectClassPropertiesFragment fragment = new SelectClassPropertiesFragment();
+                SetAbilityScoresFragment fragment = new SetAbilityScoresFragment();
                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                 fragmentTransaction.commit();
 
