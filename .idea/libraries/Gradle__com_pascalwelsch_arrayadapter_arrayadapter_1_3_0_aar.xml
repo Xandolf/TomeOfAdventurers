@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.pascalwelsch.arrayadapter:arrayadapter:1.3.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/arrayadapter-1.3.0.aar/6b31a7cb2fe2681da568229d4929543f/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/arrayadapter-1.3.0.aar/6b31a7cb2fe2681da568229d4929543f/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pascalwelsch.arrayadapter/arrayadapter/1.3.0/49db31031223a9d12a94d2d0eab3cc5628e5f89d/arrayadapter-1.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/parchment1">
+    android:background="@drawable/parchment1"
+    android:orientation="vertical">
 
-
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listViewInventory"
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="8"
 
         android:divider="@color/colorPrimaryDark"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="1dp"
+        android:visibility="visible"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/weightString"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="8"
+        android:gravity="center"
+        android:text="@string/weight"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/textViewInventoryWeight"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_weight="2"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:textColor="#000" />
+
 </LinearLayout>
