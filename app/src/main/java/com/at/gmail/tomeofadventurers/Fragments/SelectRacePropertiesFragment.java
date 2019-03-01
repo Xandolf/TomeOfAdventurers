@@ -1,10 +1,11 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,15 +75,21 @@ public class SelectRacePropertiesFragment extends Fragment {
                     */
 
                 //Set the fragment before the move is made
-                Fragment frag = new SelectClassFragment();
-                FragmentManager fragManager = getFragmentManager();
-                android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
+//                Fragment frag = new SelectClassFragment();
+//                FragmentManager fragManager = getFragmentManager();
+//                android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+                SelectClassFragment frag = new SelectClassFragment();
+                fragTrans.replace(R.id.fragment_container, frag);
+                fragTrans.commit();
 
                 //begin transaction with arguments
                 //frag.setArguments(sendData);
-                fragTrans.replace(R.id.fragment_container, frag);
+                //fragTrans.replace(R.id.fragment_container, frag);
 //                    fragTrans.addToBackStack(null);
-                fragTrans.commit();
+                //fragTrans.commit();
 
             }
         });

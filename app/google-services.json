@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "300208353506",
+    "firebase_url": "https://tomeofadventurers-42f98.firebaseio.com",
+    "project_id": "tomeofadventurers-42f98",
+    "storage_bucket": "tomeofadventurers-42f98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300208353506:android:27b786bddd64042f",
+        "android_client_info": {
+          "package_name": "com.at.gmail.tomeofadventurers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300208353506-1d3strn65t8bp7lvj0o86il5gbgkg09m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.at.gmail.tomeofadventurers",
+            "certificate_hash": "1071a0df60262e86293e476ec1d902f4859c66fb"
+          }
+        },
+        {
+          "client_id": "300208353506-gh0bljteabv9kts3o3e2ov02idjelb6g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFhjsOoNlHtKvWUvc0e2pKrq5CLMd0VJc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300208353506-gh0bljteabv9kts3o3e2ov02idjelb6g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

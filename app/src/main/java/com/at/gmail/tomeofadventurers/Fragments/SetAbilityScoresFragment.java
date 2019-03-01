@@ -1,8 +1,9 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,8 +181,14 @@ public class SetAbilityScoresFragment extends Fragment {
 //                BUS.unregister(this);
 
                 //Transfer to Select Name Fragment
-                FragmentManager fragManager = getFragmentManager();
-                fragManager.beginTransaction().replace(R.id.fragment_container, new SelectNameFragment()).commit();
+//                FragmentManager fragManager = getFragmentManager();
+//                fragManager.beginTransaction().replace(R.id.fragment_container, new SelectNameFragment()).commit();
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+                SelectNameFragment frag = new SelectNameFragment();
+                fragTrans.replace(R.id.fragment_container, frag);
+                fragTrans.commit();
             }
         });
 
