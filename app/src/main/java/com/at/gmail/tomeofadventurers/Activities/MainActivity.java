@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
 import com.at.gmail.tomeofadventurers.Fragments.AllItemsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.AllSpellsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.CharacterSheetFragment;
@@ -19,6 +20,8 @@ import com.at.gmail.tomeofadventurers.Fragments.HomeFragment;
 import com.at.gmail.tomeofadventurers.Fragments.InventoryFragment;
 import com.at.gmail.tomeofadventurers.Fragments.SpellbookFragment;
 import com.at.gmail.tomeofadventurers.R;
+import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -108,22 +111,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //Produce functions for a given even class are called when a different
     // a class registers with the Bus. They are required for dynamically created things
-    // such as new fragments or activities.
-
+//    // such as new fragments or activities.
 //    @Produce
 //    public Character sendCharacter ()
 //    {
 //        String name="Xanandorf";
-//        Character sampleCharacter = new Character(name,abilityScores,"raceName","className");
 //
 //        return sampleCharacter;
 //    }
-//
-//    @Subscribe
-//    void setAbilityScores(AbilityScoreSender abilityScoreSender)
-//    {
-//        abilityScores=abilityScoreSender.getAbilityScores();
-//    }
+
+    @Subscribe
+    void setAbilityScores(AbilityScoreSender abilityScoreSender)
+    {
+        abilityScores=abilityScoreSender.getAbilityScores();
+    }
 
 
     @Override

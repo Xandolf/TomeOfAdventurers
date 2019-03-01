@@ -94,12 +94,12 @@ public class SelectRaceFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-
-                BUS.register(this); //Register the BUS (must unregister?)
-                BUS.post(sendRace());       //Send the Race Name to the BUS
+//
+//                BUS.register(this); //Register the BUS (must unregister?)
+//                BUS.post(sendRace());       //Send the Race Name to the BUS
 
                 //Set the fragment before the move is made
-                Fragment                        frag        = new SelectRacePropertiesFragment();
+                Fragment                        frag        = new SelectClassFragment();
                 FragmentManager                 fragManager = getFragmentManager();
                 android.app.FragmentTransaction fragTrans   = fragManager.beginTransaction();
                 fragTrans.replace(R.id.fragment_container, frag);

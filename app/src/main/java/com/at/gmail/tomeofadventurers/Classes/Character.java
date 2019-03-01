@@ -80,6 +80,7 @@ public class Character
     private int spellBookTable;
     private int inventoryTable;
 
+
     public Character(String name, int abilityScores[], String myRace, String myClass,
             int passSpeed, int passHP, int[] passHitDice)
     {

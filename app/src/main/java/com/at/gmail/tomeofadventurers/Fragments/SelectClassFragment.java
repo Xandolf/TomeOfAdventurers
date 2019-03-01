@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
@@ -25,6 +27,7 @@ import com.squareup.otto.Produce;
 
 public class SelectClassFragment extends Fragment
 {
+    String classIds []= {"a","b"};
     String subClassIds[];
     String className = "NA";
 
@@ -38,7 +41,7 @@ public class SelectClassFragment extends Fragment
     Dialog testDialog;
     TextView textViewPassAttributes;
     Button buttonClosePopup;
-
+    ClassDatabaseAccess classDatabaseAccess;
      //string alternatives
     String[] stringClassList;
     ArrayAdapter<String> classListAdapter;
@@ -86,13 +89,13 @@ public class SelectClassFragment extends Fragment
             public void onClick(View v)
             {
 
-                //Post to the BUS before transfering fragments
-                BUS.post(sendDnDClass());
+                //Post to the BUS before transferring fragments
+//                BUS.post(sendDnDClass());
 
                 //Unregister the BUS
 //                BUS.unregister(this); //go to class properties fragment
 
-                Fragment                        frag        = new SelectClassPropertiesFragment();
+                Fragment                        frag        = new SelectClassFragment();
                 FragmentManager                 fragManager = getFragmentManager();
                 android.app.FragmentTransaction fragTrans   = fragManager.beginTransaction();
 
@@ -127,14 +130,19 @@ public class SelectClassFragment extends Fragment
 
     public void addItemsToSpinner()
     {
-        //alternate way to make the spinner
-        stringClassList = getResources().getStringArray(R.array.ClassList);
-        classListAdapter = new ArrayAdapter<String>(this.getActivity(),
-                                                    android.R.layout.simple_spinner_item,
-                                                    stringClassList);
+        classDatabaseAccess = classDatabaseAccess.getInstance(this.getContext());
+        classDatabaseAccess.open();
+
+        classIds = classDatabaseAccess.getClassIds();
+        String[] classNames = classDatabaseAccess.getClassNames(classIds);
+
+        classListAdapter = new ArrayAdapter<>(this.getActivity(),
+                                             android.R.layout.simple_spinner_item,
+                                             classNames);
         classListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerClass.setAdapter(classListAdapter);
     }
+
 
     public void selectAndParse(AdapterView adapterView, int i)
     {
