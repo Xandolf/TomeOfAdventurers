@@ -23,6 +23,7 @@ import com.at.gmail.tomeofadventurers.Fragments.FirebaseFragment;
 import com.at.gmail.tomeofadventurers.Fragments.HomeFragment;
 import com.at.gmail.tomeofadventurers.Fragments.InventoryFragment;
 import com.at.gmail.tomeofadventurers.Fragments.SpellbookFragment;
+import com.at.gmail.tomeofadventurers.Fragments.TabFragment;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
@@ -89,9 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //        new HomeFragment()).commit();
                 break;
             case R.id.nav_stats:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CharacterSheetFragment()).commit();
-//                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CharacterSheetFragment()).commit();
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TabFragment()).commit();
                 break;
             case R.id.nav_inventory:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
