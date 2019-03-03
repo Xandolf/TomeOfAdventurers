@@ -18,8 +18,9 @@ import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
+import com.at.gmail.tomeofadventurers.Classes.SubClassDatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.SubRaceDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -30,11 +31,13 @@ public class SelectClassFragment extends Fragment
     String classIds []= {"a","b"};
     String subClassIds[];
     String className = "NA";
+    String selectedClassId;
+    String selectedSubClassID;
 
     //variables
     Button buttonToClassProperties;
     TextView textViewDisplayText;
-    Spinner spinnerClass;
+    Spinner spinnerClass, spinnerSubClass;
     Button buttonMoreInfo;
     Bus BUS;
     //Dialog popup test
@@ -42,9 +45,11 @@ public class SelectClassFragment extends Fragment
     TextView textViewPassAttributes;
     Button buttonClosePopup;
     ClassDatabaseAccess classDatabaseAccess;
+    SubClassDatabaseAccess subClassDatabaseAccess;
      //string alternatives
     String[] stringClassList;
     ArrayAdapter<String> classListAdapter;
+    ArrayAdapter<String> subClassListAdapter;
 
     @Nullable
     @Override
@@ -63,6 +68,8 @@ public class SelectClassFragment extends Fragment
 
         //spinner variables
         spinnerClass = view.findViewById(R.id.spinnerClass);
+        spinnerSubClass= view.findViewById(R.id.spinnerSubClass);
+
         addItemsToSpinner();
         spinnerClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -82,7 +89,7 @@ public class SelectClassFragment extends Fragment
         //Register the BUS
         BUS.register(this);
 
-        buttonToClassProperties = (Button) view.findViewById(R.id.btnToClassPropertiesFragment);
+        buttonToClassProperties = (Button) view.findViewById(R.id.buttonToClassPropertiesFragment);
         buttonToClassProperties.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -147,6 +154,21 @@ public class SelectClassFragment extends Fragment
     public void selectAndParse(AdapterView adapterView, int i)
     {
         String index = adapterView.getItemAtPosition(i).toString();
+
+
+        selectedClassId = classIds [i];
+
+        subClassDatabaseAccess = SubClassDatabaseAccess.getInstance(this.getContext());
+        subClassDatabaseAccess.open();
+        subClassIds = subClassDatabaseAccess.getSubClassIdsFor(selectedClassId);
+        String subClassNames [] = subClassDatabaseAccess.getSubClassNames(subClassIds);
+        subClassListAdapter = new ArrayAdapter<String>(this.getActivity(),
+                                                      android.R.layout.simple_spinner_item,
+                                                      subClassNames);
+        subClassListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerSubClass.setAdapter(subClassListAdapter);
+
     }
 
     //Function that makes a button invisible and disabled

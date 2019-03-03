@@ -4,9 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class SubRaceDatabaseAccess
 {
@@ -87,13 +90,64 @@ public class SubRaceDatabaseAccess
         return stringKeys;
     }
 
-    //----- Functions for getting single race's info
-    public int[] getAbilityScoreBonuses(String id)
+    public String getBaseRaceIdFor(String subrace_id)
     {
-        int[]  abilityScoreBonuses = new int[6];
-        String query               = "SELECT str_bonus, dex_bonus, con_bonus, int_bonus, " +
+        String baseRaceId = null;
+        String query      = "SELECT race_id FROM subraces WHERE id='" + subrace_id + "'";
+        Cursor cursor     = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (!cursor.isAfterLast())
+        {
+            baseRaceId = (cursor.getString(0));
+        } else
+        {
+            Log.d(TAG, "getBaseRaceIdFor: " + subrace_id + " cursor not found.");
+        }
+        cursor.close();
+
+        return baseRaceId;
+    }
+
+
+
+    int [] getTotalAbilityScoreBonusesForSubrace(String subrace_id){
+        String race_id = getBaseRaceIdFor(subrace_id);
+        int [] baseRaceAbilityScoreBonuses = getBaseRaceAbilityScoreBonuses(race_id);
+        int [] subRaceAbiliityScoreBonuses = getSubRaceAbilityScoreBonuses(subrace_id);
+        int [] totalAbilityScoreBonuses = new int [6];
+        for (int i =0;i<6;i++)
+        {
+            totalAbilityScoreBonuses[i]=baseRaceAbilityScoreBonuses[i]+subRaceAbiliityScoreBonuses[i];
+
+        }
+        return totalAbilityScoreBonuses;
+    }
+
+    //----- Functions for getting single race's info
+    public int[] getBaseRaceAbilityScoreBonuses(String id)
+    {
+        int[] abilityScoreBonuses = new int[6];
+        String query = "SELECT str_bonus, dex_bonus, con_bonus, int_bonus, " +
                 "wis_bonus, cha_bonus FROM races WHERE id='" + id + "'";
-        Cursor cursor              = database.rawQuery(query, null);
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        int i = 0;
+        while (!cursor.isAfterLast() && i < 6)
+        {
+            abilityScoreBonuses[i] = cursor.getInt(i);
+            i++;
+        }
+        cursor.close();
+        return abilityScoreBonuses;
+    }
+
+    //----- Functions for getting single race's info
+    public int[] getSubRaceAbilityScoreBonuses(String id)
+    {
+        int[] abilityScoreBonuses = new int[6];
+        String query = "SELECT str_bonus, dex_bonus, con_bonus, int_bonus, " +
+                "wis_bonus, cha_bonus FROM sub_races WHERE id='" + id + "'";
+        Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         int i = 0;
         while (!cursor.isAfterLast() && i < 6)
