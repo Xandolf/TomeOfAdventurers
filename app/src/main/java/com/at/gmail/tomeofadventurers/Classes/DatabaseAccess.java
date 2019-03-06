@@ -410,5 +410,14 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
+    public List<String> searchSort(String className, String level, String school, String order)
+    {
+        List<String> list = new ArrayList<>();
+        String query = "SELECT * FROM spells WHERE (class0 REGEXP '" + className + "' class1 REGEXP '" + className + "' or class2 REGEXP '" + className
+                + "' or class3 REGEXP '" + className + "' or class4 REGEXP '" + className +"' or class5 REGEXP '" + className +"' or class6 REGEXP '" + className
+                + "') and level REGEXP '^" + level + "$' and school REGEXP '" + school + "' ORDER BY " + order;
 
+        Cursor result = database.rawQuery(query, null);
+        return list;
+    }
 }
