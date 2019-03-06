@@ -409,7 +409,7 @@ public class DatabaseAccess {
         Log.d(TAG, "deleteName: Deleting " + slugToCheck + " from database.");
         database.execSQL(query);
     }
-
+    //filters results by first 3 inputs, then orders it in ascending order by the 4th, waiting on new database implementation
     public List<String> searchSort(String className, String level, String school, String order)
     {
         List<String> list = new ArrayList<>();
@@ -418,6 +418,32 @@ public class DatabaseAccess {
                 + "') and level REGEXP '^" + level + "$' and school REGEXP '" + school + "' ORDER BY " + order;
 
         Cursor result = database.rawQuery(query, null);
+        return list;
+    }
+    //temporary filter by class for pre 5e database
+    public List<String> classSearch(String filterClass)
+    {
+        if (filterClass == "All")
+        {
+            List<String> list = new ArrayList<>();
+            Cursor result = database.rawQuery("SELECT * FROM dndspells", null);
+            result.moveToFirst();
+            while (!result.isAfterLast()) {
+                list.add(result.getString(1));
+                result.moveToNext();
+            }
+            result.close();
+            return list;
+        }
+
+        List<String> list = new ArrayList<>();
+        Cursor result = database.rawQuery("SELECT * FROM dndspells WHERE dnd_class LIKE '%" + filterClass + "%'", null);
+        result.moveToFirst();
+        while (!result.isAfterLast()) {
+            list.add(result.getString(1));
+            result.moveToNext();
+        }
+        result.close();
         return list;
     }
 }

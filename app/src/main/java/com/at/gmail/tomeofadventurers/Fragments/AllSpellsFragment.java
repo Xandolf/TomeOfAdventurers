@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ import java.util.List;
 
 
 
-public class AllSpellsFragment extends Fragment {
+public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     //General Listview Variables
     ListView spellsListView;
@@ -131,6 +132,15 @@ public class AllSpellsFragment extends Fragment {
                 });
             }
         });
+
+        //creates spinner view for class filtering
+        String[] classesArray = {"All", "Bard", "Cleric", "Druid", "Paladin", "Ranger", "Sorcerer", "Warlock", "Wizard"};
+        Spinner classSpinner = view.findViewById(R.id.allSpellsClassSpinner);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, classesArray);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        classSpinner.setAdapter(spinnerAdapter);
+        classSpinner.setOnItemSelectedListener(this);
+
 
         return view;
     }
@@ -282,5 +292,18 @@ public class AllSpellsFragment extends Fragment {
 
     private void toastMessage(String message){
         Toast.makeText(getActivity(),message, Toast.LENGTH_SHORT).show();
+    }
+    //spinner on selected
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String filterClass = parent.getItemAtPosition(position).toString();
+        spellNames = myDatabaseAccess.classSearch(filterClass);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, spellNames);
+        spellsListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
