@@ -133,7 +133,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
             }
         });
 
-        //creates spinner view for class filtering
+        //creates spinner list for class filtering
         String[] classesArray = {"All", "Bard", "Cleric", "Druid", "Paladin", "Ranger", "Sorcerer", "Warlock", "Wizard"};
         Spinner classSpinner = view.findViewById(R.id.allSpellsClassSpinner);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, classesArray);
@@ -295,7 +295,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
     }
     //spinner on selected
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { //updates shown spells depending on class selected
         String filterClass = parent.getItemAtPosition(position).toString();
         spellNames = myDatabaseAccess.classSearch(filterClass);
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, spellNames);

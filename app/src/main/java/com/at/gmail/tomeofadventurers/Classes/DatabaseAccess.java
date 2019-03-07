@@ -413,9 +413,9 @@ public class DatabaseAccess {
     public List<String> searchSort(String className, String level, String school, String order)
     {
         List<String> list = new ArrayList<>();
-        String query = "SELECT * FROM spells WHERE (class0 REGEXP '" + className + "' class1 REGEXP '" + className + "' or class2 REGEXP '" + className
-                + "' or class3 REGEXP '" + className + "' or class4 REGEXP '" + className +"' or class5 REGEXP '" + className +"' or class6 REGEXP '" + className
-                + "') and level REGEXP '^" + level + "$' and school REGEXP '" + school + "' ORDER BY " + order;
+        String query = "SELECT * FROM spells WHERE (class0 LIKE '" + className + "' class1 LIKE '" + className + "' or class2 LIKE '" + className
+                + "' or class3 LIKE '" + className + "' or class4 LIKE '" + className +"' or class5 LIKE '" + className +"' or class6 LIKE '" + className
+                + "') and level LIKE '^" + level + "$' and school LIKE '" + school + "' ORDER BY " + order; //long query for combinatorial searches (wizard + level 5 + etc)
 
         Cursor result = database.rawQuery(query, null);
         return list;
@@ -423,7 +423,7 @@ public class DatabaseAccess {
     //temporary filter by class for pre 5e database
     public List<String> classSearch(String filterClass)
     {
-        if (filterClass == "All")
+        if (filterClass == "All") //base case, default setting will display all spells
         {
             List<String> list = new ArrayList<>();
             Cursor result = database.rawQuery("SELECT * FROM dndspells", null);
@@ -437,9 +437,9 @@ public class DatabaseAccess {
         }
 
         List<String> list = new ArrayList<>();
-        Cursor result = database.rawQuery("SELECT * FROM dndspells WHERE dnd_class LIKE '%" + filterClass + "%'", null);
+        Cursor result = database.rawQuery("SELECT * FROM dndspells WHERE dnd_class LIKE '%" + filterClass + "%'", null); //query dependent on filterClass var
         result.moveToFirst();
-        while (!result.isAfterLast()) {
+        while (!result.isAfterLast()) { //display loop
             list.add(result.getString(1));
             result.moveToNext();
         }
