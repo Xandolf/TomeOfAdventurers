@@ -102,6 +102,7 @@ public class CharacterSheetFragment extends Fragment {
             maxHitPoints = currentPlayerCharacter.getMaxHitPoints();
         }
         else{currentHitPoints=maxHitPoints=100;}
+        currentHitPoints++;
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setMax(maxHitPoints);
         progressBar.setProgress(currentHitPoints);
@@ -152,6 +153,15 @@ public class CharacterSheetFragment extends Fragment {
 
         return view;
     }//end OnCreate
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+    @Override
+    public void onPause(){
+        BUS.unregister(this);
+        super.onPause();
+    }
     /*
 
      Subscription is the complement to event publishing—it lets you receive notification
@@ -187,5 +197,6 @@ public class CharacterSheetFragment extends Fragment {
     }
     private void toastMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+
     }
 }

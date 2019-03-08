@@ -1,3 +1,5 @@
+//Used for character sheet display
+
 package com.at.gmail.tomeofadventurers.Adapters;
 
 import android.support.v4.app.Fragment;

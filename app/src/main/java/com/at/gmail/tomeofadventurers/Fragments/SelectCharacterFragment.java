@@ -38,8 +38,8 @@ public class SelectCharacterFragment extends Fragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         mEditText = view.findViewById(R.id.edit_text);
 
-        button_save = view.findViewById(R.id.button_save); //Assigns id d4 from fragment_diceroller.xml to local
-        // button d4
+        button_save = view.findViewById(R.id.button_save);
+
         button_save.setOnClickListener(this);
 
         button_load = view.findViewById(R.id.button_load);
