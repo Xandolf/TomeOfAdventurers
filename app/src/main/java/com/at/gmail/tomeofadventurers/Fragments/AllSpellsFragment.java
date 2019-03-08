@@ -139,13 +139,19 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         });
 
         //creates spinner view for class filtering
-        String[] classesArray = {"All", "Bard", "Cleric", "Druid", "Paladin", "Ranger", "Sorcerer", "Warlock", "Wizard"};
+        String[] classesArray = {"Class", "Bard", "Cleric", "Druid", "Paladin", "Ranger", "Sorcerer", "Warlock", "Wizard"};
         Spinner classSpinner = view.findViewById(R.id.allSpellsClassSpinner);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, classesArray);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        classSpinner.setAdapter(spinnerAdapter);
+        ArrayAdapter<String> classSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, classesArray);
+        classSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        classSpinner.setAdapter(classSpinnerAdapter);
         classSpinner.setOnItemSelectedListener(this);
-
+        //creates spinner view for level filtering
+        String[] levelsArray = {"Lvl", "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        Spinner levelsSpinner = view.findViewById(R.id.allSpellsLevelSpinner);
+        ArrayAdapter<String> levelSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, levelsArray);
+        levelSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        levelsSpinner.setAdapter(levelSpinnerAdapter);
+        levelsSpinner.setOnItemSelectedListener(this);
 
         return view;
     }
@@ -301,43 +307,91 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
     //spinner on selected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        classURL = parent.getItemAtPosition(position).toString();
+        String spinnerSelection = parent.getItemAtPosition(position).toString();
 
-        if (classURL == "All")
+        if (spinnerSelection == "Class") //yes, its ugly but its clear and it works, uses the spinner selection to determine what new filter is being added then requests a new spell list from that
         {
             classURL = "%";
         }
-        else if (classURL == "Bard")
+        else if (spinnerSelection == "Bard")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/2";
         }
-        else if (classURL == "Cleric")
+        else if (spinnerSelection == "Cleric")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/3";
         }
-        else if (classURL == "Druid")
+        else if (spinnerSelection == "Druid")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/4";
         }
-        else if (classURL == "Paladin")
+        else if (spinnerSelection == "Paladin")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/7";
         }
-        else if (classURL == "Ranger")
+        else if (spinnerSelection == "Ranger")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/8";
         }
-        else if (classURL == "Sorcerer")
+        else if (spinnerSelection == "Sorcerer")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/10";
         }
-        else if (classURL == "Warlock")
+        else if (spinnerSelection == "Warlock")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/11";
         }
-        else if (classURL == "Wizard")
+        else if (spinnerSelection == "Wizard")
         {
             classURL = "http://www.dnd5eapi.co/api/classes/12";
+        }
+        else if (spinnerSelection == "Lvl")
+        {
+            spellLevel = "%";
+        }
+        else if (spinnerSelection == "-1")
+        {
+            spellLevel = "-1";
+        }
+        else if (spinnerSelection == "0")
+        {
+            spellLevel = "0";
+        }
+        else if (spinnerSelection == "1")
+        {
+            spellLevel = "1";
+        }
+        else if (spinnerSelection == "2")
+        {
+            spellLevel = "2";
+        }
+        else if (spinnerSelection == "3")
+        {
+            spellLevel = "3";
+        }
+        else if (spinnerSelection == "4")
+        {
+            spellLevel = "4";
+        }
+        else if (spinnerSelection == "5")
+        {
+            spellLevel = "5";
+        }
+        else if (spinnerSelection == "6")
+        {
+            spellLevel = "6";
+        }
+        else if (spinnerSelection == "7")
+        {
+            spellLevel = "7";
+        }
+        else if (spinnerSelection == "8")
+        {
+            spellLevel = "8";
+        }
+        else if (spinnerSelection == "9")
+        {
+            spellLevel = "9";
         }
 
         spellNames = myDatabaseAccess.searchSort(classURL, spellLevel, spellSchool, orderBy);
