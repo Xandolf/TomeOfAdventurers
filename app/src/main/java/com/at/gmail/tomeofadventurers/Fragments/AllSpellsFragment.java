@@ -53,6 +53,11 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
     EditText createSpellDesc;
     Button createSpellClose;
     Button createSpellAddSpell;
+    //Spell Search and Sort Variables
+    String classURL = "%";
+    String spellLevel = "%";
+    String orderBy = "name";
+    String spellSchool = "%";
 
 
     @Nullable
@@ -296,9 +301,47 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
     //spinner on selected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String filterClass = parent.getItemAtPosition(position).toString();
-        spellNames = myDatabaseAccess.classSearch(filterClass);
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, spellNames);
+        classURL = parent.getItemAtPosition(position).toString();
+
+        if (classURL == "All")
+        {
+            classURL = "%";
+        }
+        else if (classURL == "Bard")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/2";
+        }
+        else if (classURL == "Cleric")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/3";
+        }
+        else if (classURL == "Druid")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/4";
+        }
+        else if (classURL == "Paladin")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/7";
+        }
+        else if (classURL == "Ranger")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/8";
+        }
+        else if (classURL == "Sorcerer")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/10";
+        }
+        else if (classURL == "Warlock")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/11";
+        }
+        else if (classURL == "Wizard")
+        {
+            classURL = "http://www.dnd5eapi.co/api/classes/12";
+        }
+
+        spellNames = myDatabaseAccess.searchSort(classURL, spellLevel, spellSchool, orderBy);
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, spellNames);
         spellsListView.setAdapter(adapter);
     }
 

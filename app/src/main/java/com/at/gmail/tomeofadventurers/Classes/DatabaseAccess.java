@@ -410,12 +410,12 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
     //filters results by first 3 inputs, then orders it in ascending order by the 4th, waiting on new database implementation
-    public List<String> searchSort(String className, String level, String school, String order)
+    public List<String> searchSort(String classURL, String level, String school, String order)
     {
         List<String> list = new ArrayList<>();
-        String query = "SELECT * FROM spells WHERE (class0 REGEXP '" + className + "' class1 REGEXP '" + className + "' or class2 REGEXP '" + className
-                + "' or class3 REGEXP '" + className + "' or class4 REGEXP '" + className +"' or class5 REGEXP '" + className +"' or class6 REGEXP '" + className
-                + "') and level REGEXP '^" + level + "$' and school REGEXP '" + school + "' ORDER BY " + order;
+        String query = "SELECT * FROM spells WHERE (class1 LIKE '" + classURL + "' OR class2 LIKE '" + classURL + "' OR class3 LIKE '" + classURL
+            + "' OR class4 LIKE '" + classURL + "' OR class5 LIKE '" + classURL +"' OR class6 LIKE '" + classURL +"' OR class7 LIKE '" + classURL
+            + "') AND spell_level LIKE '" + level + "' AND school LIKE '" + school + "' ORDER BY " + order;
 
         Cursor result = database.rawQuery(query, null);
         return list;
