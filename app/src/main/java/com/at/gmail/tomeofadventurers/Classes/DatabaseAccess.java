@@ -418,6 +418,12 @@ public class DatabaseAccess {
             + "') AND spell_level LIKE '" + level + "' AND school LIKE '" + school + "' ORDER BY " + order;
 
         Cursor result = database.rawQuery(query, null);
+        result.moveToFirst();
+        while (!result.isAfterLast()) {
+            list.add(result.getString(1));
+            result.moveToNext();
+        }
+        result.close();
         return list;
     }
     //temporary filter by class for pre 5e database
