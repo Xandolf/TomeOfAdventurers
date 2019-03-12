@@ -87,7 +87,7 @@ public class SelectClassFragment extends Fragment
         });
 
         //Register the BUS
-        BUS.register(this);
+//        BUS.register(this);
 
         buttonToClassProperties = (Button) view.findViewById(R.id.buttonToClassPropertiesFragment);
         buttonToClassProperties.setOnClickListener(new View.OnClickListener()
@@ -102,7 +102,7 @@ public class SelectClassFragment extends Fragment
                 //Unregister the BUS
 //                BUS.unregister(this); //go to class properties fragment
 
-                Fragment                        frag        = new SelectClassFragment();
+                Fragment                        frag        = new SetAbilityScoresFragment();
                 FragmentManager                 fragManager = getFragmentManager();
                 android.app.FragmentTransaction fragTrans   = fragManager.beginTransaction();
 
