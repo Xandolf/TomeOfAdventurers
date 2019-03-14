@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.at.gmail.tomeofadventurers.Activities.CreateCharacterActivity;
+import com.at.gmail.tomeofadventurers.Activities.SelectCharacterActivity;
 import com.at.gmail.tomeofadventurers.R;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -44,15 +45,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         {
             case R.id.creatCharBtn:
             //Intent intent = new Intent(getActivity(), CreateCharacterActivity.class);
-            Intent intent = new Intent(getActivity(), CreateCharacterActivity.class);
-            startActivity(intent);
+            Intent createCharacter = new Intent(getActivity(), CreateCharacterActivity.class);
+            startActivity(createCharacter);
             break;
             case R.id.selCharBtn:
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-            SelectCharacterFragment frag = new SelectCharacterFragment();
-            fragTrans.replace(R.id.fragment_container, frag);
-            fragTrans.commit();
+                Intent selectCharacter = new Intent(getActivity(), SelectCharacterActivity.class);
+                startActivity(selectCharacter);
+//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//            FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+//            SelectCharacterFragment frag = new SelectCharacterFragment();
+//            fragTrans.replace(R.id.fragment_container, frag);
+//            fragTrans.commit();
         }
 
     }
