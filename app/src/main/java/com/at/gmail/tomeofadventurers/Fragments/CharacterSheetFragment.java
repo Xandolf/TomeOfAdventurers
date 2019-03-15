@@ -40,10 +40,10 @@ public class CharacterSheetFragment extends Fragment {
     int abilityScores[] = {10,10,10,10,10,10};
     int [] abilityScoreModifiers={0,0,0,0,0,0};
     String name = "NA";
-    String className="Bard";//TODO FIX ME
+    String className="";
+
     //FIXME WOW
     boolean skillProficiencies[] ={ true,false,true,false,false,true,true,true,false,true,false,true,false,true,true,false,true,false};
-
 
 
     int currentHitPoints;
@@ -162,8 +162,9 @@ public class CharacterSheetFragment extends Fragment {
         BUS.unregister(this);
         super.onPause();
     }
-    /*
 
+
+    /*
      Subscription is the complement to event publishing—it lets you receive notification
       that an event has occurred. To subscribe to an event, annotate a method with
       @Subscribe. The method should take only a single parameter,
@@ -183,9 +184,6 @@ public class CharacterSheetFragment extends Fragment {
         maxHitPoints=currentPlayerCharacter.getMaxHitPoints();
         currentHitPoints=currentPlayerCharacter.getCurrentHitPoints();
         className=currentPlayerCharacter.getClassName();
-
-
-
     }
 
     @Subscribe

@@ -30,7 +30,6 @@ public class SelectClassFragment extends Fragment
 {
     String classIds[] = {"a", "b"};
     String subClassIds[];
-    String className = "NA";
     String selectedClassId;
     String selectedSubClassID;
 
@@ -59,7 +58,7 @@ public class SelectClassFragment extends Fragment
 
         //Get the instance of the bus
         BUS = BusProvider.getInstance();
-
+        BUS.register(this);
         //TextView variables
         textViewDisplayText = view.findViewById(R.id.txtvwJSONResultClass);
         textViewDisplayText.setText("Initial Setting Text");
@@ -121,6 +120,11 @@ public class SelectClassFragment extends Fragment
         });
         disableButton(buttonMoreInfo);
         return view;
+    }
+    @Override
+    public void onPause(){
+        BUS.unregister(this);
+        super.onPause();
     }
 
     public void toastMessage(String message)

@@ -65,6 +65,7 @@ public class SelectRaceFragment extends Fragment {
 
         //Get the instance of the bus
         BUS = BusProvider.getInstance();
+        BUS.register(this);
 
         //TextView variables
         textViewDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
@@ -97,7 +98,7 @@ public class SelectRaceFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                BUS.register(this);
+
 
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
@@ -137,6 +138,13 @@ public class SelectRaceFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onPause(){
+        BUS.unregister(this);
+        super.onPause();
+    }
+
 
     //Function for quickly generating a toast message
     public void toastMessage(String message)
@@ -201,7 +209,6 @@ public class SelectRaceFragment extends Fragment {
 
         //find the text view in the popup
         textViewPassAttributes = (TextView) testDialog.findViewById(R.id.txtvwMoreInfoRace);
-
 
         //find and add the close button
         buttonClosePopup = (Button) testDialog.findViewById(R.id.btnClose);
