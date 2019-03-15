@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public Character sendCharacter ()
     {
         String name="Xanandorf";
-        Character sampleCharacter = new Character(name, abilityScores, "raceName", "className", 13, 25, "1d4");
+        Character sampleCharacter = new Character(name, abilityScores, "raceName", "className", 13, 25, abilityScores);
 
         return sampleCharacter;
     }

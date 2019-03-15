@@ -116,9 +116,6 @@ public class SelectRaceFragment extends Fragment {
                 //Register the BUS
                 BUS.register(this);
 
-                //Send the Race Name to the BUS
-                raceName = busRaceName;
-                BUS.post(sendRace());
 
                 //Unregister the BUS
 //                BUS.unregister(this);
@@ -131,26 +128,10 @@ public class SelectRaceFragment extends Fragment {
 
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-                SelectRacePropertiesFragment frag = new SelectRacePropertiesFragment();
+                SelectClassFragment frag = new SelectClassFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
 
-                //set the bundles
-                Bundle sendData = new Bundle();
-                sendData.putIntArray("passAbilityScores", abilityScores);
-                sendData.putStringArray("passAlignment", alignment);
-                sendData.putInt("passAlignmentLength", alignmentLength);
-                sendData.putInt("passSpeed", speed);
-                sendData.putStringArray("passAbility", ability);
-                sendData.putInt("passAbilityLength", abilityLength);
-                sendData.putStringArray("passLanguages", languages);
-                sendData.putInt("passLanguagesLength", languagesLength);
-
-                //begin transaction with arguments
-                frag.setArguments(sendData);
-//                fragTrans.replace(R.id.fragment_container, frag);
-////                fragTrans.addToBackStack(null);
-//                fragTrans.commit();
 
             }
         });

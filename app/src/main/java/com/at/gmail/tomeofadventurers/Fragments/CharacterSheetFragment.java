@@ -184,9 +184,7 @@ public class CharacterSheetFragment extends Fragment {
         currentHitPoints=currentPlayerCharacter.getCurrentHitPoints();
         className=currentPlayerCharacter.getClassName();
 
-        //Alex Code
-        speedValue = 30;
-        hitDiceValue = currentPlayerCharacter.getMyHitDice();
+
 
     }
 

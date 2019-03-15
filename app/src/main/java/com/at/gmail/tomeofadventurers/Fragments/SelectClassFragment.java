@@ -103,15 +103,12 @@ public class SelectClassFragment extends Fragment
         //Register the BUS
 //        BUS.register(this);
 
-        buttonToClassProperties = view.findViewById(R.id.btnToClassPropertiesFragment);
+        buttonToClassProperties = view.findViewById(R.id.buttonToClassPropertiesFragment);
         buttonToClassProperties.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                //Post to the BUS before transfering fragments
-                className=busClassName;
-                BUS.post(sendDnDClass());
-
+                //Post to the BUS befo
                 //Unregister the BUS
 //                BUS.unregister(this);
 
@@ -122,20 +119,10 @@ public class SelectClassFragment extends Fragment
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-                SelectClassPropertiesFragment frag = new SelectClassPropertiesFragment();
+                SetAbilityScoresFragment frag = new SetAbilityScoresFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
 
-                //Set the Bundle
-                Bundle sendData = new Bundle();
-                sendData.putInt("subClassLength", subClassLength);
-                sendData.putStringArray("subClasses", subClasses);
-
-                frag.setArguments(sendData);
-//                fragTrans.replace(R.id.fragment_container, frag);
-//                fragTrans.commit();
-
-                //fragManager.beginTransaction().replace(R.id.fragment_container, new SelectClassPropertiesFragment()).commit();
             }
         });
 
