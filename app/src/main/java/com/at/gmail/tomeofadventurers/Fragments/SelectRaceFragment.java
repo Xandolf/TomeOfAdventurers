@@ -119,6 +119,26 @@ public class SelectRaceFragment extends Fragment
         });
         disableButton(buttonMoreInfo);
 
+
+        spinnerSubRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedSubRaceId=subRaceIds[i];
+                enableButton(buttonToClass);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                textViewDisplayText.setText("Nothing Selected");
+            }
+        });
+
+
+
+
         return view;
     }
 

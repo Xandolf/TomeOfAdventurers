@@ -13,46 +13,56 @@ import java.util.List;
 import static android.content.ContentValues.TAG;
 
 
-public class DatabaseAccess {
+public class DatabaseAccess
+{
 
+    private static DatabaseAccess instance;
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase database;
-    private static DatabaseAccess instance;
 
-//General database functions -----------------------------------------------------------------
-    private DatabaseAccess(Context context) {
+    //General database functions -----------------------------------------------------------------
+    private DatabaseAccess(Context context)
+    {
         this.openHelper = new DatabaseHelper(context);
     }
 
-    public static DatabaseAccess getInstance(Context context) {
-        if (instance == null) {
+    public static DatabaseAccess getInstance(Context context)
+    {
+        if (instance == null)
+        {
             instance = new DatabaseAccess(context);
         }
         return instance;
     }
 
-    public void open() {
+    public void open()
+    {
         this.database = openHelper.getWritableDatabase();
     }
 
-    public void close() {
-        if (database != null) {
+    public void close()
+    {
+        if (database != null)
+        {
             this.database.close();
         }
     }
 
     //Itembook database functions -----------------------------------------------------------------
-    public Cursor getItemsData(){
+    public Cursor getItemsData()
+    {
         String query = "SELECT * FROM dnditems";
-        Cursor data = database.rawQuery(query, null);
+        Cursor data  = database.rawQuery(query, null);
         return data;
     }
 
-    public List<String> getItemNames() {
-        List<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM dnditems", null);
+    public List<String> getItemNames()
+    {
+        List<String> list   = new ArrayList<>();
+        Cursor       cursor = database.rawQuery("SELECT * FROM dnditems", null);
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast())
+        {
             list.add(cursor.getString(1));
             cursor.moveToNext();
         }
@@ -60,13 +70,15 @@ public class DatabaseAccess {
         return list;
     }
 
-    public Cursor getItemSlugitems(String listName){
+    public Cursor getItemSlugitems(String listName)
+    {
         String query = "SELECT slug FROM dnditems WHERE name = '" + listName + "'";
-        Cursor data = database.rawQuery(query, null);
+        Cursor data  = database.rawQuery(query, null);
         return data;
     }
 
-    public void deleteItemFromItembook(String listSlug){
+    public void deleteItemFromItembook(String listSlug)
+    {
         String query = "DELETE FROM " + "dnditems" + " WHERE "
                 + "slug" + " = '" + listSlug + "'";
         Log.d(TAG, "deleteName: query: " + query);
@@ -74,7 +86,8 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
-    public boolean addItemToItembook(String itemName, String descr, String source1, String type1) {
+    public boolean addItemToItembook(String itemName, String descr, String source1, String type1)
+    {
         ContentValues contentValues = new ContentValues();
         contentValues.put("slug", itemName);
         contentValues.put("name", itemName);
@@ -85,42 +98,48 @@ public class DatabaseAccess {
         long result = database.insert("dnditems", null, contentValues);
 
         //if data is inserted incorrectly it will return -1
-        if (result == -1) {
+        if (result == -1)
+        {
             return false;
-        } else {
+        } else
+        {
             return true;
         }
     }
 
     //Inventory database functions -----------------------------------------------------------------
-    public boolean isIteminInventories(String slugToCheck){
+    public boolean isIteminInventories(String slugToCheck)
+    {
 
         boolean inInventories = false;
-        String slugMatched = "_"; //Dummy initialize value
+        String  slugMatched   = "_"; //Dummy initialize value
 
         String query = "SELECT " + "slug" + " FROM " + "inventories" +
                 " WHERE " + "slug" + " = '" + slugToCheck + "'";
         Cursor data = database.rawQuery(query, null);
 
-        while(data.moveToNext())
+        while (data.moveToNext())
         {
             slugMatched = data.getString(0);
         }
 
         data.close();
 
-        if(slugMatched != "_")
+        if (slugMatched != "_")
             inInventories = true;
 
         return inInventories;
     }
 
-    public List<String> fillInventory() {
+    public List<String> fillInventory()
+    {
         List<String> list = new ArrayList<>();
-        String query = "SELECT name FROM dnditems, inventories WHERE dnditems.slug = inventories.slug";
+        String query = "SELECT name FROM dnditems, inventories WHERE dnditems.slug = " +
+                "inventories.slug";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast())
+        {
             list.add(cursor.getString(0));
             cursor.moveToNext();
         }
@@ -129,7 +148,8 @@ public class DatabaseAccess {
     }
 
 
-    public boolean addToInventories(int idchar, String slug, int myCount) {
+    public boolean addToInventories(int idchar, String slug, int myCount)
+    {
 
         ContentValues contentValue = new ContentValues();
 
@@ -141,15 +161,17 @@ public class DatabaseAccess {
 
         long result = database.insert("inventories", null, contentValue);
 
-        if (result == -1) {
+        if (result == -1)
+        {
             return false;
-        }
-        else {
+        } else
+        {
             return true;
         }
     }
 
-    public void addToInventoriesCount(String slugToCheck, int myCount) {
+    public void addToInventoriesCount(String slugToCheck, int myCount)
+    {
 
         String newCount = Integer.toString(myCount);
 
@@ -159,7 +181,8 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
-    public void removeFromInventoriesCount(String slugToCheck, int myCount) {
+    public void removeFromInventoriesCount(String slugToCheck, int myCount)
+    {
 
         String newCount = Integer.toString(myCount);
 
@@ -169,7 +192,8 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
-    public void deleteItemFromInv(String slugToCheck){
+    public void deleteItemFromInv(String slugToCheck)
+    {
         String query = "DELETE FROM " + "inventories" + " WHERE "
                 + "slug" + " = '" + slugToCheck + "'";
         Log.d(TAG, "deleteName: query: " + query);
@@ -177,7 +201,8 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
-    public int getExistingItemCount(String slugToCheck){
+    public int getExistingItemCount(String slugToCheck)
+    {
 
         int finalCount = -1;
 
@@ -186,7 +211,8 @@ public class DatabaseAccess {
 
         Cursor data = database.rawQuery(query, null);
 
-        while(data.moveToNext()) {
+        while (data.moveToNext())
+        {
             finalCount = data.getInt(0);
         }
 
@@ -196,11 +222,13 @@ public class DatabaseAccess {
     }
 
     //Spells database functions -----------------------------------------------------------------
-    public List<String> getSpellNames() {
-        List<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM dndspells", null);
+    public List<String> getSpellNames()
+    {
+        List<String> list   = new ArrayList<>();
+        Cursor       cursor = database.rawQuery("SELECT * FROM dndspells", null);
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast())
+        {
             list.add(cursor.getString(1));
             cursor.moveToNext();
         }
@@ -208,35 +236,38 @@ public class DatabaseAccess {
         return list;
     }
 
-    public Cursor getSpellSlugSpells(String listName){
+    public Cursor getSpellSlugSpells(String listName)
+    {
         String query = "SELECT slug FROM dndspells WHERE name = '" + listName + "'";
-        Cursor data = database.rawQuery(query, null);
+        Cursor data  = database.rawQuery(query, null);
         return data;
     }
 
-    public boolean isSpellinSpellbook(String slugToCheck){
+    public boolean isSpellinSpellbook(String slugToCheck)
+    {
 
         boolean inSpellbooks = false;
-        String slugMatched = "_"; //Dummy initialize value
+        String  slugMatched  = "_"; //Dummy initialize value
 
         String query = "SELECT " + "slug" + " FROM " + "spellbooks" +
                 " WHERE " + "slug" + " = '" + slugToCheck + "'";
         Cursor data = database.rawQuery(query, null);
 
-        while(data.moveToNext())
+        while (data.moveToNext())
         {
             slugMatched = data.getString(0);
         }
 
         data.close();
 
-        if(slugMatched != "_")
+        if (slugMatched != "_")
             inSpellbooks = true;
 
         return inSpellbooks;
     }
 
-    public boolean addToSpellbooks(int idchar, String slug, int myCount) {
+    public boolean addToSpellbooks(int idchar, String slug, int myCount)
+    {
 
         ContentValues contentValue = new ContentValues();
 
@@ -248,15 +279,17 @@ public class DatabaseAccess {
 
         long result = database.insert("spellbooks", null, contentValue);
 
-        if (result == -1) {
+        if (result == -1)
+        {
             return false;
-        }
-        else {
+        } else
+        {
             return true;
         }
     }
 
-    public int getExistingSpellCount(String slugToCheck){
+    public int getExistingSpellCount(String slugToCheck)
+    {
 
         int finalCount = -1;
 
@@ -265,7 +298,8 @@ public class DatabaseAccess {
 
         Cursor data = database.rawQuery(query, null);
 
-        while(data.moveToNext()) {
+        while (data.moveToNext())
+        {
             finalCount = data.getInt(0);
         }
 
@@ -274,9 +308,11 @@ public class DatabaseAccess {
         return finalCount;
     }
 
-    public void addToSpellbooksCount(String slugToCheck, int myCount) {
+    public void addToSpellbooksCount(String slugToCheck, int myCount)
+    {
 
-        String newCount = Integer.toString(myCount);;
+        String newCount = Integer.toString(myCount);
+        ;
 
         String query = "UPDATE " + "spellbooks" + " SET " + "count" +
                 " = '" + newCount + "' WHERE " + "slug" + " = '" + slugToCheck + "'";
@@ -284,7 +320,8 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
-    public boolean addSpellToSpells(String spellName, String descr, String source1, String type1) {
+    public boolean addSpellToSpells(String spellName, String descr, String source1, String type1)
+    {
         ContentValues contentValues = new ContentValues();
         contentValues.put("slug", spellName);
         contentValues.put("name", spellName);
@@ -295,20 +332,24 @@ public class DatabaseAccess {
         long result = database.insert("dndspells", null, contentValues);
 
         //if data is inserted incorrectly it will return -1
-        if (result == -1) {
+        if (result == -1)
+        {
             return false;
-        } else {
+        } else
+        {
             return true;
         }
     }
 
-    public Cursor getSpellsData(){
+    public Cursor getSpellsData()
+    {
         String query = "SELECT * FROM dndspells";
-        Cursor data = database.rawQuery(query, null);
+        Cursor data  = database.rawQuery(query, null);
         return data;
     }
 
-    public void deleteSpellFromSpells(String listSlug){
+    public void deleteSpellFromSpells(String listSlug)
+    {
         String query = "DELETE FROM " + "dndspells" + " WHERE "
                 + "slug" + " = '" + listSlug + "'";
         Log.d(TAG, "deleteName: query: " + query);
@@ -316,12 +357,15 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
-    public List<String> fillSpellbook() {
+    public List<String> fillSpellbook()
+    {
         List<String> list = new ArrayList<>();
-        String query = "SELECT name FROM dndspells, spellbooks WHERE dndspells.slug = spellbooks.slug";
+        String query = "SELECT name FROM dndspells, spellbooks WHERE dndspells.slug = " +
+                "spellbooks.slug";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast())
+        {
             list.add(cursor.getString(0));
             cursor.moveToNext();
         }
@@ -329,7 +373,8 @@ public class DatabaseAccess {
         return list;
     }
 
-    public void removeFromSpellbooksCount(String slugToCheck, int myCount) {
+    public void removeFromSpellbooksCount(String slugToCheck, int myCount)
+    {
 
         String newCount = Integer.toString(myCount);
 
@@ -339,7 +384,8 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
 
-    public void deleteItemFromSpellbook(String slugToCheck){
+    public void deleteItemFromSpellbook(String slugToCheck)
+    {
         String query = "DELETE FROM " + "spellbooks" + " WHERE "
                 + "slug" + " = '" + slugToCheck + "'";
         Log.d(TAG, "deleteName: query: " + query);

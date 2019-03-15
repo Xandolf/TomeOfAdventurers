@@ -20,7 +20,6 @@ import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.SubClassDatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.SubRaceDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -28,7 +27,7 @@ import com.squareup.otto.Produce;
 
 public class SelectClassFragment extends Fragment
 {
-    String classIds []= {"a","b"};
+    String classIds[] = {"a", "b"};
     String subClassIds[];
     String className = "NA";
     String selectedClassId;
@@ -46,7 +45,7 @@ public class SelectClassFragment extends Fragment
     Button buttonClosePopup;
     ClassDatabaseAccess classDatabaseAccess;
     SubClassDatabaseAccess subClassDatabaseAccess;
-     //string alternatives
+    //string alternatives
     String[] stringClassList;
     ArrayAdapter<String> classListAdapter;
     ArrayAdapter<String> subClassListAdapter;
@@ -68,7 +67,7 @@ public class SelectClassFragment extends Fragment
 
         //spinner variables
         spinnerClass = view.findViewById(R.id.spinnerClass);
-        spinnerSubClass= view.findViewById(R.id.spinnerSubClass);
+        spinnerSubClass = view.findViewById(R.id.spinnerSubClass);
 
         addItemsToSpinner();
         spinnerClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -77,6 +76,21 @@ public class SelectClassFragment extends Fragment
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 selectAndParse(adapterView, i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                textViewDisplayText.setText("Nothing Selected");
+            }
+        });
+        spinnerSubClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedSubClassID = subClassIds[i];
+                enableButton(buttonToClassProperties);
             }
 
             @Override
@@ -144,8 +158,8 @@ public class SelectClassFragment extends Fragment
         String[] classNames = classDatabaseAccess.getClassNames(classIds);
 
         classListAdapter = new ArrayAdapter<>(this.getActivity(),
-                                             android.R.layout.simple_spinner_item,
-                                             classNames);
+                                              android.R.layout.simple_spinner_item,
+                                              classNames);
         classListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerClass.setAdapter(classListAdapter);
     }
@@ -156,15 +170,15 @@ public class SelectClassFragment extends Fragment
         String index = adapterView.getItemAtPosition(i).toString();
 
 
-        selectedClassId = classIds [i];
+        selectedClassId = classIds[i];
 
         subClassDatabaseAccess = SubClassDatabaseAccess.getInstance(this.getContext());
         subClassDatabaseAccess.open();
         subClassIds = subClassDatabaseAccess.getSubClassIdsFor(selectedClassId);
-        String subClassNames [] = subClassDatabaseAccess.getSubClassNames(subClassIds);
+        String subClassNames[] = subClassDatabaseAccess.getSubClassNames(subClassIds);
         subClassListAdapter = new ArrayAdapter<String>(this.getActivity(),
-                                                      android.R.layout.simple_spinner_item,
-                                                      subClassNames);
+                                                       android.R.layout.simple_spinner_item,
+                                                       subClassNames);
         subClassListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerSubClass.setAdapter(subClassListAdapter);
@@ -220,7 +234,7 @@ public class SelectClassFragment extends Fragment
     public DnDClass sendDnDClass()
     {
         DnDClass dnDClass = new DnDClass();
-        dnDClass.setClassName(className);
+        dnDClass.setClassName(selectedSubClassID);
         return dnDClass;
     }
 }
