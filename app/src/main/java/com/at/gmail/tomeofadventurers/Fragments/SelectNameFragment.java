@@ -36,7 +36,7 @@ public class SelectNameFragment extends Fragment {
     Bus BUS;
 
     //Alex Code
-    String hitDice;
+    int [] hitDice = {8,8};
     int charSpeed = 0;
     int HP = 0;
 
@@ -124,8 +124,8 @@ public class SelectNameFragment extends Fragment {
     }
     @Subscribe
     public void getHP(DnDClass dnDClass){HP = dnDClass.getHP();}
-    @Subscribe
-    public void getHitDice(DnDClass dnDClass){hitDice = dnDClass.getHitDice();}
+//    @Subscribe
+//    public void getHitDice(DnDClass dnDClass){hitDice = dnDClass.getHitDice();}
 
     //This is the produce function. It takes in an already created charater
     //Make sure you call it while the BUS is registered and inside a BUS.post()
@@ -133,7 +133,7 @@ public class SelectNameFragment extends Fragment {
     public Character sendCharacter ()
     {
         //Create a new instance of a character, using the parameters from the Posterboard on the BUS
-        Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP, hitDice);
+        Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP,hitDice);
 
         //Alex Code
         //toastMessage(String.valueOf(charSpeed));

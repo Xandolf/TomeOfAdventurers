@@ -5,7 +5,11 @@ public class DnDClass {
 
     //Alex Code
     private int HP;
-    private String hitDice;
+    private String shitDice;
+    private int hitDice;
+    private String [] equipment;
+    private boolean [] skillProficiencies;
+    private boolean [] savingThrows;
 
     public void setClassName(String className)
     {
@@ -20,6 +24,6 @@ public class DnDClass {
     public void setHP(int HP){this.HP = HP;}
     public int getHP(){return this.HP;}
 
-    public void setHitDice(String hitDice){this.hitDice = hitDice;}
-    public String getHitDice(){return this.hitDice;}
+    public void setHitDice(String hitDice){this.shitDice = hitDice;}
+//    public String getHitDice(){return this.shitDice;}
 }

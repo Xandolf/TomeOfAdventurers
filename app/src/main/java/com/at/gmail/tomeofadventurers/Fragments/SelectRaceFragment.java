@@ -19,16 +19,12 @@ import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Race;
+import com.at.gmail.tomeofadventurers.Classes.RaceDatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.SubRaceDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 
 public class SelectRaceFragment extends Fragment {
@@ -48,25 +44,28 @@ public class SelectRaceFragment extends Fragment {
     //variables
     Button buttonToClass;
     Button buttonMoreInfo;
-    TextView txtvwDisplayText;
-    Spinner spinnerRace;
+    TextView textViewDisplayText;
+    Spinner spinnerRace, spinnerSubRace;
     Bus BUS;
+    String[] raceIds;
+    String selectedRaceId;
+
+    SubRaceDatabaseAccess subRaceDatabaseAccess;
+    String[] subRaceIds;
+    String[] subRaceNames;
+    String selectedSubRaceId;
+    ArrayAdapter<String> subRaceListAdapter;
+
+    RaceDatabaseAccess raceDatabaseAccess;
+
     //Dialog popupTest;
     Dialog testDialog;
-    TextView txtvwPassAttributes;
-    Button btnClosePopup;
-
-    //array list variables
-    //ArrayList<String> testDescription = new ArrayList<>();
-    //ArrayList<String> raceList = new ArrayList<>();
+    TextView textViewPassAttributes;
+    Button buttonClosePopup;
 
     //string alternatives
-    String [] stringRaceList;
+    String[] stringRaceList;
     ArrayAdapter<String> raceListAdapter;
-
-    //define the bus Race object
-    String busRaceName="NA";
-
 
     @Nullable
     @Override
@@ -75,26 +74,29 @@ public class SelectRaceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         //Get the instance of the bus
-        BUS=BusProvider.getInstance();
+        BUS = BusProvider.getInstance();
 
         //TextView variables
-        txtvwDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
-        txtvwDisplayText.setText("Initial Setting Text");
-
+        textViewDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
+        textViewDisplayText.setText("Initial Setting Text");
 
         //spinner variables
         spinnerRace = (Spinner) view.findViewById(R.id.spinnerRace);
         addItemsToSpinner();
-        spinnerRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerSubRace = view.findViewById(R.id.spinnerSubRace);
 
+        spinnerRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
                 selectAndParse(adapterView, i);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                txtvwDisplayText.setText("Nothing Selected");
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                textViewDisplayText.setText("Nothing Selected");
             }
         });
 
@@ -165,262 +167,100 @@ public class SelectRaceFragment extends Fragment {
         //********************TESTING POPUP*************************
         //testDialog = new Dialog(getContext());
 
+        spinnerSubRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedSubRaceId=subRaceIds[i];
+                enableButton(buttonToClass);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+                textViewDisplayText.setText("Nothing Selected");
+            }
+        });
+
+
+
+
         return view;
     }
 
-
-    //Function that reads and parses json files and sets the text view display text to the descriptions
-    public void readAndParse(String assetName) {
-        String readJSON = loadJSONFromAsset(assetName);
-        txtvwDisplayText.setText(parse_JSON(readJSON));
-    }
-
     //Function for quickly generating a toast message
-    public void toastMessage(String message){
-        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void toastMessage(String message)
+    {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
-    //Function for loading the JSON
-    public String loadJSONFromAsset(String filename) {
-        String json = null;
-        try {
-            InputStream is = getActivity().getAssets().open(filename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            toastMessage("IOException reading JSON");
-            return null;
-        }
-        return json;
-    }
-
-    //Function that actually parses the JSON and returns a string of the Race Description
-    public String parse_JSON(String jsonFile){
-        try{
-            //make a JSON object based off of the file that is being read
-            JSONObject raceObject = new JSONObject(jsonFile);
-
-            //************Put values inside the Global Variables*************
-            //Get the ability scores
-            abilityScores[0] = raceObject.getInt("AbilityScore_Strength");
-            abilityScores[1] = raceObject.getInt("AbilityScore_Dexterity");
-            abilityScores[2] = raceObject.getInt("AbilityScore_Constitution");
-            abilityScores[3] = raceObject.getInt("AbilityScore_Intelligence");
-            abilityScores[4] = raceObject.getInt("AbilityScore_Wisdom");
-            abilityScores[5] = raceObject.getInt("AbilityScore_Charisma");
-
-            //Get the Alignment Array
-            JSONArray alignmentArray = raceObject.getJSONArray("Alignment");
-            alignmentLength = alignmentArray.length();
-            for(int i = 0; i < alignmentArray.length(); i++){
-                alignment[i] = alignmentArray.getString(i);
-            }
-
-            //Get the Speed
-            speed = raceObject.getInt("Speed");
-
-            //Get the abilities and ability Description
-            JSONArray abilitiesArray = raceObject.getJSONArray("Abilities");
-            abilityLength = abilitiesArray.length();
-            for(int i = 0; i < abilitiesArray.length(); i++){
-                //Create Internal Object
-                JSONObject abilitiesObject = abilitiesArray.getJSONObject(i);
-
-                //Set the stuff
-                ability[i] = abilitiesObject.getString("AbilityName");
-                abilityDescription[i] = abilitiesObject.getString("AbilityDescription");
-            }
-
-            //Get the Languages
-            JSONArray languagesArray = raceObject.getJSONArray("Languages");
-            languagesLength = languagesArray.length();
-            for(int i = 0; i < languagesArray.length(); i++){
-                if (languagesArray.getString(i) == "null"){
-                    //don't assign anything
-                }else{
-                    languages[i] = languagesArray.getString(i);
-                }
-            }
-            //***********Done putting values in Global Variables****************
-
-            //set temporary variable for parsing
-            String raceDescription;
-
-            //if there is a subrace, return description + subrace description else return just the description
-            if (raceObject.getBoolean("isSubrace") == true){
-                raceDescription = raceObject.getString("Description") + "\n\n" + raceObject.getString("SubRaceDescription");
-            }
-            else{
-                raceDescription = raceObject.getString("Description");
-            }
-
-            //testGlobalValues();
-
-            return raceDescription;
-        }
-        catch(JSONException e){
-            return "Error: JSONException happened";
-        }
-        //return "Never went through";
-    }
-
     //Function that adds items to the spinner
-    public void addItemsToSpinner() {
-        //alternate way to make the spinner
-        stringRaceList = getResources().getStringArray(R.array.RaceList);
-        raceListAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, stringRaceList);
+    public void addItemsToSpinner()
+    {
+        raceDatabaseAccess = RaceDatabaseAccess.getInstance(this.getContext());
+        raceDatabaseAccess.open();
+
+        raceIds = raceDatabaseAccess.getRaceKeys();
+        String[] stringRaceList = raceDatabaseAccess.getRaceNames(raceIds);
+
+        raceListAdapter = new ArrayAdapter<>(this.getActivity(),
+                                             android.R.layout.simple_spinner_item,
+                                             stringRaceList);
         raceListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRace.setAdapter(raceListAdapter);
     }
 
     //Function that reads and parses depending on what was selected on the spinner
-    public void selectAndParse(AdapterView adapterView, int i){
-        //toastMessage("In 'onItemSelected'");
+    public void selectAndParse(AdapterView adapterView, int i)
+    {
+        selectedRaceId = raceIds[i];
+        String alignmentText = raceDatabaseAccess.getDescriptionOfRace(selectedRaceId);
 
-        //test
-        String index = adapterView.getItemAtPosition(i).toString();
+        textViewDisplayText.setText(alignmentText);
+        subRaceDatabaseAccess = SubRaceDatabaseAccess.getInstance(this.getContext());
+        subRaceDatabaseAccess.open();
+        subRaceIds = subRaceDatabaseAccess.getSubRaceIdsFor(selectedRaceId);
+        subRaceNames = subRaceDatabaseAccess.getSubraceNames(subRaceIds);
+        subRaceListAdapter = new ArrayAdapter<String>(this.getActivity(),
+                                                      android.R.layout.simple_spinner_item,
+                                                      subRaceNames);
+        subRaceListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        //toastMessage(index);
-
-        switch (index){
-            case "Nothing Selected":
-                txtvwDisplayText.setText("Nothing Selected");
-                disableButton(buttonMoreInfo);
-                disableButton(buttonToClass);
-                break;
-            /*case "Dwarf":
-                readAndParse("JSONs/RaceJSONs/Dwarf.json");
-                break;*/
-            case "Hill Dwarf":
-                readAndParse("JSONs/RaceJSONs/Dwarf_Hill.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Hill Dwarf";
-                break;
-            case "Mountain Dwarf":
-                readAndParse("JSONs/RaceJSONs/Dwarf_Mountain.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Mountain Dwarf";
-                break;
-            /*case "Elf":
-                readAndParse("JSONs/RaceJSONs/Elf.json");
-                break;*/
-            case "High Elf":
-                readAndParse("JSONs/RaceJSONs/Elf_High_Elf.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "High Elf";
-                break;
-            case "Wood Elf":
-                readAndParse("JSONs/RaceJSONs/Elf_Wood_Elf.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Wood Elf";
-                break;
-            case "Dark Elf (Drow)":
-                readAndParse("JSONs/RaceJSONs/Elf_Dark_Elf_Drow.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Dark Elf";
-                break;
-            /*case "Halfling":
-                readAndParse("JSONs/RaceJSONs/Halfling.json");
-                break;*/
-            case "Lightfoot Halfling":
-                readAndParse("JSONs/RaceJSONs/Halfling_Lightfoot.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Lightfoot Halfling";
-                break;
-            case "Stout Halfling":
-                readAndParse("JSONs/RaceJSONs/Halfling_Stout.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Stout Halfling";
-                break;
-            case "Human":
-                readAndParse("JSONs/RaceJSONs/Human.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Human";
-                break;
-            case "Dragonborn":
-                readAndParse("JSONs/RaceJSONs/Dragonborn.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Dragonborn";
-                break;
-            /*case "Gnome":
-                readAndParse("JSONs/RaceJSONs/Gnome.json");
-                break;*/
-            case "Forest Gnome":
-                readAndParse("JSONs/RaceJSONs/Gnome_Forest_Gnome.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Forest Gnome";
-                break;
-            case "Rock Gnome":
-                readAndParse("JSONs/RaceJSONs/Gnome_Rock_Gnome.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Rock Gnome";
-                break;
-            case "Half-Elf":
-                readAndParse("JSONs/RaceJSONs/Half-Elf.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Half-Elf";
-                break;
-            case "Half-Orc":
-                readAndParse("JSONs/RaceJSONs/Half-Orc.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Half-Orc";
-                break;
-            case "Tiefling":
-                readAndParse("JSONs/RaceJSONs/Tiefling.json");
-                enableButton(buttonMoreInfo);
-                enableButton(buttonToClass);
-                busRaceName = "Tiefling";
-                break;
-        }
+        spinnerSubRace.setAdapter(subRaceListAdapter);
     }
 
     //Function that makes a button invisible and disabled
-    public void disableButton(Button passButton){
+    public void disableButton(Button passButton)
+    {
         passButton.setEnabled(false);
         passButton.setVisibility(View.GONE);
     }
 
     //Function that makes a button visible and enabled
-    public void enableButton(Button passButton){
+    public void enableButton(Button passButton)
+    {
         passButton.setEnabled(true);
         passButton.setVisibility(View.VISIBLE);
     }
 
     //Function that calls the popup
-    public void callPopup(){
+    public void callPopup()
+    {
         //set the content view
         testDialog.setContentView(R.layout.popup_moreinfo_race);
 
         //find the text view in the popup
-        txtvwPassAttributes = (TextView) testDialog.findViewById(R.id.txtvwMoreInfoRace);
+        textViewPassAttributes = (TextView) testDialog.findViewById(R.id.txtvwMoreInfoRace);
 
-        //set the text view in the popup
-        txtvwPassAttributes.setText(internalJSONRace());
 
         //find and add the close button
-        btnClosePopup = (Button) testDialog.findViewById(R.id.btnClose);
-        btnClosePopup.setOnClickListener(new View.OnClickListener(){
+        buttonClosePopup = (Button) testDialog.findViewById(R.id.btnClose);
+        buttonClosePopup.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v){
+            public void onClick(View v)
+            {
                 testDialog.dismiss();
             }
         });
@@ -488,12 +328,8 @@ public class SelectRaceFragment extends Fragment {
     @Produce
     public Race sendRace()
     {
-        Race race= new Race();
-        race.setRaceName(raceName);
-
-        //Alex Code
-        race.setSpeed(speed);
-
+        Race race = new Race();
+        race.setRaceName(selectedRaceId);
         return race;
     }
 
