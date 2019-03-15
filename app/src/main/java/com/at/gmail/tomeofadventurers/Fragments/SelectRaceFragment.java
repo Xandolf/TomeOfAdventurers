@@ -30,16 +30,6 @@ import com.squareup.otto.Produce;
 public class SelectRaceFragment extends Fragment {
     //Global Variables
     int abilityScores[] = new int[6];
-    String alignment[] = new String[9];
-    int speed=30;
-    String ability[] = new String[10];
-    String abilityDescription[] = new String[10];
-    String languages[] = new String[16];
-    String raceName="NA";
-    //Get lengths for all global variables
-    int alignmentLength;
-    int abilityLength;
-    int languagesLength;
 
     //variables
     Button buttonToClass;
@@ -100,31 +90,14 @@ public class SelectRaceFragment extends Fragment {
             }
         });
 
-        //popupTest.setContentView(R.layout.popup_test);
 
         //button variables
         buttonToClass = (Button) view.findViewById(R.id.btnToClassFragment);
         buttonToClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Alternate way to change fragment window
-                /*
-                Fragment frag = new SelectClassFragment();
-                FragmentManager fragManager = getFragmentManager();
-                fragManager.beginTransaction().replace(R.id.fragment_container, new SelectClassFragment()).commit();
-                */
-                //Register the BUS
+
                 BUS.register(this);
-
-
-                //Unregister the BUS
-//                BUS.unregister(this);
-
-
-                //Set the fragment before the move is made
-//                Fragment frag = new SelectRacePropertiesFragment();
-//                FragmentManager fragManager = getFragmentManager();
-//                android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
 
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
@@ -145,8 +118,6 @@ public class SelectRaceFragment extends Fragment {
         });
         disableButton(buttonMoreInfo);
 
-        //********************TESTING POPUP*************************
-        //testDialog = new Dialog(getContext());
 
         spinnerSubRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -163,9 +134,6 @@ public class SelectRaceFragment extends Fragment {
                 textViewDisplayText.setText("Nothing Selected");
             }
         });
-
-
-
 
         return view;
     }
@@ -249,57 +217,6 @@ public class SelectRaceFragment extends Fragment {
         testDialog.show();
     }
 
-    //Function that puts all of the internal JSON data in a string so it can be put in a popup
-    public String internalJSONRace(){
-        String internalString;
-
-        //Add the Ability Scores
-        String abilityScoreString = "Ability Scores:\n" + "Strength = " + abilityScores[0] + "\n" + "Dexterity = " + abilityScores[1] + "\n" + "Constitution = " + abilityScores[2] + "\n" + "Intelligence = " + abilityScores[3] + "\n" + "Wisdom = " + abilityScores[4] + "\n" + "Charisma = " + abilityScores[5] + "\n\n";
-
-        //Add Alignment
-        String showAlignment = "";
-        for (int i = 0; i < alignmentLength; i++){
-            if(i == (alignmentLength - 1)){
-                showAlignment = showAlignment + alignment[i];
-
-            }else{
-                showAlignment = showAlignment + alignment[i] + "," + "\n";
-            }
-        }
-        String alignmentString = "Alignment:\n" + showAlignment + "\n\n";
-
-        //Add Speed
-        String speedString = "Speed: " + speed + "\n\n";
-
-        //Add abilities and ability description
-        String showAbilities = "";
-        for (int i = 0; i < abilityLength; i++){
-            if(i == (abilityLength - 1)){
-                showAbilities = showAbilities + "Ability Name: " + ability[i] + "\n" + "Ability Description: " + abilityDescription[i];
-            }else{
-                showAbilities = showAbilities + "Ability Name: " + ability[i] + "\n" + "Ability Description: " + abilityDescription[i] + "\n\n";
-            }
-
-        }
-        String abilitiesString = showAbilities + "\n\n";
-
-        //Add languages
-        String showLanguage = "";
-        for (int i = 0; i < languagesLength; i++){
-            if(i == (languagesLength - 1)){
-                showLanguage = showLanguage + languages[i];
-
-            }else{
-                showLanguage = showLanguage + languages[i] + "," + "\n";
-            }
-        }
-        String languageString = "Languages: \n" + showLanguage;
-
-        internalString = abilityScoreString + alignmentString + speedString + abilitiesString + languageString;
-
-        return internalString;
-    }
-
     //Here is a function that will produce a race.
     // Pass it a string that holds the name of the race you are trying to pass.
     // You will want to call it in the format when you switch to the next stage
@@ -314,45 +231,6 @@ public class SelectRaceFragment extends Fragment {
         return race;
     }
 
-
-    //**********************TEST FUNCTIONS************************
-    //Function that will toast out all the global variables
-    public void testGlobalValues(){
-        //Show ability scores
-        toastMessage("Ability Score Strength = " + abilityScores[0] + "\n" + "Ability Score Dexterity = " + abilityScores[1] + "\n" + "Ability Score Constitution = " + abilityScores[2] + "\n" + "Ability Score Intelligence = " + abilityScores[3] + "\n" + "Ability Score Wisdom = " + abilityScores[4] + "\n" + "Ability Score Charisma = " + abilityScores[5] + "\n");
-
-        //Show alignment
-        String showAlignment = "";
-        for (int i = 0; i < alignmentLength; i++){
-            if(i == (alignmentLength - 1)){
-                showAlignment = showAlignment + alignment[i];
-
-            }else{
-                showAlignment = showAlignment + alignment[i] + "," + "\n";
-            }
-        }
-        toastMessage(showAlignment);
-
-        //Show Speed
-        toastMessage("Speed = " + speed);
-
-        //show abilities and ability description
-        for (int i = 0; i < abilityLength; i++){
-            toastMessage("Ability Name: " + ability[i] + "\n" + "Ability Description: " + abilityDescription[i]);
-        }
-
-        //show languages
-        String showLanguage = "";
-        for (int i = 0; i < languagesLength; i++){
-            if(i == (languagesLength - 1)){
-                showLanguage = showLanguage + languages[i];
-
-            }else{
-                showLanguage = showLanguage + languages[i] + "," + "\n";
-            }
-        }
-        toastMessage(showLanguage);
-    }
 
     public int[] getAbilityScores(){
         return new int[]{abilityScores[0], abilityScores[1], abilityScores[2], abilityScores[3], abilityScores[4], abilityScores[5]};

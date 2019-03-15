@@ -32,7 +32,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         selCharBtn = view.findViewById(R.id.selCharBtn);
         selCharBtn.setOnClickListener(this);
-
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return view;
@@ -51,20 +50,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.selCharBtn:
                 Intent selectCharacter = new Intent(getActivity(), SelectCharacterActivity.class);
                 startActivity(selectCharacter);
-//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-//            SelectCharacterFragment frag = new SelectCharacterFragment();
-//            fragTrans.replace(R.id.fragment_container, frag);
-//            fragTrans.commit();
         }
-
     }
-
-
-//                FragmentTransaction manager = getActivity().getSupportFragmentManager().beginTransaction();
-//                manager.replace(R.id.fragment_container, new SelectCharacterFragment());
-//                manager.commit();
-
-
 }
 

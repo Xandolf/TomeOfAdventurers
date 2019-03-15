@@ -67,7 +67,6 @@ public class SelectClassFragment extends Fragment
         //spinner variables
         spinnerClass = view.findViewById(R.id.spinnerClass);
         spinnerSubClass = view.findViewById(R.id.spinnerSubClass);
-
         addItemsToSpinner();
         spinnerClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -99,30 +98,15 @@ public class SelectClassFragment extends Fragment
             }
         });
 
-
-        //Register the BUS
-//        BUS.register(this);
-
         buttonToClassProperties = view.findViewById(R.id.buttonToClassPropertiesFragment);
         buttonToClassProperties.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
-                //Post to the BUS befo
-                //Unregister the BUS
-//                BUS.unregister(this);
-
-                //go to class properties fragment
-                //Fragment frag = new SelectClassPropertiesFragment();
-                //FragmentManager fragManager = getFragmentManager();
-                //android.app.FragmentTransaction fragTrans = fragManager.beginTransaction();
-
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
                 SetAbilityScoresFragment frag = new SetAbilityScoresFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
-
             }
         });
 
@@ -136,17 +120,11 @@ public class SelectClassFragment extends Fragment
             }
         });
         disableButton(buttonMoreInfo);
-
-        //********************TESTING POPUP*************************
-        //testDialog = new Dialog(getContext());
-
         return view;
     }
 
-
     public void toastMessage(String message)
     {
-        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -168,11 +146,7 @@ public class SelectClassFragment extends Fragment
 
     public void selectAndParse(AdapterView adapterView, int i)
     {
-        String index = adapterView.getItemAtPosition(i).toString();
-
-
         selectedClassId = classIds[i];
-
         subClassDatabaseAccess = SubClassDatabaseAccess.getInstance(this.getContext());
         subClassDatabaseAccess.open();
         subClassIds = subClassDatabaseAccess.getSubClassIdsFor(selectedClassId);
@@ -181,9 +155,7 @@ public class SelectClassFragment extends Fragment
                                                        android.R.layout.simple_spinner_item,
                                                        subClassNames);
         subClassListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerSubClass.setAdapter(subClassListAdapter);
-
     }
 
     //Function that makes a button invisible and disabled
