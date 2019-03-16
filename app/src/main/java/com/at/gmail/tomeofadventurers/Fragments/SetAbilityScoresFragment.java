@@ -29,7 +29,7 @@ import com.squareup.otto.Produce;
 public class SetAbilityScoresFragment extends Fragment {
 
     EditText editTextStr,editTextDex,editTextCon,editTextInt,editTextWis,editTextCha;
-    Button buttonCalculateModifiers, buttonGoToSelectName;
+    Button buttonCalculateModifiers, buttonGoToSelectSkills;
     TextView textViewStrModifier, textViewDexModifier, textViewConModifier, textViewIntModifier, textViewWisModifier, textViewChaModifier;
     boolean validInput;
     Bus BUS;
@@ -64,7 +64,7 @@ public class SetAbilityScoresFragment extends Fragment {
         textViewIntModifier = view.findViewById(R.id.textViewIntModifier);
         textViewWisModifier= view.findViewById(R.id.textViewWisModifier);
         textViewChaModifier = view.findViewById(R.id.textViewChaModifier);
-        buttonGoToSelectName = view.findViewById(R.id.buttonGoToEnterName);
+        buttonGoToSelectSkills = view.findViewById(R.id.buttonGoToSelectSkills);
 
 
         buttonCalculateModifiers.setOnClickListener(new View.OnClickListener() {
@@ -163,13 +163,13 @@ public class SetAbilityScoresFragment extends Fragment {
                 */
 
                 //enable button after calculating
-                enableButton(buttonGoToSelectName);
+                enableButton(buttonGoToSelectSkills);
             }
         });//end OnClickListener
 
 
         //Go to Set Name
-        buttonGoToSelectName.setOnClickListener(new View.OnClickListener(){
+        buttonGoToSelectSkills.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
@@ -185,14 +185,14 @@ public class SetAbilityScoresFragment extends Fragment {
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-                SelectNameFragment frag = new SelectNameFragment();
+                SelectSkillsFragment frag = new SelectSkillsFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
             }
         });
 
         //disable the button to proceed
-        disableButton(buttonGoToSelectName);
+        disableButton(buttonGoToSelectSkills);
 
 
 
