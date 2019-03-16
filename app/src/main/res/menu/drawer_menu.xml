@@ -12,7 +12,7 @@
         <item
             android:id="@+id/nav_stats"
             android:icon="@drawable/ic_exposure_plus_1_black_24dp"
-            android:title="@string/stats" />
+            android:title="@string/character_sheet" />
         <item
             android:id="@+id/nav_inventory"
             android:icon="@drawable/shopping_cart_24dp"
@@ -39,6 +39,16 @@
                     android:id="@+id/nav_spells"
                     android:icon="@drawable/ic_local_library_black_24dp"
                     android:title="@string/spells" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Online Connectivity">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_firebase"
+                    android:icon="@drawable/ic_local_library_black_24dp"
+                    android:title="Firebase" />
             </group>
         </menu>
     </item>

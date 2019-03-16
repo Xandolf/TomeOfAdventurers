@@ -1,11 +1,12 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ public class SelectClassFragment extends Fragment
 {
     String classIds[] = {"a", "b"};
     String subClassIds[];
-    String className = "NA";
     String selectedClassId;
     String selectedSubClassID;
 
@@ -52,15 +52,13 @@ public class SelectClassFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.fragment_select_class, container, false);
-        super.onCreate(savedInstanceState);
+   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+       View view=inflater.inflate(R.layout.fragment_select_class,container,false);
+       super.onCreate(savedInstanceState);
 
         //Get the instance of the bus
         BUS = BusProvider.getInstance();
-
+        BUS.register(this);
         //TextView variables
         textViewDisplayText = view.findViewById(R.id.txtvwJSONResultClass);
         textViewDisplayText.setText("Initial Setting Text");
@@ -68,7 +66,6 @@ public class SelectClassFragment extends Fragment
         //spinner variables
         spinnerClass = view.findViewById(R.id.spinnerClass);
         spinnerSubClass = view.findViewById(R.id.spinnerSubClass);
-
         addItemsToSpinner();
         spinnerClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -100,26 +97,13 @@ public class SelectClassFragment extends Fragment
             }
         });
 
-        //Register the BUS
-//        BUS.register(this);
-
-        buttonToClassProperties = (Button) view.findViewById(R.id.buttonToClassPropertiesFragment);
-        buttonToClassProperties.setOnClickListener(new View.OnClickListener()
-        {
+        buttonToClassProperties = view.findViewById(R.id.buttonToClassPropertiesFragment);
+        buttonToClassProperties.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v)
-            {
-
-                //Post to the BUS before transferring fragments
-//                BUS.post(sendDnDClass());
-
-                //Unregister the BUS
-//                BUS.unregister(this); //go to class properties fragment
-
-                Fragment                        frag        = new SetAbilityScoresFragment();
-                FragmentManager                 fragManager = getFragmentManager();
-                android.app.FragmentTransaction fragTrans   = fragManager.beginTransaction();
-
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+                SetAbilityScoresFragment frag = new SetAbilityScoresFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
             }
@@ -135,17 +119,16 @@ public class SelectClassFragment extends Fragment
             }
         });
         disableButton(buttonMoreInfo);
-
-        //********************TESTING POPUP*************************
-        testDialog = new Dialog(getContext());
-
         return view;
     }
-
+    @Override
+    public void onPause(){
+        BUS.unregister(this);
+        super.onPause();
+    }
 
     public void toastMessage(String message)
     {
-        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -167,11 +150,7 @@ public class SelectClassFragment extends Fragment
 
     public void selectAndParse(AdapterView adapterView, int i)
     {
-        String index = adapterView.getItemAtPosition(i).toString();
-
-
         selectedClassId = classIds[i];
-
         subClassDatabaseAccess = SubClassDatabaseAccess.getInstance(this.getContext());
         subClassDatabaseAccess.open();
         subClassIds = subClassDatabaseAccess.getSubClassIdsFor(selectedClassId);
@@ -180,9 +159,7 @@ public class SelectClassFragment extends Fragment
                                                        android.R.layout.simple_spinner_item,
                                                        subClassNames);
         subClassListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerSubClass.setAdapter(subClassListAdapter);
-
     }
 
     //Function that makes a button invisible and disabled

@@ -1,11 +1,12 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,11 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 
 
-public class SelectRaceFragment extends Fragment
-{
+
+public class SelectRaceFragment extends Fragment {
+    //Global Variables
+    int abilityScores[] = new int[6];
+
     //variables
     Button buttonToClass;
     Button buttonMoreInfo;
@@ -55,14 +59,13 @@ public class SelectRaceFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.fragment_select_race, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+        View view=inflater.inflate(R.layout.fragment_select_race,container,false);
         super.onCreate(savedInstanceState);
 
         //Get the instance of the bus
         BUS = BusProvider.getInstance();
+        BUS.register(this);
 
         //TextView variables
         textViewDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
@@ -88,32 +91,29 @@ public class SelectRaceFragment extends Fragment
             }
         });
 
-        buttonToClass = (Button) view.findViewById(R.id.btnToClassFragment);
-        buttonToClass.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-//
-//                BUS.register(this); //Register the BUS (must unregister?)
-//                BUS.post(sendRace());       //Send the Race Name to the BUS
 
-                //Set the fragment before the move is made
-                Fragment                        frag        = new SelectClassFragment();
-                FragmentManager                 fragManager = getFragmentManager();
-                android.app.FragmentTransaction fragTrans   = fragManager.beginTransaction();
+        //button variables
+        buttonToClass = (Button) view.findViewById(R.id.btnToClassFragment);
+        buttonToClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+                SelectClassFragment frag = new SelectClassFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
+
 
             }
         });
 
         buttonMoreInfo = (Button) view.findViewById(R.id.btnMoreInfo);
-        buttonMoreInfo.setOnClickListener(new View.OnClickListener()
-        {
+        buttonMoreInfo.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v){
                 callPopup();
             }
         });
@@ -136,11 +136,15 @@ public class SelectRaceFragment extends Fragment
             }
         });
 
-
-
-
         return view;
     }
+
+    @Override
+    public void onPause(){
+        BUS.unregister(this);
+        super.onPause();
+    }
+
 
     //Function for quickly generating a toast message
     public void toastMessage(String message)
@@ -206,7 +210,6 @@ public class SelectRaceFragment extends Fragment
         //find the text view in the popup
         textViewPassAttributes = (TextView) testDialog.findViewById(R.id.txtvwMoreInfoRace);
 
-
         //find and add the close button
         buttonClosePopup = (Button) testDialog.findViewById(R.id.btnClose);
         buttonClosePopup.setOnClickListener(new View.OnClickListener()
@@ -234,4 +237,11 @@ public class SelectRaceFragment extends Fragment
         race.setRaceName(selectedRaceId);
         return race;
     }
+
+
+    public int[] getAbilityScores(){
+        return new int[]{abilityScores[0], abilityScores[1], abilityScores[2], abilityScores[3], abilityScores[4], abilityScores[5]};
+    }
+
+
 }
