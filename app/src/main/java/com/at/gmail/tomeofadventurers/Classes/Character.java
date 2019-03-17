@@ -75,6 +75,11 @@ public class Character {
     private int mySpellBookTable;
     private int myInventoryTable;
 
+    public Character(String name)
+    {
+        this.name = name;
+    }
+
     public Character(String name, int abilityScores[], String myRace, String myClass, int passSpeed, int passHP, String passHitDice)
     {
         this.name = name;

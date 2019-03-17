@@ -47,4 +47,44 @@ public class CharacterDBAccess {
         cursor.close();
         return list;
     }
+
+    public String getIDFromCharacters(String charName){
+        String query = "SELECT id FROM characters WHERE Name = '" + charName + "'";
+        Cursor data = database.rawQuery(query, null);
+
+        String charID = "_";
+
+        while (data.moveToNext()) {
+            charID = data.getString(0);
+        }
+
+        data.close();
+
+        return charID;
+    }
+
+    public void chooseCharacter(String charID)
+    {
+        String query1 = "UPDATE characters SET Selected = 0";
+        database.execSQL(query1);
+
+        String query2 = "UPDATE characters SET Selected = 1 WHERE id = '"+ charID +"'";
+        database.execSQL(query2);
+    }
+
+    public String findSelectedCharacter()
+    {
+        String query = "SELECT id FROM characters WHERE Selected = 1";
+        Cursor data = database.rawQuery(query, null);
+
+        String charID = "_";
+
+        while (data.moveToNext()) {
+            charID = data.getString(0);
+        }
+
+        data.close();
+
+        return charID;
+    }
 }

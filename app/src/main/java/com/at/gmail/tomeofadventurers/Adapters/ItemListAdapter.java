@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.Item;
 import com.at.gmail.tomeofadventurers.R;
@@ -39,6 +40,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     TextView itemType;
     TextView itemDesc;
     TextView itemCount;
+
+    String charID;
 
     //Constructor
     public ItemListAdapter(Context myContext, List<Item> myItems, int length) {
@@ -67,6 +70,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         itemListAdapterViewHolder.textViewItemName.setText(items.get(i).getItemName());
         itemListAdapterViewHolder.textViewQty.setText(itemQuantity);
 
+        CharacterDBAccess myCharDBAccess;
+        myCharDBAccess = CharacterDBAccess.getInstance(myContext);
+        myCharDBAccess.open();
+        charID = myCharDBAccess.findSelectedCharacter();
+        myCharDBAccess.close();
+
         myDatabaseAccess = DatabaseAccess.getInstance(myContext);
         myDatabaseAccess.open();
 
@@ -90,16 +99,17 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
             @Override
             public void onClick(View view)
             {
+
                 if(itemListAdapterViewHolder.itemEquipped.isSelected())
                 {
-                    myDatabaseAccess.setEquipped(myItemID, 0);
+                    myDatabaseAccess.setEquipped(myItemID, 0, charID);
                     items.get(i).setItemEquipped(0);
                     itemListAdapterViewHolder.itemEquipped.setSelected(false);
                     itemListAdapterViewHolder.itemEquipped.setChecked(false);
                 }
                 else
                 {
-                    myDatabaseAccess.setEquipped(myItemID, 1);
+                    myDatabaseAccess.setEquipped(myItemID, 1, charID);
                     items.get(i).setItemEquipped(1);
                     itemListAdapterViewHolder.itemEquipped.setSelected(true);
                     itemListAdapterViewHolder.itemEquipped.setChecked(true);
@@ -116,7 +126,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
                 String itemID = myDatabaseAccess.getIDFromItembook(name); //get the id associated with that name
 
-                if (myDatabaseAccess.isIteminInventories(itemID)) {
+                if (myDatabaseAccess.isIteminInventories(itemID, charID)) {
 
                     myDialog = new Dialog(myContext); //for item infoinventory popup
                     myDialog.setContentView(R.layout.popup_iteminfoinventory);
@@ -141,10 +151,10 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
                         @Override
                         public void onClick(View v) {
 
-                            int itemCount = myDatabaseAccess.getExistingItemCount(finalItemID);
+                            int itemCount = myDatabaseAccess.getExistingItemCount(finalItemID, charID);
 
                             if(itemCount > 1) {
-                                myDatabaseAccess.removeFromInventoriesCount(finalItemID, itemCount-1); //remove 1 from count
+                                myDatabaseAccess.removeFromInventoriesCount(finalItemID, itemCount-1, charID); //remove 1 from count
                                 getItemInfo(finalItemID, myDialog);
 
                                 items.get(i).setItemCount(itemCount-1);
@@ -152,7 +162,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
                             }
 
                             else {
-                                myDatabaseAccess.deleteItemFromInv(finalItemID);
+                                myDatabaseAccess.deleteItemFromInv(finalItemID, charID);
 
                                 items.remove(i);
                                 itemNameArrayLength--;
@@ -199,7 +209,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
         data.close();
 
-        itemCount.setText("QTY: " + Integer.toString(myDatabaseAccess.getExistingItemCount(id)));
+        itemCount.setText("QTY: " + Integer.toString(myDatabaseAccess.getExistingItemCount(id, charID)));
     }
 
     @Override

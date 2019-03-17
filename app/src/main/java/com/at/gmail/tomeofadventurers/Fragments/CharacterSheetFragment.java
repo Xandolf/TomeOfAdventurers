@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Adapters.AbilityScoreAdapter;
 import com.at.gmail.tomeofadventurers.Adapters.SkillsListAdapter;
@@ -44,8 +43,6 @@ public class CharacterSheetFragment extends Fragment {
     //FIXME WOW
     boolean skillProficiencies[] ={ true,false,true,false,false,true,true,true,false,true,false,true,false,true,true,false,true,false};
 
-
-
     int currentHitPoints;
     int maxHitPoints =0;
 
@@ -68,6 +65,7 @@ public class CharacterSheetFragment extends Fragment {
 //        toastMessage("Im in");
         textViewCharacterName = view.findViewById(R.id.textViewCharacterName);
         textViewCharacterName.setText(name);
+
 
         textViewClassName=view.findViewById(R.id.textViewClassName);
         textViewClassName.setText(className);
@@ -184,7 +182,7 @@ public class CharacterSheetFragment extends Fragment {
         currentHitPoints=currentPlayerCharacter.getCurrentHitPoints();
         className=currentPlayerCharacter.getClassName();
 
-        //Alex Code
+//        //Alex Code
         speedValue = 30;
         hitDiceValue = currentPlayerCharacter.getMyHitDice();
 
@@ -195,8 +193,5 @@ public class CharacterSheetFragment extends Fragment {
     {
         className=dnDClass.getClassName();
     }
-    private void toastMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
-    }
 }

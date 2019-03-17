@@ -21,13 +21,14 @@ public class SelectCharacterActivity extends AppCompatActivity {
     CharacterDBAccess myDatabaseAccess;
     RecyclerView selectCharacterRecyclerView;
     SelectCharacterAdapter adapter;
-
     Button createCharButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_select_character);
         super.onCreate(savedInstanceState);
+
 //Recycler View initialization
         selectCharacterRecyclerView = findViewById(R.id.RecyclerViewSelectChar);
 
@@ -52,7 +53,7 @@ public class SelectCharacterActivity extends AppCompatActivity {
                 startActivity(createCharacter);
             }
         });
-
     }
+
 }
 

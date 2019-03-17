@@ -70,6 +70,8 @@ public class SelectNameFragment extends Fragment {
                 //Post the character we just created to the BUS
                 BUS.post(sendCharacter());
 
+//                BUS.post(sendCharID());
+
 //                BUS.unregister(this);
 
                 //Direct to Character Sheet fragment
@@ -140,6 +142,10 @@ public class SelectNameFragment extends Fragment {
 
         return newCharacter;
     }
+
+//    @Produce
+//    public String sendCharID()
+//    {
+//        return "00AA";
+//    }
 }
-
-
