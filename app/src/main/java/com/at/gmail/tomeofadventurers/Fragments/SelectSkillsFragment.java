@@ -11,15 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
-import com.at.gmail.tomeofadventurers.Activities.MainActivity;
-import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+
+import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
 
 public class SelectSkillsFragment extends Fragment {
 
     Button buttonGoToSelectName;
+    RadioGroup radioGroup1,radioGroup2;
+    RadioButton radioButton;
+    Bus BUS;
+    //0 = Not Proficient, 1 = Proficient, 2 = Expertise
+    int[] skillProficiencies = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //19 options for all skills
 
     @Nullable
     @Override
@@ -27,15 +36,31 @@ public class SelectSkillsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_select_skills, container, false);
         super.onCreate(savedInstanceState);
         buttonGoToSelectName = view.findViewById(R.id.buttonGoToEnterName);
-        //enableButton(buttonGoToSelectName);
-        //Go to Set Name
+
+
+        radioGroup1 = view.findViewById(R.id.radioGroup1);
+        radioGroup2 = view.findViewById(R.id.radioGroup2);
+
+        radioGroup1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                int radioId = radioGroup1.getCheckedRadioButtonId();
+
+                radioButton = v.findViewById(radioId);
+            }
+        });
+
+
+
         buttonGoToSelectName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 //Send the ability scores to the BUS
-                //BUS.post(sendAbilityScores());
+                BUS.post(proficiencySender());
 
                 //Unregister the BUS
 //                BUS.unregister(this);
@@ -77,4 +102,12 @@ public class SelectSkillsFragment extends Fragment {
         passButton.setEnabled(true);
         passButton.setVisibility(View.VISIBLE);
     }
+
+    @Produce
+    SkillProficiencySender proficiencySender ()
+    {
+        SkillProficiencySender skillProficiencySender = new SkillProficiencySender(skillProficiencies);
+        return skillProficiencySender;
+    }
+
 }
