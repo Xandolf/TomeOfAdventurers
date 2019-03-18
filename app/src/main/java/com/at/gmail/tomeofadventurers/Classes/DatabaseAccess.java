@@ -230,6 +230,27 @@ public class DatabaseAccess {
         return finalCount;
     }
 
+    public boolean isItemEquipped(String idToCheck, String charID) {
+
+        boolean inInventories = false;
+        String idMatched = "_"; //Dummy initialize value
+
+        String query = "SELECT equip FROM inventories WHERE id = '"+ idToCheck +"' AND idchar = '"+ charID +"'";
+        Cursor data = database.rawQuery(query, null);
+
+        while(data.moveToNext())
+        {
+            idMatched = data.getString(0);
+        }
+
+        data.close();
+
+        if(idMatched != "_")
+            inInventories = true;
+
+        return inInventories;
+    }
+
     public void setEquipped(String idToCheck, int isEquipped, String charID) {
 
         String query = "UPDATE " + "inventories" + " SET " + "equip" +

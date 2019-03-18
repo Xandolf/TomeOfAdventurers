@@ -70,7 +70,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         itemListAdapterViewHolder.textViewItemName.setText(items.get(i).getItemName());
         itemListAdapterViewHolder.textViewQty.setText(itemQuantity);
 
-        CharacterDBAccess myCharDBAccess;
+        final CharacterDBAccess myCharDBAccess;
         myCharDBAccess = CharacterDBAccess.getInstance(myContext);
         myCharDBAccess.open();
         charID = myCharDBAccess.findSelectedCharacter();
@@ -155,6 +155,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
                             if(itemCount > 1) {
                                 myDatabaseAccess.removeFromInventoriesCount(finalItemID, itemCount-1, charID); //remove 1 from count
+
                                 getItemInfo(finalItemID, myDialog);
 
                                 items.get(i).setItemCount(itemCount-1);

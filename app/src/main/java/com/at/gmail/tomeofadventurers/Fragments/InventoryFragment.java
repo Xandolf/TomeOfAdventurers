@@ -70,5 +70,4 @@ public class InventoryFragment extends Fragment {
 
         return view;
     }
-
 }

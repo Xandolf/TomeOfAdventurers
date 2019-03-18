@@ -17,6 +17,7 @@ import com.at.gmail.tomeofadventurers.Adapters.AbilityScoreAdapter;
 import com.at.gmail.tomeofadventurers.Adapters.SkillsListAdapter;
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Character;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
@@ -47,9 +48,14 @@ public class CharacterSheetFragment extends Fragment {
     int maxHitPoints =0;
 
     //Alex Code
-    TextView textViewSpeedValue, textViewHitDiceValue;
-    int speedValue;
+    TextView textViewSpeedValue, textViewHitDiceValue, textViewArmorClass, textViewProfBonus, textViewPassivePerception;
+    String speedValue;
     String hitDiceValue;
+    String armorClassValue;
+    int profBonus;
+    String passivePerception;
+
+    CharacterDBAccess characterDBAccess;
 
     @Nullable
     @Override
@@ -58,9 +64,25 @@ public class CharacterSheetFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_character_sheet, container, false);
 
+        characterDBAccess = CharacterDBAccess.getInstance(getContext());
+        characterDBAccess.open();
+
+        name = characterDBAccess.loadCharacterName();
+        className = characterDBAccess.loadCharacterClass();
+        hitDiceValue = characterDBAccess.loadCharacterHitDice();
+        armorClassValue = characterDBAccess.loadCharacterArmorClass();
+        speedValue = characterDBAccess.loadCharacterSpeed();
+        abilityScores = characterDBAccess.loadAbilityScores();
+        abilityScoreModifiers = characterDBAccess.loadAbilityScoresModifiers();
+        skillModifiers = characterDBAccess.loadSkillModifiers();
+        maxHitPoints = characterDBAccess.loadCharacterMaxHP();
+        currentHitPoints = characterDBAccess.loadCharacterCurrentHP();
+        profBonus = characterDBAccess.loadCharacterProfBonus();
+        passivePerception = characterDBAccess.loadCharacterPassivePerception();
+
         //Used to load PlayerCharacter
-        BUS = BusProvider.getInstance();
-        BUS.register(this);
+//        BUS = BusProvider.getInstance();
+//        BUS.register(this);
 
 //        toastMessage("Im in");
         textViewCharacterName = view.findViewById(R.id.textViewCharacterName);
@@ -70,8 +92,17 @@ public class CharacterSheetFragment extends Fragment {
         textViewClassName=view.findViewById(R.id.textViewClassName);
         textViewClassName.setText(className);
 
+        textViewArmorClass = view.findViewById(R.id.textViewArmorClassValue);
+        textViewArmorClass.setText(armorClassValue);
+
+        textViewProfBonus = view.findViewById(R.id.textViewProficencyBonusValue);
+        textViewProfBonus.setText("+"+Integer.toString(profBonus));
+
+        textViewPassivePerception = view.findViewById(R.id.textViewPassivePerceptionValue);
+        textViewPassivePerception.setText("+"+passivePerception);
+
         //Load in the ability scores
-        if (currentPlayerCharacter!=null)  abilityScores = currentPlayerCharacter.getAbilityScores();
+//        if (currentPlayerCharacter!=null)  abilityScores = currentPlayerCharacter.getAbilityScores();
         abilityScoreRecycler = view.findViewById(R.id.recyclerViewAbilityScores);
         abilityScoreRecycler.setHasFixedSize(true);
         abilityScoreRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
@@ -95,12 +126,12 @@ public class CharacterSheetFragment extends Fragment {
         buttonIncreaseHitPoints =view.findViewById(R.id.buttonIncreaseHealth);
 
         //Initialize Health Bar Values
-        if (currentPlayerCharacter!=null) {
-            currentHitPoints = currentPlayerCharacter.getCurrentHitPoints();
-            maxHitPoints = currentPlayerCharacter.getMaxHitPoints();
-        }
-        else{currentHitPoints=maxHitPoints=100;}
-        currentHitPoints++;
+//        if (currentPlayerCharacter!=null) {
+//            currentHitPoints = currentPlayerCharacter.getCurrentHitPoints();
+//            maxHitPoints = currentPlayerCharacter.getMaxHitPoints();
+//        }
+//        else{currentHitPoints=maxHitPoints=100;}
+//        currentHitPoints++;
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setMax(maxHitPoints);
         progressBar.setProgress(currentHitPoints);
@@ -119,6 +150,7 @@ public class CharacterSheetFragment extends Fragment {
                     displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
                 }
+                characterDBAccess.saveCurrentHP(currentHitPoints);
             }
         });
 
@@ -133,7 +165,7 @@ public class CharacterSheetFragment extends Fragment {
                     displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
                 }
-
+                characterDBAccess.saveCurrentHP(currentHitPoints);
             }
         });
         //......................................................................................
@@ -143,10 +175,8 @@ public class CharacterSheetFragment extends Fragment {
         textViewSpeedValue = view.findViewById(R.id.textViewSpeedValue);
         textViewHitDiceValue = view.findViewById(R.id.textViewHitDiceValue);
         //set the appropriate values
-        if(currentPlayerCharacter!=null){
-            textViewSpeedValue.setText(String.valueOf(speedValue));
-            textViewHitDiceValue.setText(String.valueOf(hitDiceValue));
-        }
+        textViewSpeedValue.setText(speedValue);
+        textViewHitDiceValue.setText(hitDiceValue);
 
 
         return view;
@@ -157,7 +187,7 @@ public class CharacterSheetFragment extends Fragment {
     }
     @Override
     public void onPause(){
-        BUS.unregister(this);
+//        BUS.unregister(this);
         super.onPause();
     }
     /*
@@ -169,29 +199,29 @@ public class CharacterSheetFragment extends Fragment {
       You DONT need to call the function, the Otto Bus API will do so
       In order to receive an event you need to register with the Bus
       */
-    @Subscribe
-    public void getCharacter(Character sampleCharacter)
-    {
-        currentPlayerCharacter = sampleCharacter;
-        abilityScores = currentPlayerCharacter.getAbilityScores();
-        abilityScoreModifiers=currentPlayerCharacter.getAllAbilityScoreModifiers();
-        skillModifiers=currentPlayerCharacter.getAllSkillModifiers();
-        skillProficiencies=currentPlayerCharacter.getAllSkillProficiencies();
-        name=currentPlayerCharacter.getName();
-        maxHitPoints=currentPlayerCharacter.getMaxHitPoints();
-        currentHitPoints=currentPlayerCharacter.getCurrentHitPoints();
-        className=currentPlayerCharacter.getClassName();
+//    @Subscribe
+//    public void getCharacter(Character sampleCharacter)
+//    {
+//        currentPlayerCharacter = sampleCharacter;
+//        abilityScores = currentPlayerCharacter.getAbilityScores();
+//        abilityScoreModifiers=currentPlayerCharacter.getAllAbilityScoreModifiers();
+//        skillModifiers=currentPlayerCharacter.getAllSkillModifiers();
+//        skillProficiencies=currentPlayerCharacter.getAllSkillProficiencies();
+//        name=currentPlayerCharacter.getName();
+//        maxHitPoints=currentPlayerCharacter.getMaxHitPoints();
+//        currentHitPoints=currentPlayerCharacter.getCurrentHitPoints();
+//        className=currentPlayerCharacter.getClassName();
+//
+////        //Alex Code
+//        speedValue = 30;
+//        hitDiceValue = currentPlayerCharacter.getMyHitDice();
+//
+//    }
 
-//        //Alex Code
-        speedValue = 30;
-        hitDiceValue = currentPlayerCharacter.getMyHitDice();
-
-    }
-
-    @Subscribe
-    public void getClass (DnDClass dnDClass)
-    {
-        className=dnDClass.getClassName();
-    }
+//    @Subscribe
+//    public void getClass (DnDClass dnDClass)
+//    {
+//        className=dnDClass.getClassName();
+//    }
 
 }
