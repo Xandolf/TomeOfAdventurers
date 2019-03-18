@@ -155,10 +155,4 @@ public class SelectNameFragment extends Fragment {
 //
 //        return newCharacter;
 //    }
-
-//    @Produce
-//    public String sendCharID()
-//    {
-//        return "00AA";
-//    }
 }

@@ -77,8 +77,9 @@ public class CharacterSheetFragment extends Fragment {
         skillModifiers = characterDBAccess.loadSkillModifiers();
         maxHitPoints = characterDBAccess.loadCharacterMaxHP();
         currentHitPoints = characterDBAccess.loadCharacterCurrentHP();
-//        profBonus = characterDBAccess.loadCharacterProfBonus();
+        profBonus = characterDBAccess.loadCharacterProfBonus();
         passivePerception = characterDBAccess.loadCharacterPassivePerception();
+        skillProficiencies = characterDBAccess.loadSkillProficiencies();
 
         //Used to load PlayerCharacter
 //        BUS = BusProvider.getInstance();

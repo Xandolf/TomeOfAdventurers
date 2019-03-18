@@ -411,6 +411,31 @@ public class CharacterDBAccess {
         database.execSQL(query);
     }
 
+    public boolean[] loadSkillProficiencies()
+    {
+        boolean[] skillProficiencies = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}; //18 total
+
+        String query = "SELECT AcrobaticsProf, AnimalHandlingProf, ArcanaProf, AthleticsProf, DeceptionProf, HistoryProf, InsightProf," +
+                " IntimidationProf, InvestigationProf, MedicineProf, NatureProf, PerceptionProf, PerformanceProf, " +
+                "PersuasionProf, ReligionProf, SleightOfHandProf, StealthProf, SurvivalProf FROM characters WHERE Selected = 1";
+        Cursor data = database.rawQuery(query, null);
+
+        while (data.moveToNext())
+        {
+            for(int i = 0; i< 18; i++)
+            {
+                if(data.getString(i).equals(Integer.toString(1)))
+                {
+                    skillProficiencies[i] = true;
+                }
+            }
+        }
+
+        data.close();
+
+        return skillProficiencies;
+    }
+
     public boolean saveCharacter(Character aCharacter)
     {
         Random rand = new Random();
@@ -428,6 +453,7 @@ public class CharacterDBAccess {
         int[] abilityscores;
         int[] abilityscoremod;
         int[] skillmodifiers;
+        boolean[] skillProficiencies;
 
         name = aCharacter.getName();
         race = aCharacter.getRaceName();
@@ -439,6 +465,18 @@ public class CharacterDBAccess {
         abilityscores = aCharacter.getAbilityScores();
         abilityscoremod = aCharacter.getAllAbilityScoreModifiers();
         skillmodifiers = aCharacter.getAllSkillModifiers();
+        skillProficiencies = aCharacter.getAllSkillProficiencies();
+
+
+        int[] dbSkillProficiencies = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+        for(int i = 0; i < 18; i++) //convert booleans into 1's and zeros for DB
+        {
+            if(skillProficiencies[i] == true)
+            {
+                dbSkillProficiencies[i] = 1;
+            }
+        }
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("Selected", 1);  //need to have id for new items later!!
@@ -485,6 +523,24 @@ public class CharacterDBAccess {
         contentValues.put("Stealth", skillmodifiers[16]);
         contentValues.put("Survival", skillmodifiers[17]);
 
+        contentValues.put("AcrobaticsProf", dbSkillProficiencies[0]);
+        contentValues.put("AnimalHandlingProf", dbSkillProficiencies[1]);
+        contentValues.put("ArcanaProf", dbSkillProficiencies[2]);
+        contentValues.put("AthleticsProf", dbSkillProficiencies[3]);
+        contentValues.put("DeceptionProf", dbSkillProficiencies[4]);
+        contentValues.put("HistoryProf", dbSkillProficiencies[5]);
+        contentValues.put("InsightProf", dbSkillProficiencies[6]);
+        contentValues.put("IntimidationProf", dbSkillProficiencies[7]);
+        contentValues.put("InvestigationProf", dbSkillProficiencies[8]);
+        contentValues.put("MedicineProf", dbSkillProficiencies[9]);
+        contentValues.put("NatureProf", dbSkillProficiencies[10]);
+        contentValues.put("PerceptionProf", dbSkillProficiencies[11]);
+        contentValues.put("PerformanceProf", dbSkillProficiencies[12]);
+        contentValues.put("PersuasionProf", dbSkillProficiencies[13]);
+        contentValues.put("ReligionProf", dbSkillProficiencies[14]);
+        contentValues.put("SleightOfHandProf", dbSkillProficiencies[15]);
+        contentValues.put("StealthProf", dbSkillProficiencies[16]);
+        contentValues.put("SurvivalProf", dbSkillProficiencies[17]);
 
         long result = database.insert("characters", null, contentValues);
 
