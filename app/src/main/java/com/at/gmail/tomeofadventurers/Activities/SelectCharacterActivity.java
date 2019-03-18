@@ -18,7 +18,7 @@ import java.util.List;
 public class SelectCharacterActivity extends AppCompatActivity {
 
     List<String> characterNames;
-    CharacterDBAccess myDatabaseAccess;
+    CharacterDBAccess charDBAccess;
     RecyclerView selectCharacterRecyclerView;
     SelectCharacterAdapter adapter;
     Button createCharButton;
@@ -32,11 +32,11 @@ public class SelectCharacterActivity extends AppCompatActivity {
 //Recycler View initialization
         selectCharacterRecyclerView = findViewById(R.id.RecyclerViewSelectChar);
 
-        myDatabaseAccess = CharacterDBAccess.getInstance(this);
-        myDatabaseAccess.open();
+        charDBAccess = CharacterDBAccess.getInstance(this);
+        charDBAccess.open();
 
         characterNames = new ArrayList<>();
-        characterNames = myDatabaseAccess.getCharacterNames();
+        characterNames = charDBAccess.getCharacterNames();
 
         adapter = new SelectCharacterAdapter(this, characterNames, characterNames.size());
         selectCharacterRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,6 +49,7 @@ public class SelectCharacterActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View v) {
+                charDBAccess.clearSelectedCharacters();
                 Intent createCharacter = new Intent(getApplicationContext(), CreateCharacterActivity.class);
                 startActivity(createCharacter);
             }

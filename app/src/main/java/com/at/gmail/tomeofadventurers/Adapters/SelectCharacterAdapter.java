@@ -65,7 +65,7 @@ public class SelectCharacterAdapter extends RecyclerView.Adapter<SelectCharacter
 
                 myCharacterDBAccess.chooseCharacter(myCharID);
 
-                toastMessage(myCharID);
+                toastMessage(name+" selected");
 
                 Intent switcher = new Intent(myContext, MainActivity.class);
                 myContext.startActivity(switcher);

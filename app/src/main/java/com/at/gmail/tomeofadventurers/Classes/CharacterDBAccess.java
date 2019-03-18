@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Classes;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CharacterDBAccess {
 
@@ -70,6 +72,12 @@ public class CharacterDBAccess {
 
         String query2 = "UPDATE characters SET Selected = 1 WHERE id = '"+ charID +"'";
         database.execSQL(query2);
+    }
+
+    public void clearSelectedCharacters()
+    {
+        String query = "UPDATE characters SET Selected = 0";
+        database.execSQL(query);
     }
 
     public String findSelectedCharacter()
@@ -210,12 +218,15 @@ public class CharacterDBAccess {
 
         data.close();
 
-        abilityScores[0] = Integer.parseInt(str);
-        abilityScores[1] = Integer.parseInt(dex);
-        abilityScores[2] = Integer.parseInt(con);
-        abilityScores[3] = Integer.parseInt(intell);
-        abilityScores[4] = Integer.parseInt(wis);
-        abilityScores[5] = Integer.parseInt(cha);
+        if(str != null)
+        {
+            abilityScores[0] = Integer.parseInt(str);
+            abilityScores[1] = Integer.parseInt(dex);
+            abilityScores[2] = Integer.parseInt(con);
+            abilityScores[3] = Integer.parseInt(intell);
+            abilityScores[4] = Integer.parseInt(wis);
+            abilityScores[5] = Integer.parseInt(cha);
+        }
 
         return abilityScores;
     }
@@ -247,12 +258,15 @@ public class CharacterDBAccess {
 
         data.close();
 
-        abilityScoresModifiers[0] = Integer.parseInt(str);
-        abilityScoresModifiers[1] = Integer.parseInt(dex);
-        abilityScoresModifiers[2] = Integer.parseInt(con);
-        abilityScoresModifiers[3] = Integer.parseInt(intell);
-        abilityScoresModifiers[4] = Integer.parseInt(wis);
-        abilityScoresModifiers[5] = Integer.parseInt(cha);
+        if(str != null)
+        {
+            abilityScoresModifiers[0] = Integer.parseInt(str);
+            abilityScoresModifiers[1] = Integer.parseInt(dex);
+            abilityScoresModifiers[2] = Integer.parseInt(con);
+            abilityScoresModifiers[3] = Integer.parseInt(intell);
+            abilityScoresModifiers[4] = Integer.parseInt(wis);
+            abilityScoresModifiers[5] = Integer.parseInt(cha);
+        }
 
         return abilityScoresModifiers;
     }
@@ -295,24 +309,27 @@ public class CharacterDBAccess {
 
         data.close();
 
-        skillModifiers[0] = Integer.parseInt(ACR);
-        skillModifiers[1] = Integer.parseInt(AH);
-        skillModifiers[2] = Integer.parseInt(ARC);
-        skillModifiers[3] = Integer.parseInt(ATH);
-        skillModifiers[4] = Integer.parseInt(DEC);
-        skillModifiers[5] = Integer.parseInt(HIST);
-        skillModifiers[6] = Integer.parseInt(INS);
-        skillModifiers[7] = Integer.parseInt(INTI);
-        skillModifiers[8] = Integer.parseInt(INV);
-        skillModifiers[9] = Integer.parseInt(MED);
-        skillModifiers[10] = Integer.parseInt(NAT);
-        skillModifiers[11] = Integer.parseInt(PERC);
-        skillModifiers[12] = Integer.parseInt(PERF);
-        skillModifiers[13] = Integer.parseInt(PERS);
-        skillModifiers[14] = Integer.parseInt(REL);
-        skillModifiers[15] = Integer.parseInt(SOH);
-        skillModifiers[16] = Integer.parseInt(STLH);
-        skillModifiers[17] = Integer.parseInt(SURV);
+        if(ACR != null)
+        {
+            skillModifiers[0] = Integer.parseInt(ACR);
+            skillModifiers[1] = Integer.parseInt(AH);
+            skillModifiers[2] = Integer.parseInt(ARC);
+            skillModifiers[3] = Integer.parseInt(ATH);
+            skillModifiers[4] = Integer.parseInt(DEC);
+            skillModifiers[5] = Integer.parseInt(HIST);
+            skillModifiers[6] = Integer.parseInt(INS);
+            skillModifiers[7] = Integer.parseInt(INTI);
+            skillModifiers[8] = Integer.parseInt(INV);
+            skillModifiers[9] = Integer.parseInt(MED);
+            skillModifiers[10] = Integer.parseInt(NAT);
+            skillModifiers[11] = Integer.parseInt(PERC);
+            skillModifiers[12] = Integer.parseInt(PERF);
+            skillModifiers[13] = Integer.parseInt(PERS);
+            skillModifiers[14] = Integer.parseInt(REL);
+            skillModifiers[15] = Integer.parseInt(SOH);
+            skillModifiers[16] = Integer.parseInt(STLH);
+            skillModifiers[17] = Integer.parseInt(SURV);
+        }
 
 
         return skillModifiers;
@@ -356,6 +373,7 @@ public class CharacterDBAccess {
         Cursor data = database.rawQuery(query, null);
 
         String pB = "_";
+        int profBonusAmount = 0; //initializer
 
         while (data.moveToNext()) {
             pB = data.getString(0);
@@ -363,7 +381,12 @@ public class CharacterDBAccess {
 
         data.close();
 
-        return Integer.parseInt(pB);
+        if(pB != null)
+        {
+            profBonusAmount = Integer.parseInt(pB);
+        }
+
+        return profBonusAmount;
     }
 
     public String loadCharacterPassivePerception()
@@ -386,5 +409,90 @@ public class CharacterDBAccess {
     {
         String query = "UPDATE characters SET CurrentHitPoints = '"+ currentHP +"' WHERE Selected = 1";
         database.execSQL(query);
+    }
+
+    public boolean saveCharacter(Character aCharacter)
+    {
+        Random rand = new Random();
+
+        int rand_int1 = rand.nextInt(1000);
+        int rand_int2 = rand.nextInt(27); //used to choose letter
+
+        char[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+
+        char rand_char1 = alphabet[rand_int2];
+
+        String charID = Integer.toString(rand_int1)+rand_char1;
+
+        String name, race, dclass, hitdice, armorclass, hp, speed;
+        int[] abilityscores;
+        int[] abilityscoremod;
+        int[] skillmodifiers;
+
+        name = aCharacter.getName();
+        race = aCharacter.getRaceName();
+        dclass = aCharacter.getClassName();
+        hitdice = aCharacter.getMyHitDice();
+        armorclass = Integer.toString(aCharacter.getArmorClass());
+        hp = Integer.toString(aCharacter.getCurrentHitPoints());
+        speed = Integer.toString(aCharacter.getSpeed());
+        abilityscores = aCharacter.getAbilityScores();
+        abilityscoremod = aCharacter.getAllAbilityScoreModifiers();
+        skillmodifiers = aCharacter.getAllSkillModifiers();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Selected", 1);  //need to have id for new items later!!
+        contentValues.put("id", charID);
+        contentValues.put("Name", name);
+        contentValues.put("Race", race);
+        contentValues.put("Class", dclass);
+        contentValues.put("HitDice", hitdice);
+        contentValues.put("AC", armorclass);
+        contentValues.put("Speed", speed);
+        contentValues.put("CurrentHitPoints", hp);
+        contentValues.put("MaxHitPoints", hp);
+
+        contentValues.put("Str", abilityscores[0]);
+        contentValues.put("Dex", abilityscores[1]);
+        contentValues.put("Con", abilityscores[2]);
+        contentValues.put("Int", abilityscores[3]);
+        contentValues.put("Wis", abilityscores[4]);
+        contentValues.put("Cha", abilityscores[5]);
+
+        contentValues.put("StrMod", abilityscoremod[0]);
+        contentValues.put("DexMod", abilityscoremod[1]);
+        contentValues.put("ConMod", abilityscoremod[2]);
+        contentValues.put("IntMod", abilityscoremod[3]);
+        contentValues.put("WisMod", abilityscoremod[4]);
+        contentValues.put("ChaMod", abilityscoremod[5]);
+
+        contentValues.put("Acrobatics", skillmodifiers[0]);
+        contentValues.put("AnimalHandling", skillmodifiers[1]);
+        contentValues.put("Arcana", skillmodifiers[2]);
+        contentValues.put("Athletics", skillmodifiers[3]);
+        contentValues.put("Deception", skillmodifiers[4]);
+        contentValues.put("History", skillmodifiers[5]);
+        contentValues.put("Insight", skillmodifiers[6]);
+        contentValues.put("Intimidation", skillmodifiers[7]);
+        contentValues.put("Investigation", skillmodifiers[8]);
+        contentValues.put("Medicine", skillmodifiers[9]);
+        contentValues.put("Nature", skillmodifiers[10]);
+        contentValues.put("Perception", skillmodifiers[11]);
+        contentValues.put("Performance", skillmodifiers[12]);
+        contentValues.put("Persuasion", skillmodifiers[13]);
+        contentValues.put("Religion", skillmodifiers[14]);
+        contentValues.put("SleightOfHand", skillmodifiers[15]);
+        contentValues.put("Stealth", skillmodifiers[16]);
+        contentValues.put("Survival", skillmodifiers[17]);
+
+
+        long result = database.insert("characters", null, contentValues);
+
+        //if data is inserted incorrectly it will return -1
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

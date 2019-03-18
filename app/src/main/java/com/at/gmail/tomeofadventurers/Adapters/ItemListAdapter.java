@@ -74,7 +74,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
         myCharDBAccess = CharacterDBAccess.getInstance(myContext);
         myCharDBAccess.open();
         charID = myCharDBAccess.findSelectedCharacter();
-        myCharDBAccess.close();
+//        myCharDBAccess.close();
 
         myDatabaseAccess = DatabaseAccess.getInstance(myContext);
         myDatabaseAccess.open();

@@ -77,7 +77,7 @@ public class CharacterSheetFragment extends Fragment {
         skillModifiers = characterDBAccess.loadSkillModifiers();
         maxHitPoints = characterDBAccess.loadCharacterMaxHP();
         currentHitPoints = characterDBAccess.loadCharacterCurrentHP();
-        profBonus = characterDBAccess.loadCharacterProfBonus();
+//        profBonus = characterDBAccess.loadCharacterProfBonus();
         passivePerception = characterDBAccess.loadCharacterPassivePerception();
 
         //Used to load PlayerCharacter
@@ -181,15 +181,15 @@ public class CharacterSheetFragment extends Fragment {
 
         return view;
     }//end OnCreate
-    @Override
-    public void onResume(){
-        super.onResume();
-    }
-    @Override
-    public void onPause(){
-//        BUS.unregister(this);
-        super.onPause();
-    }
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//    }
+//    @Override
+//    public void onPause(){
+////        BUS.unregister(this);
+//        super.onPause();
+//    }
     /*
 
      Subscription is the complement to event publishing—it lets you receive notification

@@ -16,6 +16,7 @@ import com.at.gmail.tomeofadventurers.Activities.MainActivity;
 import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Character;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.Race;
 import com.at.gmail.tomeofadventurers.R;
@@ -39,6 +40,8 @@ public class SelectNameFragment extends Fragment {
     String hitDice;
     int charSpeed = 0;
     int HP = 0;
+
+    CharacterDBAccess characterDBAccess;
 
     @Nullable
     @Override
@@ -64,11 +67,21 @@ public class SelectNameFragment extends Fragment {
                 //Get the name from the editText box
                 name = editTextCharacterName.getText().toString();
 
+                characterDBAccess = CharacterDBAccess.getInstance(getContext());
+                characterDBAccess.open();
 
+                Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP, hitDice);
 
+                boolean insertCharacter = characterDBAccess.saveCharacter(newCharacter);
+
+                if (insertCharacter) {
+                    toastMessage("Character Successfully Created!");
+                } else {
+                    toastMessage("Something went wrong");
+                }
 
                 //Post the character we just created to the BUS
-                BUS.post(sendCharacter());
+//                BUS.post(sendCharacter());
 
 //                BUS.post(sendCharID());
 
@@ -110,12 +123,12 @@ public class SelectNameFragment extends Fragment {
         className = dnDClass.getClassName();
     }
     @Subscribe
-    void getRace (Race race)
+    public void getRace (Race race)
     {
         raceName = race.getRaceName();
     }
     @Subscribe
-    void getAbilityScores(AbilityScoreSender abilityScoreSender)
+    public void getAbilityScores(AbilityScoreSender abilityScoreSender)
     { abilityScores = abilityScoreSender.getAbilityScores();}
 
     //Alex Code
@@ -131,17 +144,17 @@ public class SelectNameFragment extends Fragment {
 
     //This is the produce function. It takes in an already created charater
     //Make sure you call it while the BUS is registered and inside a BUS.post()
-    @Produce
-    public Character sendCharacter ()
-    {
-        //Create a new instance of a character, using the parameters from the Posterboard on the BUS
-        Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP, hitDice);
-
-        //Alex Code
-        //toastMessage(String.valueOf(charSpeed));
-
-        return newCharacter;
-    }
+//    @Produce
+//    public Character sendCharacter ()
+//    {
+//        //Create a new instance of a character, using the parameters from the Posterboard on the BUS
+//        Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP, hitDice);
+//
+//        //Alex Code
+//        //toastMessage(String.valueOf(charSpeed));
+//
+//        return newCharacter;
+//    }
 
 //    @Produce
 //    public String sendCharID()
