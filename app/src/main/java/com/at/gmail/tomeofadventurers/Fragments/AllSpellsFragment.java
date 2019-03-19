@@ -146,12 +146,26 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         classSpinner.setAdapter(classSpinnerAdapter);
         classSpinner.setOnItemSelectedListener(this);
         //creates spinner view for level filtering
-        String[] levelsArray = {"Lvl", "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String[] levelsArray = {"Lvl", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         Spinner levelsSpinner = view.findViewById(R.id.allSpellsLevelSpinner);
         ArrayAdapter<String> levelSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, levelsArray);
         levelSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         levelsSpinner.setAdapter(levelSpinnerAdapter);
         levelsSpinner.setOnItemSelectedListener(this);
+        //creates spinner view for school filtering
+        String[] schoolArray = {"School", "Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation"};
+        Spinner schoolSpinner = view.findViewById(R.id.allSpellsSchoolSpinner);
+        ArrayAdapter<String> schoolSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, schoolArray);
+        schoolSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        schoolSpinner.setAdapter(schoolSpinnerAdapter);
+        schoolSpinner.setOnItemSelectedListener(this);
+        //creates spinner view for ordering results
+        String[] orderArray = {"Order", "Name", "Spell Level", "School"};
+        Spinner orderSpinner = view.findViewById(R.id.allSpellsOrderSpinner);
+        ArrayAdapter<String> orderSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, orderArray);
+        orderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        orderSpinner.setAdapter(orderSpinnerAdapter);
+        orderSpinner.setOnItemSelectedListener(this);
 
         return view;
     }
@@ -179,9 +193,10 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
             if(slug.equals(data.getString(0)))
             {
                 spellSource.setText(data.getString(4));
-                spellType.setText(data.getString(13));
+                spellType.setText(data.getString(15));
                 spellDesc.setText(data.getString(2));
                 spellNameTextView.setText(data.getString(1));
+                break;
             }
         }
 
@@ -349,10 +364,6 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         {
             spellLevel = "%";
         }
-        else if (spinnerSelection == "-1")
-        {
-            spellLevel = "-1";
-        }
         else if (spinnerSelection == "0")
         {
             spellLevel = "0";
@@ -392,6 +403,54 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         else if (spinnerSelection == "9")
         {
             spellLevel = "9";
+        }
+        else if (spinnerSelection == "School")
+        {
+            spellSchool = "%";
+        }
+        else if (spinnerSelection == "Abjuration")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/1";
+        }
+        else if (spinnerSelection == "Conjuration")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/2";
+        }
+        else if (spinnerSelection == "Divination")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/3";
+        }
+        else if (spinnerSelection == "Enchantment")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/4";
+        }
+        else if (spinnerSelection == "Evocation")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/5";
+        }
+        else if (spinnerSelection == "Illusion")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/6";
+        }
+        else if (spinnerSelection == "Necromancy")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/7";
+        }
+        else if (spinnerSelection == "Transmutation")
+        {
+            spellSchool = "http://www.dnd5eapi.co/api/magic-schools/8";
+        }
+        else if (spinnerSelection == "Order" || spinnerSelection == "Name")
+        {
+            orderBy = "name";
+        }
+        else if (spinnerSelection == "Spell Level")
+        {
+            orderBy = "spell_level";
+        }
+        else if (spinnerSelection == "School")
+        {
+            orderBy = "school";
         }
 
         spellNames = myDatabaseAccess.searchSort(classURL, spellLevel, spellSchool, orderBy);

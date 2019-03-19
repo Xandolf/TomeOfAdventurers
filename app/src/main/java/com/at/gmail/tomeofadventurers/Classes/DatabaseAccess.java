@@ -272,7 +272,7 @@ public class DatabaseAccess {
     }
 
     public Cursor getSpellSlugSpells(String listName){
-        String query = "SELECT slug FROM dndspells WHERE name = '" + listName + "'";
+        String query = "SELECT slug FROM spells WHERE name = '" + listName + "'";
         Cursor data = database.rawQuery(query, null);
         return data;
     }
@@ -366,7 +366,7 @@ public class DatabaseAccess {
     }
 
     public Cursor getSpellsData(){
-        String query = "SELECT * FROM dndspells";
+        String query = "SELECT * FROM spells";
         Cursor data = database.rawQuery(query, null);
         return data;
     }
