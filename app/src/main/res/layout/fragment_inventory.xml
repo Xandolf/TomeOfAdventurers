@@ -6,6 +6,79 @@
     android:background="@drawable/parchment1"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/textViewInventoryPlatinum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0F66C5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textColor="#000"
+            android:text="Plat" />
+        <TextView
+            android:id="@+id/textViewInventoryGold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#E3B612"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textColor="#000"
+            android:text="Gold" />
+        <TextView
+            android:id="@+id/textViewInventoryElectrum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#595959"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textColor="#000"
+            android:text="Elect" />
+        <TextView
+            android:id="@+id/textViewInventorySilver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#CAC1B7"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textColor="#000"
+            android:text="Silver" />
+        <TextView
+            android:id="@+id/textViewInventoryCopper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#B56834"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textColor="#000"
+            android:text="Copper" />
+
+        <TextView
+            android:id="@+id/textViewInventoryConverter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="#000"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:text="Convert" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listViewInventory"
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
@@ -16,15 +89,6 @@
         android:divider="@color/colorPrimaryDark"
         android:dividerHeight="1dp"
         android:visibility="visible"></android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/weightString"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="8"
-        android:gravity="center"
-        android:text="@string/weight"
-        android:textColor="#000" />
 
     <TextView
         android:id="@+id/textViewInventoryWeight"

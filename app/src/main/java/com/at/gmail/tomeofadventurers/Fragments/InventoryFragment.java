@@ -33,6 +33,7 @@ public class InventoryFragment extends Fragment {
     List<Item> inventoryItems;
     ItemListAdapter adapter;
     TextView weight;
+    TextView platinum, gold, electrum, silver, copper;
 
 
     @Nullable
@@ -65,8 +66,25 @@ public class InventoryFragment extends Fragment {
             inventoryRecyclerView.setAdapter(adapter);
 
             weight = view.findViewById(R.id.textViewInventoryWeight);
-            weight.setText(myDatabaseAccess.inventoryWeight());
+            weight.setText("Weight: "+myDatabaseAccess.inventoryWeight());
         }
+
+        String[] myCurrencyValues = myDatabaseAccess.inventoryCurrency();
+
+        platinum = view.findViewById(R.id.textViewInventoryPlatinum);
+        platinum.setText(myCurrencyValues[0]+"pp");
+
+        gold = view.findViewById(R.id.textViewInventoryGold);
+        gold.setText(myCurrencyValues[1]+"gp");
+
+        electrum = view.findViewById(R.id.textViewInventoryElectrum);
+        electrum.setText(myCurrencyValues[2]+"ep");
+
+        silver = view.findViewById(R.id.textViewInventorySilver);
+        silver.setText(myCurrencyValues[3]+"sp");
+
+        copper = view.findViewById(R.id.textViewInventoryCopper);
+        copper.setText(myCurrencyValues[4]+"cp");
 
         return view;
     }

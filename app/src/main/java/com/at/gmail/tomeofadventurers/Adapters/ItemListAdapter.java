@@ -237,7 +237,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     public void updateInventoryWeight(){
         TextView txtView = (TextView) ((Activity)myContext).findViewById(R.id.textViewInventoryWeight);
-        txtView.setText(myDatabaseAccess.inventoryWeight());
+        txtView.setText("Weight: "+myDatabaseAccess.inventoryWeight());
     }
 }
 

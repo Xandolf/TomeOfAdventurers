@@ -126,7 +126,7 @@ public class DatabaseAccess {
 
     public List<String> fillInventoryNames() {
         List<String> list = new ArrayList<>();
-        String query = "SELECT items.name FROM items, inventories, characters WHERE items.id = inventories.id AND characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.id";
+        String query = "SELECT items.name FROM items, inventories, characters WHERE items.id = inventories.id AND characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
 
@@ -142,7 +142,7 @@ public class DatabaseAccess {
 
     public List<Integer> fillInventoryQty() {
         List<Integer> list = new ArrayList<>();
-        String query = "SELECT count FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.id";
+        String query = "SELECT count FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -155,7 +155,7 @@ public class DatabaseAccess {
 
     public List<Integer> fillInventoryEquipped() {
         List<Integer> list = new ArrayList<>();
-        String query = "SELECT equip FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.id";
+        String query = "SELECT equip FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -272,6 +272,28 @@ public class DatabaseAccess {
         data.close();
 
         return  totalWeight;
+    }
+
+    public String[] inventoryCurrency()
+    {
+        String query = "select count from inventories, characters where (inventories.id = 'platinum' or \n" +
+                "inventories.id = 'gold' or inventories.id = 'electrum' or inventories.id = 'silver' or \n" +
+                "inventories.id = 'copper') AND characters.Selected = 1 AND characters.id = inventories.idchar\n" +
+                "order by (case inventories.id when 'platinum' then 1 when 'gold' then 2 when 'electrum' then 3\n" +
+                "when 'silver' then 4 when 'copper' then 5 else 100 end)";
+        Cursor data = database.rawQuery(query, null);
+
+        String[] currencyValues = {"0","0","0","0","0"};
+        int counter = 0;
+
+        while(data.moveToNext()) {
+            currencyValues[counter] = data.getString(0);
+            counter++;
+        }
+
+        data.close();
+
+        return  currencyValues;
     }
 
     //Spells database functions -----------------------------------------------------------------
