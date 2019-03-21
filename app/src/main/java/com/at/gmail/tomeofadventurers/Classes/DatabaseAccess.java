@@ -103,13 +103,12 @@ public class DatabaseAccess {
     }
 
     //Inventory database functions -----------------------------------------------------------------
-    public boolean isIteminInventories(String idToCheck){
+    public boolean isIteminInventories(String idToCheck, String charID){
 
         boolean inInventories = false;
         String idMatched = "_"; //Dummy initialize value
 
-        String query = "SELECT " + "id" + " FROM " + "inventories" +
-                " WHERE " + "id" + " = '" + idToCheck + "'";
+        String query = "SELECT id FROM inventories WHERE id = '"+ idToCheck +"' AND idchar = '"+ charID +"'";
         Cursor data = database.rawQuery(query, null);
 
         while(data.moveToNext())
@@ -127,7 +126,7 @@ public class DatabaseAccess {
 
     public List<String> fillInventoryNames() {
         List<String> list = new ArrayList<>();
-        String query = "SELECT name FROM items, inventories WHERE items.id = inventories.id";
+        String query = "SELECT items.name FROM items, inventories, characters WHERE items.id = inventories.id AND characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
 
@@ -143,7 +142,7 @@ public class DatabaseAccess {
 
     public List<Integer> fillInventoryQty() {
         List<Integer> list = new ArrayList<>();
-        String query = "SELECT count FROM inventories";
+        String query = "SELECT count FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -156,7 +155,7 @@ public class DatabaseAccess {
 
     public List<Integer> fillInventoryEquipped() {
         List<Integer> list = new ArrayList<>();
-        String query = "SELECT equip FROM inventories";
+        String query = "SELECT equip FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -168,7 +167,7 @@ public class DatabaseAccess {
     }
 
 
-    public boolean addToInventories(int idchar, String id, int myCount, int isEquipped) {
+    public boolean addToInventories(String idchar, String id, int myCount, int isEquipped) {
 
         ContentValues contentValue = new ContentValues();
 
@@ -189,40 +188,36 @@ public class DatabaseAccess {
         }
     }
 
-    public void addToInventoriesCount(String idToCheck, int myCount) {
+    public void addToInventoriesCount(String idToCheck, int myCount, String charID) {
 
         String newCount = Integer.toString(myCount);
 
-        String query = "UPDATE " + "inventories" + " SET " + "count" +
-                " = '" + newCount + "' WHERE " + "id" + " = '" + idToCheck + "'";
+        String query = "UPDATE inventories SET count = '"+ newCount +"' WHERE id = '"+ idToCheck +"' AND idchar = '"+ charID +"'";
 
         database.execSQL(query);
     }
 
-    public void removeFromInventoriesCount(String idToCheck, int myCount) {
+    public void removeFromInventoriesCount(String idToCheck, int myCount, String charID) {
 
         String newCount = Integer.toString(myCount);
 
-        String query = "UPDATE " + "inventories" + " SET " + "count" +
-                " = '" + newCount + "' WHERE " + "id" + " = '" + idToCheck + "'";
+        String query = "UPDATE inventories SET count = '"+ newCount +"' WHERE id = '"+ idToCheck +"' AND idchar = '"+ charID +"'";
 
         database.execSQL(query);
     }
 
-    public void deleteItemFromInv(String idToCheck){
-        String query = "DELETE FROM " + "inventories" + " WHERE "
-                + "id" + " = '" + idToCheck + "'";
+    public void deleteItemFromInv(String idToCheck, String charID){
+        String query = "DELETE FROM inventories WHERE id = '"+ idToCheck +"' AND idchar = '"+ charID +"'";
         Log.d(TAG, "deleteName: query: " + query);
         Log.d(TAG, "deleteName: Deleting " + idToCheck + " from database.");
         database.execSQL(query);
     }
 
-    public int getExistingItemCount(String idToCheck){
+    public int getExistingItemCount(String idToCheck, String charID){
 
         int finalCount = -1;
 
-        String query = "SELECT " + "count" + " FROM " + "inventories" +
-                " WHERE " + "id" + " = '" + idToCheck + "'";
+        String query = "SELECT count FROM inventories WHERE id = '"+ idToCheck +"' and idchar = '"+ charID +"'";
 
         Cursor data = database.rawQuery(query, null);
 
@@ -235,10 +230,31 @@ public class DatabaseAccess {
         return finalCount;
     }
 
-    public void setEquipped(String idToCheck, int isEquipped) {
+    public boolean isItemEquipped(String idToCheck, String charID) {
+
+        boolean inInventories = false;
+        String idMatched = "_"; //Dummy initialize value
+
+        String query = "SELECT equip FROM inventories WHERE id = '"+ idToCheck +"' AND idchar = '"+ charID +"'";
+        Cursor data = database.rawQuery(query, null);
+
+        while(data.moveToNext())
+        {
+            idMatched = data.getString(0);
+        }
+
+        data.close();
+
+        if(idMatched != "_")
+            inInventories = true;
+
+        return inInventories;
+    }
+
+    public void setEquipped(String idToCheck, int isEquipped, String charID) {
 
         String query = "UPDATE " + "inventories" + " SET " + "equip" +
-                " = '" + isEquipped + "' WHERE " + "id" + " = '" + idToCheck + "'";
+                " = '" + isEquipped + "' WHERE " + "id" + " = '" + idToCheck + "' AND idchar = '"+ charID +"'";
 
         database.execSQL(query);
     }
@@ -246,7 +262,7 @@ public class DatabaseAccess {
     public String inventoryWeight()
     {
         String totalWeight = "0";
-        String query = "SELECT SUM(weight*count) FROM items, inventories WHERE items.id = inventories.id";
+        String query = "SELECT SUM(weight*count) FROM items, inventories, characters WHERE items.id = inventories.id AND characters.Selected = 1 AND characters.id = inventories.idchar";
         Cursor data = database.rawQuery(query, null);
 
         while(data.moveToNext()) {
@@ -256,6 +272,28 @@ public class DatabaseAccess {
         data.close();
 
         return  totalWeight;
+    }
+
+    public String[] inventoryCurrency()
+    {
+        String query = "select count from inventories, characters where (inventories.id = 'platinum' or \n" +
+                "inventories.id = 'gold' or inventories.id = 'electrum' or inventories.id = 'silver' or \n" +
+                "inventories.id = 'copper') AND characters.Selected = 1 AND characters.id = inventories.idchar\n" +
+                "order by (case inventories.id when 'platinum' then 1 when 'gold' then 2 when 'electrum' then 3\n" +
+                "when 'silver' then 4 when 'copper' then 5 else 100 end)";
+        Cursor data = database.rawQuery(query, null);
+
+        String[] currencyValues = {"0","0","0","0","0"};
+        int counter = 0;
+
+        while(data.moveToNext()) {
+            currencyValues[counter] = data.getString(0);
+            counter++;
+        }
+
+        data.close();
+
+        return  currencyValues;
     }
 
     //Spells database functions -----------------------------------------------------------------

@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Activities;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-            HomeFragment frag = new HomeFragment();
+            TabFragment frag = new TabFragment();
             fragTrans.replace(R.id.fragment_container, frag);
             fragTrans.commit();
 
@@ -77,17 +77,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-//                Fragment frag = new HomeFragment();
-//                android.app.FragmentManager fragManager = getFragmentManager();
-//                fragManager.beginTransaction().replace(R.id.fragment_container, frag).commit();
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-                HomeFragment frag = new HomeFragment();
-                fragTrans.replace(R.id.fragment_container, frag);
-                fragTrans.commit();
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                //        new HomeFragment()).commit();
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
+//                HomeFragment frag = new HomeFragment();
+//                fragTrans.replace(R.id.fragment_container, frag);
+//                fragTrans.commit();
+                Intent switcher = new Intent(this, SelectCharacterActivity.class);
+                startActivity(switcher);
                 break;
             case R.id.nav_stats:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

@@ -16,6 +16,7 @@ import com.at.gmail.tomeofadventurers.Activities.MainActivity;
 import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Character;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.Race;
 import com.at.gmail.tomeofadventurers.R;

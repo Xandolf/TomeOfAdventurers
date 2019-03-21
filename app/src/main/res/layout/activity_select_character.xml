@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@drawable/parchment1"
+    android:orientation="vertical">
 
-    tools:context=".Activities.CreateCharacterActivity"
-    tools:openDrawer="start">
-
-
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RecyclerViewSelectChar"
+        style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_weight="8"
 
-        <FrameLayout
-            android:id="@+id/select_character_fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:divider="@color/colorPrimaryDark"
+        android:dividerHeight="1dp"
+        android:visibility="visible"></android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
-</android.support.v4.widget.DrawerLayout>
+    <Button
+        android:id="@+id/createNewCharBtn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="2"
+        android:background="@drawable/parchment3"
+        android:gravity="center"
+        android:text="@string/charCreat"
+        android:textColor="#000" />
+
+</LinearLayout>
