@@ -272,7 +272,7 @@ public class DatabaseAccess {
     }
 
     public Cursor getSpellSlugSpells(String listName){
-        String query = "SELECT slug FROM dndspells WHERE name = '" + listName + "'";
+        String query = "SELECT slug FROM spells WHERE name = '" + listName + "'";
         Cursor data = database.rawQuery(query, null);
         return data;
     }
@@ -366,7 +366,7 @@ public class DatabaseAccess {
     }
 
     public Cursor getSpellsData(){
-        String query = "SELECT * FROM dndspells";
+        String query = "SELECT * FROM spells";
         Cursor data = database.rawQuery(query, null);
         return data;
     }
@@ -409,6 +409,21 @@ public class DatabaseAccess {
         Log.d(TAG, "deleteName: Deleting " + slugToCheck + " from database.");
         database.execSQL(query);
     }
+    //filters results by first 3 inputs, then orders it in ascending order by the 4th (ie name from A to Z, level from lowest to highest, etc)
+    public List<String> searchSort(String classURL, String level, String school, String order)
+    {
+        List<String> list = new ArrayList<>();
+        String query = "SELECT * FROM spells WHERE (class1 LIKE '" + classURL + "' OR class2 LIKE '" + classURL + "' OR class3 LIKE '" + classURL
+            + "' OR class4 LIKE '" + classURL + "' OR class5 LIKE '" + classURL +"' OR class6 LIKE '" + classURL +"' OR class7 LIKE '" + classURL
+            + "') AND spell_level LIKE '" + level + "' AND school LIKE '" + school + "' ORDER BY " + order;
 
-
+        Cursor result = database.rawQuery(query, null);
+        result.moveToFirst();
+        while (!result.isAfterLast()) {
+            list.add(result.getString(1));
+            result.moveToNext();
+        }
+        result.close();
+        return list;
+    }
 }

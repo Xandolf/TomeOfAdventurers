@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         selCharBtn = view.findViewById(R.id.selCharBtn);
         selCharBtn.setOnClickListener(this);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         return view;
     }

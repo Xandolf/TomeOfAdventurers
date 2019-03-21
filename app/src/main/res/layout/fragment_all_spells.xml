@@ -1,23 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/parchment1">
+    android:background="@drawable/parchment1"
+    android:orientation="vertical">
     <!--android:background="@color/colorTan">-->
 
     <Button
         android:id="@+id/createSpellBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/createSpell" />
+        android:text="@string/createSpell"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Spinner
+        android:id="@+id/allSpellsClassSpinner"
+        android:layout_width="139dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createSpellBtn" />
+
+    <Spinner
+        android:id="@+id/allSpellsLevelSpinner"
+        android:layout_width="92dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/allSpellsClassSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/createSpellBtn" />
 
     <ListView
         android:id="@+id/listViewSpells"
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="621dp"
 
         android:divider="@color/colorPrimaryDark"
-        android:dividerHeight="1dp" />
-</LinearLayout>
+        android:dividerHeight="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/allSpellsOrderSpinner"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Spinner
+        android:id="@+id/allSpellsSchoolSpinner"
+        android:layout_width="179dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/allSpellsLevelSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/createSpellBtn" />
+
+    <Spinner
+        android:id="@+id/allSpellsOrderSpinner"
+        android:layout_width="151dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createSpellBtn" />
+</android.support.constraint.ConstraintLayout>
