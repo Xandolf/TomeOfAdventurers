@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
@@ -18,23 +19,24 @@ import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 
-public class SelectSkillsFragment extends Fragment implements View.OnClickListener{
+public class SelectSkillsFragment extends Fragment implements View.OnClickListener {
 
     Button buttonGoToSelectName;
-    CheckBox acrobaticsButton,animalHandlingButton, arcanaButton,athleticsButton, deceptionButton,
-            historyButton,insightButton,intimidationButton,investigationButton,medicineButton,natureButton,
-            perceptionButton,performanceButton,persuasionButton, religionButton, slightOfHandButton,
+    CheckBox acrobaticsButton, animalHandlingButton, arcanaButton, athleticsButton, deceptionButton,
+            historyButton, insightButton, intimidationButton, investigationButton, medicineButton, natureButton,
+            perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
             stealthButton, survivalButton;
 
     Bus BUS;
     //0 = Not Proficient, 1 = Proficient, 2 = Expertise
-    int[] skillProficiencies = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //19 options for all skills
+    int[] skillProficiencies = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //19 options for all skills
+    //Player can select 2 skills from provided skills
+    int skillCount = 2;
 
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_skills, container, false);
         super.onCreate(savedInstanceState);
 
@@ -121,100 +123,274 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         //disableButton(buttonGoToSelectName);
 
 
-
-
-        acrobaticsButton.setChecked(true);
-        acrobaticsButton.setEnabled(false);
-
-        animalHandlingButton.setEnabled(false);
+        //preDeterminedProficiencies();
+        //nonSelectableProficiencies();
 
 
         return view;
     }
 
-    public void onClick(View v){
+    public void preDeterminedProficiencies() {
+        acrobaticsButton.setChecked(true);
+        acrobaticsButton.setEnabled(false);
+
+    }
+
+    public void nonSelectableProficiencies() {
+        animalHandlingButton.setEnabled(false);
+    }
+
+    public void checkExpendedPoints() {
+        CheckBox[] skillArray = {acrobaticsButton, animalHandlingButton, arcanaButton, athleticsButton, deceptionButton,
+                historyButton, insightButton, intimidationButton, investigationButton, medicineButton, natureButton,
+                perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
+                stealthButton, survivalButton};
+        //If all skill points are used
+        if (skillCount == 0) {
+            for (int i = 0; i < skillArray.length; i++) {
+                if (!skillArray[i].isChecked()) {
+                    skillArray[i].setEnabled(false);
+                }
+            }
+        } else {
+            for (int i = 0; i < skillArray.length; i++) {
+                if (!skillArray[i].isChecked()) {
+                    skillArray[i].setEnabled(true);
+                }
+            }
+        }
+        //preDeterminedProficiencies();
+        //nonSelectableProficiencies();
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        //toastMessage("Proficient: "+ skillProficiencies[0]);
+    }
+
+    //Onclicks for all checkboxes
+    public void onClick(View v) {
 
         boolean checked = ((CheckBox) v).isChecked();
-
-
-
-
-
-
+        //Updating each skill based on whether it is selected or not
+        //Could be pre selected depending on class specs
         switch (v.getId()) {
             case R.id.radio_acrobatics:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[0] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[0] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_animalHandling:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[1] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[1] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_arcana:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[2] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[2] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_athletics:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[3] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[3] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_deception:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[4] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[4] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_history:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[5] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[5] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_insight:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[6] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[6] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_intimidation:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[7] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[7] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_investigation:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[8] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[8] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_medicine:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[9] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[9] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_nature:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[10] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[10] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_perception:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[11] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[11] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_performance:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[12] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[12] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_persuasion:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[13] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[13] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_religion:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[14] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[14] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_slightOfHand:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[15] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[15] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_stealth:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[16] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[16] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
             case R.id.radio_survival:
-                if(checked)
-                    break;
+                if (checked) {
+                    skillProficiencies[17] = 1;
+                    skillCount--;
+                }
+                if (!checked) {
+                    skillProficiencies[17] = 0;
+                    skillCount++;
+                }
+                checkExpendedPoints();
+                break;
 
         }
     }
 
     //Function that makes a button invisible and disabled
-    public void disableButton(Button passButton){
+    public void disableButton(Button passButton) {
         passButton.setEnabled(false);
         passButton.setVisibility(View.VISIBLE);
     }
 
     //Function that makes a button visible and enabled
-    public void enableButton(Button passButton){
+    public void enableButton(Button passButton) {
         passButton.setEnabled(true);
         passButton.setVisibility(View.VISIBLE);
     }
 
     @Produce
-    SkillProficiencySender proficiencySender ()
-    {
+    SkillProficiencySender proficiencySender() {
         SkillProficiencySender skillProficiencySender = new SkillProficiencySender(skillProficiencies);
         return skillProficiencySender;
     }
