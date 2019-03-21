@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.at.gmail.tomeofadventurers.Activities.CreateCharacterActivity"></activity>
+        <activity android:name="com.at.gmail.tomeofadventurers.Activities.FirebaseActivity"></activity>
         <activity android:name="com.at.gmail.tomeofadventurers.Activities.SelectCharacterActivity"></activity>
     </application>
 
