@@ -1,8 +1,12 @@
 package com.at.gmail.tomeofadventurers.Classes;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class SkillsDatabaseAccess {
     private static SkillsDatabaseAccess instance;
@@ -36,4 +40,24 @@ public class SkillsDatabaseAccess {
             this.database.close();
         }
     }
+
+
+    public String getBaseRaceIdFor(String subrace_id)
+    {
+        String baseRaceId = null;
+        String query      = "SELECT race_id FROM subraces WHERE id='" + subrace_id + "'";
+        Cursor cursor     = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (!cursor.isAfterLast())
+        {
+            baseRaceId = (cursor.getString(0));
+        } else
+        {
+            Log.d(TAG, "getBaseRaceIdFor: " + subrace_id + " cursor not found.");
+        }
+        cursor.close();
+
+        return baseRaceId;
+    }
+
 }

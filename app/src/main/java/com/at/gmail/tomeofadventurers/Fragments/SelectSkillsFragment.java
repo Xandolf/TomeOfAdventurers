@@ -14,10 +14,12 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
 
 public class SelectSkillsFragment extends Fragment implements View.OnClickListener {
 
@@ -26,6 +28,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
             historyButton, insightButton, intimidationButton, investigationButton, medicineButton, natureButton,
             perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
             stealthButton, survivalButton;
+    String className;
 
     Bus BUS;
     //0 = Not Proficient, 1 = Proficient, 2 = Expertise
@@ -145,14 +148,17 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
                 historyButton, insightButton, intimidationButton, investigationButton, medicineButton, natureButton,
                 perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
                 stealthButton, survivalButton};
-        //If all skill points are used
+        //If all skill points are used, disables all unchecked skills
         if (skillCount == 0) {
+            //enableButton(buttonGoToSelectName);
             for (int i = 0; i < skillArray.length; i++) {
                 if (!skillArray[i].isChecked()) {
                     skillArray[i].setEnabled(false);
                 }
             }
+        //If a skill points > 0 then all unchecked skills will be enabled.
         } else {
+            //disableButton(buttonGoToSelectName);
             for (int i = 0; i < skillArray.length; i++) {
                 if (!skillArray[i].isChecked()) {
                     skillArray[i].setEnabled(true);
@@ -162,8 +168,8 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         //preDeterminedProficiencies();
         //nonSelectableProficiencies();
     }
-
-    private void toastMessage(String message) {
+    //Toast message for testing. Feel free to delete if no longer needed.
+    public void toastMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
         //toastMessage("Proficient: "+ skillProficiencies[0]);
     }
@@ -389,10 +395,17 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         passButton.setVisibility(View.VISIBLE);
     }
 
+
     @Produce
     SkillProficiencySender proficiencySender() {
         SkillProficiencySender skillProficiencySender = new SkillProficiencySender(skillProficiencies);
         return skillProficiencySender;
+    }
+
+    @Subscribe
+    public void getClass(DnDClass dnDClass)
+    {
+        className = dnDClass.getClassName();
     }
 
 }
