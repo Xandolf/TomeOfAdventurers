@@ -103,6 +103,14 @@
         <item>Undercommon</item>
     </string-array>
 
+    <string-array name="currencyList">
+        <item>Platinum</item>
+        <item>Gold</item>
+        <item>Electrum</item>
+        <item>Silver</item>
+        <item>Copper</item>
+    </string-array>
+
     <string name="home">Home</string>
 
 

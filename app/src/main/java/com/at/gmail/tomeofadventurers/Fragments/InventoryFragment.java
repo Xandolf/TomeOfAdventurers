@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +39,11 @@ public class InventoryFragment extends Fragment {
     ItemListAdapter adapter;
     TextView weight;
     TextView platinum, gold, electrum, silver, copper;
+    Dialog currencyConverterDialog;
+    Button currencyConverterBttn, closeBttn;
+    Spinner currencyTypeSpinner1,currencyTypeSpinner2;
+    String[] currencyTypes;
+    ArrayAdapter<String> currencyTypesAdapter;
 
 
     @Nullable
@@ -86,6 +96,54 @@ public class InventoryFragment extends Fragment {
         copper = view.findViewById(R.id.textViewInventoryCopper);
         copper.setText(myCurrencyValues[4]+"cp");
 
+        currencyConverterBttn = view.findViewById(R.id.buttonCurrencyConverter);
+
+        currencyConverterBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                currencyConverterDialog = new Dialog(getContext());
+                currencyConverterDialog.setContentView(R.layout.popup_currency_converter);
+
+                closeBttn = (Button) currencyConverterDialog.findViewById(R.id.closeBtn);
+
+                closeBttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        currencyConverterDialog.dismiss();
+                    }
+                });
+
+                currencyTypeSpinner1 = currencyConverterDialog.findViewById(R.id.spinnerCurrencyType1);
+                currencyTypeSpinner2 = currencyConverterDialog.findViewById(R.id.spinnerCurrencyType2);
+                addItemsToSpinners();
+
+// TODO currency conversion logic
+//                currencyTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                        //
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> adapterView) {
+////                        txtvwDisplayText.setText("Nothing Selected");
+//                    }
+//                });
+
+                currencyConverterDialog.show();
+            }
+        });
+
         return view;
+    }
+
+    public void addItemsToSpinners() {
+        currencyTypes = getResources().getStringArray(R.array.currencyList);
+        currencyTypesAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, currencyTypes);
+        currencyTypesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currencyTypeSpinner1.setAdapter(currencyTypesAdapter);
+        currencyTypeSpinner2.setAdapter(currencyTypesAdapter);
     }
 }
