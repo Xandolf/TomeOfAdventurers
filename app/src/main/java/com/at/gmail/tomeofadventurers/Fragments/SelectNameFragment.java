@@ -40,6 +40,7 @@ public class SelectNameFragment extends Fragment {
     int [] hitDice = {8,8};
     int charSpeed = 0;
     int HP = 0;
+    CharacterDBAccess characterDBAccess;
 
     @Nullable
     @Override
@@ -64,6 +65,19 @@ public class SelectNameFragment extends Fragment {
             public void onClick(View v ){
                 //Get the name from the editText box
                 name = editTextCharacterName.getText().toString();
+
+                characterDBAccess = CharacterDBAccess.getInstance(getContext());
+                characterDBAccess.open();
+
+                Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP, hitDice);
+
+                boolean insertCharacter = characterDBAccess.saveCharacter(newCharacter);
+
+                if (insertCharacter) {
+                    toastMessage("Character Successfully Created!");
+                } else {
+                    toastMessage("Something went wrong");
+                }
 
 
 

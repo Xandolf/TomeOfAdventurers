@@ -449,7 +449,8 @@ public class CharacterDBAccess {
 
         String charID = Integer.toString(rand_int1)+rand_char1;
 
-        String name, race, dclass, hitdice, armorclass, hp, speed;
+        String name, race, dclass, armorclass, hp, speed;
+        int[] hitdice;
         int[] abilityscores;
         int[] abilityscoremod;
         int[] skillmodifiers;
@@ -458,7 +459,7 @@ public class CharacterDBAccess {
         name = aCharacter.getName();
         race = aCharacter.getRaceName();
         dclass = aCharacter.getClassName();
-//        hitdice = aCharacter.getMyHitDice();
+        hitdice = aCharacter.getCurrentHitDice();
         armorclass = Integer.toString(aCharacter.getArmorClass());
         hp = Integer.toString(aCharacter.getCurrentHitPoints());
         speed = Integer.toString(aCharacter.getSpeed());
@@ -484,7 +485,7 @@ public class CharacterDBAccess {
         contentValues.put("Name", name);
         contentValues.put("Race", race);
         contentValues.put("Class", dclass);
-//        contentValues.put("HitDice", hitdice);
+        contentValues.put("HitDice", hitdice[0]+"d"+hitdice[1]);
         contentValues.put("AC", armorclass);
         contentValues.put("Speed", speed);
         contentValues.put("CurrentHitPoints", hp);
