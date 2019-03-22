@@ -458,7 +458,7 @@ public class CharacterDBAccess {
         name = aCharacter.getName();
         race = aCharacter.getRaceName();
         dclass = aCharacter.getClassName();
-        hitdice = aCharacter.getMyHitDice();
+//        hitdice = aCharacter.getMyHitDice();
         armorclass = Integer.toString(aCharacter.getArmorClass());
         hp = Integer.toString(aCharacter.getCurrentHitPoints());
         speed = Integer.toString(aCharacter.getSpeed());
@@ -484,7 +484,7 @@ public class CharacterDBAccess {
         contentValues.put("Name", name);
         contentValues.put("Race", race);
         contentValues.put("Class", dclass);
-        contentValues.put("HitDice", hitdice);
+//        contentValues.put("HitDice", hitdice);
         contentValues.put("AC", armorclass);
         contentValues.put("Speed", speed);
         contentValues.put("CurrentHitPoints", hp);
