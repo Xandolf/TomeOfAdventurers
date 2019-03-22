@@ -8,7 +8,7 @@
 
 
     <Button
-        android:id="@+id/btnToClassPropertiesFragment"
+        android:id="@+id/buttonToClassPropertiesFragment"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -20,12 +20,12 @@
         app:layout_constraintBottom_toTopOf="@+id/spinnerClass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.736"
-        app:layout_constraintStart_toEndOf="@+id/txtvwPromptClass"
+        app:layout_constraintStart_toEndOf="@+id/textViewPromptClass"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.727" />
 
     <TextView
-        android:id="@+id/txtvwPromptClass"
+        android:id="@+id/textViewPromptClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -51,18 +51,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spinnerSubClass"
+        android:layout_width="360dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerClass" />
+
     <ScrollView
         android:id="@+id/scrollviewClassDescription"
         android:layout_width="346dp"
         android:layout_height="422dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerClass"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSubClass"
         app:layout_constraintVertical_bias="0.057">
 
         <LinearLayout

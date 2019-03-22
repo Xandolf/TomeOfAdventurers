@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 
@@ -53,6 +54,8 @@ public class AllItemsFragment extends Fragment {
     Button createItemClose;
     Button createItemAddItem;
 
+    String charID;
+
 
     @Nullable
     @Override
@@ -61,6 +64,13 @@ public class AllItemsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         itemBookListView = (ListView) view.findViewById(R.id.listViewItembook);
+
+        CharacterDBAccess myCharDBAccess;
+        myCharDBAccess = CharacterDBAccess.getInstance(getContext());
+        myCharDBAccess.open();
+        charID = myCharDBAccess.findSelectedCharacter();
+        myCharDBAccess.close();
+
         myDatabaseAccess = DatabaseAccess.getInstance(this.getContext());
         myDatabaseAccess.open();
         itemNames = myDatabaseAccess.getItemNames();
@@ -167,18 +177,17 @@ public class AllItemsFragment extends Fragment {
         data.close();
     }
 
-    private void addItemToInventories(int charID, String itemSlug)
+    private void addItemToInventories(String charID, String itemID)
     {
             boolean inInventories; //initially assume no duplicate items
             int itemCount;
 
-            inInventories = myDatabaseAccess.isIteminInventories(itemSlug);
-
+            inInventories = myDatabaseAccess.isIteminInventories(itemID, charID);
 
             if(inInventories == false) {    //item not in inventories list yet
 
                 //item not equipped yet
-                boolean inventoriesAdded = myDatabaseAccess.addToInventories(charID, itemSlug, 1, 0);
+                boolean inventoriesAdded = myDatabaseAccess.addToInventories(charID, itemID, 1, 0);
 
                 if(inventoriesAdded) {
                     toastMessage("Item added to inventory!");
@@ -189,8 +198,8 @@ public class AllItemsFragment extends Fragment {
             }
 
             else {
-                itemCount = myDatabaseAccess.getExistingItemCount(itemSlug);
-                myDatabaseAccess.addToInventoriesCount(itemSlug, itemCount+1); //add one to itemCount
+                itemCount = myDatabaseAccess.getExistingItemCount(itemID, charID);
+                myDatabaseAccess.addToInventoriesCount(itemID, itemCount+1, charID); //add one to itemCount
                 toastMessage("Updated QTY of item!");
             }
     }
@@ -225,7 +234,7 @@ public class AllItemsFragment extends Fragment {
                     addItemBttn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            addItemToInventories(1, finalItemSlug);
+                            addItemToInventories(charID, finalItemSlug);
                         }
                     });
 
