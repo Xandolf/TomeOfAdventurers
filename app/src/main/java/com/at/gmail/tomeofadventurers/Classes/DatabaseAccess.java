@@ -142,7 +142,7 @@ public class DatabaseAccess {
 
     public List<Integer> fillInventoryQty() {
         List<Integer> list = new ArrayList<>();
-        String query = "SELECT count FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
+        String query = "SELECT count FROM items, inventories, characters WHERE items.id = inventories.id AND characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -155,7 +155,7 @@ public class DatabaseAccess {
 
     public List<Integer> fillInventoryEquipped() {
         List<Integer> list = new ArrayList<>();
-        String query = "SELECT equip FROM inventories, characters WHERE characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
+        String query = "SELECT equip FROM items, inventories, characters WHERE items.id = inventories.id AND characters.Selected = 1 AND characters.id = inventories.idchar ORDER BY inventories.equip DESC";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
