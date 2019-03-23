@@ -299,10 +299,10 @@ public class DatabaseAccess {
     //Spells database functions -----------------------------------------------------------------
     public List<String> getSpellNames() {
         List<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM dndspells", null);
+        Cursor cursor = database.rawQuery("SELECT name FROM spells", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            list.add(cursor.getString(1));
+            list.add(cursor.getString(0));
             cursor.moveToNext();
         }
         cursor.close();
@@ -410,7 +410,7 @@ public class DatabaseAccess {
     }
 
     public void deleteSpellFromSpells(String listSlug){
-        String query = "DELETE FROM " + "dndspells" + " WHERE "
+        String query = "DELETE FROM " + "spells" + " WHERE "
                 + "slug" + " = '" + listSlug + "'";
         Log.d(TAG, "deleteName: query: " + query);
         Log.d(TAG, "deleteName: Deleting " + listSlug + " from database.");
@@ -419,7 +419,7 @@ public class DatabaseAccess {
 
     public List<String> fillSpellbook() {
         List<String> list = new ArrayList<>();
-        String query = "SELECT name FROM dndspells, spellbooks WHERE dndspells.slug = spellbooks.slug";
+        String query = "SELECT name FROM spells, spellbooks WHERE spells.slug = spellbooks.slug";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
