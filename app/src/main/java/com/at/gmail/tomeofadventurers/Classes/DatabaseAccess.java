@@ -88,7 +88,7 @@ public class DatabaseAccess {
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", itemName);  //need to have id for new items later!!
         contentValues.put("name", itemName);
-        contentValues.put("desc", descr);
+        contentValues.put("equipment_category", descr);
         contentValues.put("weapon_category", weaponCategory);
         contentValues.put("weapon_range", weaponRange);
 
@@ -315,13 +315,12 @@ public class DatabaseAccess {
         return data;
     }
 
-    public boolean isSpellinSpellbook(String slugToCheck){
+    public boolean isSpellinSpellbook(String slugToCheck, String charID){
 
         boolean inSpellbooks = false;
         String slugMatched = "_"; //Dummy initialize value
 
-        String query = "SELECT " + "slug" + " FROM " + "spellbooks" +
-                " WHERE " + "slug" + " = '" + slugToCheck + "'";
+        String query = "SELECT slug FROM spellbooks WHERE slug = '"+ slugToCheck +"' AND idchar = '"+ charID +"'";
         Cursor data = database.rawQuery(query, null);
 
         while(data.moveToNext())
@@ -337,11 +336,11 @@ public class DatabaseAccess {
         return inSpellbooks;
     }
 
-    public boolean addToSpellbooks(int idchar, String slug, int myCount) {
+    public boolean addToSpellbooks(String charID, String slug, int myCount) {
 
         ContentValues contentValue = new ContentValues();
 
-        contentValue.put("idchar", idchar);
+        contentValue.put("idchar", charID);
         contentValue.put("slug", slug);
         contentValue.put("count", myCount);
 
@@ -357,12 +356,11 @@ public class DatabaseAccess {
         }
     }
 
-    public int getExistingSpellCount(String slugToCheck){
+    public int getExistingSpellCount(String slugToCheck, String charID){
 
         int finalCount = -1;
 
-        String query = "SELECT " + "count" + " FROM " + "spellbooks" +
-                " WHERE " + "slug" + " = '" + slugToCheck + "'";
+        String query = "SELECT count FROM spellbooks WHERE slug = '"+ slugToCheck +"' and idchar = '"+ charID +"'";
 
         Cursor data = database.rawQuery(query, null);
 
@@ -375,12 +373,11 @@ public class DatabaseAccess {
         return finalCount;
     }
 
-    public void addToSpellbooksCount(String slugToCheck, int myCount) {
+    public void addToSpellbooksCount(String slugToCheck, int myCount, String charID) {
 
         String newCount = Integer.toString(myCount);;
 
-        String query = "UPDATE " + "spellbooks" + " SET " + "count" +
-                " = '" + newCount + "' WHERE " + "slug" + " = '" + slugToCheck + "'";
+        String query = "UPDATE spellbooks SET count = '"+ newCount +"' WHERE slug = '"+ slugToCheck +"' AND idchar = '"+ charID +"'";
 
         database.execSQL(query);
     }
@@ -393,7 +390,7 @@ public class DatabaseAccess {
         contentValues.put("page", source1);
         contentValues.put("school", type1);
 
-        long result = database.insert("dndspells", null, contentValues);
+        long result = database.insert("spells", null, contentValues);
 
         //if data is inserted incorrectly it will return -1
         if (result == -1) {
@@ -419,7 +416,7 @@ public class DatabaseAccess {
 
     public List<String> fillSpellbook() {
         List<String> list = new ArrayList<>();
-        String query = "SELECT name FROM spells, spellbooks WHERE spells.slug = spellbooks.slug";
+        String query = "SELECT spells.name FROM spells, spellbooks, characters WHERE spells.slug = spellbooks.slug AND characters.Selected = 1 AND characters.id = spellbooks.idchar";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -430,19 +427,17 @@ public class DatabaseAccess {
         return list;
     }
 
-    public void removeFromSpellbooksCount(String slugToCheck, int myCount) {
+    public void removeFromSpellbooksCount(String slugToCheck, int myCount, String charID) {
 
         String newCount = Integer.toString(myCount);
 
-        String query = "UPDATE " + "spellbooks" + " SET " + "count" +
-                " = '" + newCount + "' WHERE " + "slug" + " = '" + slugToCheck + "'";
+        String query = "UPDATE spellbooks SET count = '"+ newCount +"' WHERE slug = '"+ slugToCheck +"' AND idchar = '"+ charID +"'";
 
         database.execSQL(query);
     }
 
-    public void deleteItemFromSpellbook(String slugToCheck){
-        String query = "DELETE FROM " + "spellbooks" + " WHERE "
-                + "slug" + " = '" + slugToCheck + "'";
+    public void deleteItemFromSpellbook(String slugToCheck, String charID){
+        String query = "DELETE FROM spellbooks WHERE slug = '"+ slugToCheck +"' AND idchar = '"+ charID +"'";
         Log.d(TAG, "deleteName: query: " + query);
         Log.d(TAG, "deleteName: Deleting " + slugToCheck + " from database.");
         database.execSQL(query);

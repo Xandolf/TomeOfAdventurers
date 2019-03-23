@@ -34,7 +34,7 @@
         android:id="@+id/listViewSpells"
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
-        android:layout_height="621dp"
+        android:layout_height="wrap_content"
 
         android:divider="@color/colorPrimaryDark"
         android:dividerHeight="1dp"
