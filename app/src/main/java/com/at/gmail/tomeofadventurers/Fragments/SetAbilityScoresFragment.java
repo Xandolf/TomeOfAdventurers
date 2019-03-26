@@ -156,11 +156,6 @@ public class SetAbilityScoresFragment extends Fragment {
                 {
                     //Toast.makeText(getActivity(),"There were errors!",Toast.LENGTH_SHORT).show();
                 }
-                /*
-                BUS.register(this);
-                BUS.post(sendAbilityScores(abilityScores));
-                BUS.unregister(this);
-                */
 
                 //enable button after calculating
                 enableButton(buttonGoToSelectSkills);
@@ -228,7 +223,6 @@ public class SetAbilityScoresFragment extends Fragment {
     @Produce
     AbilityScoreSender sendAbilityScores()
     {
-        AbilityScoreSender abilityScoreSender = new AbilityScoreSender(abilityScores);
-        return abilityScoreSender;
+       return new AbilityScoreSender(abilityScores);
     }
 }

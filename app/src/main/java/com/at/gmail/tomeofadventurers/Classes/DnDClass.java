@@ -1,7 +1,7 @@
 package com.at.gmail.tomeofadventurers.Classes;
 
 public class DnDClass {
-    private String className;
+    private String subClassId;
 
     //Alex Code
     private int HP;
@@ -11,13 +11,13 @@ public class DnDClass {
     private boolean [] skillProficiencies;
     private boolean [] savingThrows;
 
-    public void setClassName(String className)
+    public void setSubClassId(String subClassId)
     {
-        this.className=className;
+        this.subClassId = subClassId;
     }
-    public String getClassName()
+    public String getSubClassId()
     {
-        return this.className;
+        return this.subClassId;
     }
 
     //Alex Code
