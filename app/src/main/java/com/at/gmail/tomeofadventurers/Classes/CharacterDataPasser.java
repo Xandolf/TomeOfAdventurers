@@ -1,6 +1,7 @@
 package com.at.gmail.tomeofadventurers.Classes;
 
-public class CharacterDataPasser {
+public class CharacterDataPasser
+{
     //******STARTING DEFINING VARIABLES********
     //Imported Classes variables classes
 
@@ -74,15 +75,15 @@ public class CharacterDataPasser {
     private int myInventoryTable;
 
     public CharacterDataPasser(String myName, int myMaxHealth, int abilityScores[],
-                     boolean skillProficiencies[],boolean savingThrowProfs [])
+            boolean skillProficiencies[], boolean savingThrowProfs[])
     {
         this.myName = myName;
-        this.currentHitPoints=this.maxHitPoints=myMaxHealth;
-        this.abilityScores=abilityScores;
-        this.skillProficiencies =skillProficiencies;
-        this.savingThrowProficiences=savingThrowProfs;
-        myArmorClass=13;
-        mySpeed=30;
+        this.currentHitPoints = this.maxHitPoints = myMaxHealth;
+        this.abilityScores = abilityScores;
+        this.skillProficiencies = skillProficiencies;
+        this.savingThrowProficiences = savingThrowProfs;
+        myArmorClass = 13;
+        mySpeed = 30;
 
 
     }
@@ -93,10 +94,17 @@ public class CharacterDataPasser {
         return myName;
     }
 
+    //Setters................................................................................
+    public void setMyName(String passName)
+    {
+        myName = passName;
+    }
+
     public int getMyArmorClass()
     {
         return myArmorClass;
     }
+
     public int[] getAbilityScores()
     {
         return abilityScores;
@@ -112,38 +120,36 @@ public class CharacterDataPasser {
         return maxHitPoints;
     }
 
-    public boolean [] getSkillProficiencies(){return skillProficiencies;}
-
-    public int [] getAllAbilityScoreModifiers()
+    public boolean[] getSkillProficiencies()
     {
-        int abilityScoreModifiers[]=new int [6];
-        for (int i=0; i<6;i++)
+        return skillProficiencies;
+    }
+
+    public int[] getAllAbilityScoreModifiers()
+    {
+        int abilityScoreModifiers[] = new int[6];
+        for (int i = 0; i < 6; i++)
         {
-            abilityScoreModifiers[i] = (abilityScores[i]-10)/2;
+            abilityScoreModifiers[i] = (abilityScores[i] - 10) / 2;
         }
 
 
         return abilityScoreModifiers;
     }
 
-    //Setters................................................................................
-    public void setMyName(String passName){
-        myName = passName;
-    }
-
-
-
     //Functional.............................................................................
     public void increaseCurrentHealth(int healthGained)
     {
-        currentHitPoints +=healthGained;
+        currentHitPoints += healthGained;
         if (currentHitPoints > maxHitPoints) currentHitPoints = maxHitPoints;
     }
+
     public void decreaseCurrentHealth(int healthLost)
     {
-        currentHitPoints -=healthLost;{
-        if (currentHitPoints <0) currentHitPoints =0;
-    }
+        currentHitPoints -= healthLost;
+        {
+            if (currentHitPoints < 0) currentHitPoints = 0;
+        }
 
     }
 }

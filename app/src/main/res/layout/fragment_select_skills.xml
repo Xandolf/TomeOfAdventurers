@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/buttonGoToEnterName"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/right_arrow_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSetSkillsHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewSetSkillsHeader"  />
+
+    <TextView
+        android:id="@+id/textViewSetSkillsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:text="Select Skills"
+        app:layout_constraintEnd_toStartOf="@+id/buttonGoToEnterName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/radio_acrobatics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Acrobatics"
+        app:layout_constraintBottom_toTopOf="@+id/radio_animalHandling"
+        app:layout_constraintStart_toStartOf="@+id/radio_animalHandling" />
+
+    <CheckBox
+        android:id="@+id/radio_animalHandling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/AnimalHandling"
+        app:layout_constraintBottom_toTopOf="@+id/radio_arcana"
+        app:layout_constraintStart_toStartOf="@+id/radio_arcana" />
+
+    <CheckBox
+        android:id="@+id/radio_arcana"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Arcana"
+        app:layout_constraintBottom_toTopOf="@+id/radio_athletics"
+        app:layout_constraintStart_toStartOf="@+id/radio_athletics" />
+
+    <CheckBox
+        android:id="@+id/radio_athletics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Athletics"
+        app:layout_constraintBottom_toTopOf="@+id/radio_deception"
+        app:layout_constraintStart_toStartOf="@+id/radio_deception" />
+
+    <CheckBox
+        android:id="@+id/radio_deception"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Deception"
+        app:layout_constraintBottom_toTopOf="@+id/radio_history"
+        app:layout_constraintStart_toStartOf="@+id/radio_history" />
+
+    <CheckBox
+        android:id="@+id/radio_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/History"
+        app:layout_constraintBottom_toTopOf="@+id/radio_insight"
+        app:layout_constraintStart_toStartOf="@+id/radio_insight" />
+
+    <CheckBox
+        android:id="@+id/radio_insight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Insight"
+        app:layout_constraintBottom_toTopOf="@+id/radio_intimidation"
+        app:layout_constraintStart_toStartOf="@+id/radio_intimidation" />
+
+    <CheckBox
+        android:id="@+id/radio_intimidation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Intimidation"
+        app:layout_constraintBottom_toTopOf="@+id/radio_investigation"
+        app:layout_constraintStart_toStartOf="@+id/radio_investigation" />
+
+    <CheckBox
+        android:id="@+id/radio_investigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Investigation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.688" />
+
+
+    <CheckBox
+        android:id="@+id/radio_medicine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Medicine"
+        app:layout_constraintBottom_toTopOf="@+id/radio_nature"
+        app:layout_constraintStart_toStartOf="@+id/radio_nature" />
+
+    <CheckBox
+        android:id="@+id/radio_nature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Nature"
+        app:layout_constraintBottom_toTopOf="@+id/radio_perception"
+        app:layout_constraintStart_toStartOf="@+id/radio_perception" />
+
+    <CheckBox
+        android:id="@+id/radio_perception"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Perception"
+        app:layout_constraintBottom_toTopOf="@+id/radio_performance"
+        app:layout_constraintStart_toStartOf="@+id/radio_performance" />
+
+    <CheckBox
+        android:id="@+id/radio_performance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Performance"
+        app:layout_constraintBottom_toTopOf="@+id/radio_persuasion"
+        app:layout_constraintStart_toStartOf="@+id/radio_persuasion" />
+
+    <CheckBox
+        android:id="@+id/radio_persuasion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Persuasion"
+        app:layout_constraintBottom_toTopOf="@+id/radio_religion"
+        app:layout_constraintStart_toStartOf="@+id/radio_religion" />
+
+    <CheckBox
+        android:id="@+id/radio_religion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Religion"
+        app:layout_constraintBottom_toTopOf="@+id/radio_slightOfHand"
+        app:layout_constraintStart_toStartOf="@+id/radio_slightOfHand" />
+
+    <CheckBox
+        android:id="@+id/radio_slightOfHand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/SlightOfHand"
+        app:layout_constraintBottom_toTopOf="@+id/radio_stealth"
+        app:layout_constraintStart_toStartOf="@+id/radio_stealth" />
+
+    <CheckBox
+        android:id="@+id/radio_stealth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Stealth"
+        app:layout_constraintBottom_toTopOf="@+id/radio_survival"
+        app:layout_constraintStart_toStartOf="@+id/radio_survival" />
+
+    <CheckBox
+        android:id="@+id/radio_survival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="checkButton"
+        android:text="@string/Survival"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toEndOf="@+id/radio_investigation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.699" />
+
+</android.support.constraint.ConstraintLayout>
