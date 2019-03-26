@@ -2,8 +2,7 @@ package com.at.gmail.tomeofadventurers.Classes;
 
 public class Race {
     private String raceName;
-    private String raceKey;
-
+    private String subRaceId;
 
 
     //Alex Code
@@ -13,6 +12,10 @@ public class Race {
     {
         this.raceName=raceName;
     }
+    public void setSubRaceId (String subRaceId)
+    {
+        this.subRaceId=subRaceId;
+    }
 
     public String getRaceName()
     {
@@ -21,6 +24,8 @@ public class Race {
     //Alex code
     public void setSpeed(int passSpeed){this.speed = passSpeed;}
     public int getSpeed(){return this.speed;}
+
+
 //    public int [] getAbilityScoreBonuses(){}
 
 

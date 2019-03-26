@@ -28,7 +28,7 @@ import com.squareup.otto.Produce;
 
 public class SelectClassFragment extends Fragment
 {
-    String classIds[] = {"a", "b"};
+    String classIds[];
     String subClassIds[];
     String selectedClassId;
     String selectedSubClassID;
@@ -39,14 +39,15 @@ public class SelectClassFragment extends Fragment
     Spinner spinnerClass, spinnerSubClass;
     Button buttonMoreInfo;
     Bus BUS;
+
     //Dialog popup test
     Dialog testDialog;
     TextView textViewPassAttributes;
     Button buttonClosePopup;
     ClassDatabaseAccess classDatabaseAccess;
     SubClassDatabaseAccess subClassDatabaseAccess;
+
     //string alternatives
-    String[] stringClassList;
     ArrayAdapter<String> classListAdapter;
     ArrayAdapter<String> subClassListAdapter;
 
@@ -211,7 +212,7 @@ public class SelectClassFragment extends Fragment
     public DnDClass sendDnDClass()
     {
         DnDClass dnDClass = new DnDClass();
-        dnDClass.setClassName(selectedSubClassID);
+        dnDClass.setSubClassId(selectedSubClassID);
         return dnDClass;
     }
 }

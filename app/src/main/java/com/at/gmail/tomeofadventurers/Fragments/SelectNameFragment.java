@@ -85,20 +85,13 @@ public class SelectNameFragment extends Fragment {
                 //Post the character we just created to the BUS
 //                BUS.post(sendCharacter());
 
-//                BUS.unregister(this);
+
 
                 //Direct to Character Sheet fragment
                 Intent switcher = new Intent(getActivity(), MainActivity.class);
                 startActivity(switcher);
 
-                /*
-                Fragment frag = new CharacterSheetFragment();
-                FragmentManager fragManager = getActivity().getFragmentManager();
-                FragmentTransaction fragTrans = fragManager.beginTransaction();
 
-                fragTrans.replace(R.id.fragment_container, frag);
-                fragTrans.commit();
-                */
             }
         });
 
@@ -120,7 +113,7 @@ public class SelectNameFragment extends Fragment {
     @Subscribe
     public void getClass(DnDClass dnDClass)
     {
-        className = dnDClass.getClassName();
+        className = dnDClass.getSubClassId();
     }
     @Subscribe
     void getRace (Race race)
