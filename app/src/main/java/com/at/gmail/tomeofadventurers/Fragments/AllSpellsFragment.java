@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 
@@ -59,6 +60,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
     String orderBy = "name";
     String spellSchool = "%";
 
+    String charID;
 
     @Nullable
     @Override
@@ -67,6 +69,13 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
 
         spellsListView = (ListView) view.findViewById(R.id.listViewSpells);
+
+        CharacterDBAccess myCharDBAccess;
+        myCharDBAccess = CharacterDBAccess.getInstance(getContext());
+        myCharDBAccess.open();
+        charID = myCharDBAccess.findSelectedCharacter();
+        myCharDBAccess.close();
+
         myDatabaseAccess = DatabaseAccess.getInstance(this.getContext());
         myDatabaseAccess.open();
         spellNames = myDatabaseAccess.getSpellNames();
@@ -124,7 +133,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
                         newEntryDesc = createSpellDesc.getText().toString();
 
                         if(newEntryName.length() == 0) {
-                            toastMessage("Enter an spell name.");
+                            toastMessage("Enter a spell name.");
                         }
 
                         else {
@@ -160,7 +169,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         schoolSpinner.setAdapter(schoolSpinnerAdapter);
         schoolSpinner.setOnItemSelectedListener(this);
         //creates spinner view for ordering results
-        String[] orderArray = {"Order", "Name", "Spell Level", "School"};
+        String[] orderArray = {"Order", "Name", "Spell Level", "School "};
         Spinner orderSpinner = view.findViewById(R.id.allSpellsOrderSpinner);
         ArrayAdapter<String> orderSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, orderArray);
         orderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -178,6 +187,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         } else {
             toastMessage("Something went wrong");
         }
+
     }
 
     private void getSpellInfo(String slug, Dialog myDialog) {
@@ -204,17 +214,17 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
     }
 
 
-    private void addSpellToSpellbooks(int charID, String spellSlug)
+    private void addSpellToSpellbooks(String idChar, String spellSlug)
     {
         boolean inSpellbook;
         int spellCount;
 
-        inSpellbook = myDatabaseAccess.isSpellinSpellbook(spellSlug);
+        inSpellbook = myDatabaseAccess.isSpellinSpellbook(spellSlug, idChar);
 
 
         if(inSpellbook == false) {    //item not in inventories list yet
 
-            boolean spellbooksAdded = myDatabaseAccess.addToSpellbooks(charID, spellSlug, 1);
+            boolean spellbooksAdded = myDatabaseAccess.addToSpellbooks(idChar, spellSlug, 1);
 
             if(spellbooksAdded) {
                 toastMessage("Spell added to spellbook!");
@@ -225,8 +235,8 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         }
 
         else {
-            spellCount = myDatabaseAccess.getExistingSpellCount(spellSlug);
-            myDatabaseAccess.addToSpellbooksCount(spellSlug, spellCount+1); //add one to spellCount
+            spellCount = myDatabaseAccess.getExistingSpellCount(spellSlug, idChar);
+            myDatabaseAccess.addToSpellbooksCount(spellSlug, spellCount+1, idChar); //add one to spellCount
             toastMessage("Updated QTY of spell!");
         }
     }
@@ -268,7 +278,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
                     addSpellBttn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            addSpellToSpellbooks(1, finalSpellSlug);
+                            addSpellToSpellbooks(charID, finalSpellSlug);
                         }
                     });
 
@@ -448,7 +458,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         {
             orderBy = "spell_level";
         }
-        else if (spinnerSelection == "School")
+        else if (spinnerSelection == "School ")
         {
             orderBy = "school";
         }

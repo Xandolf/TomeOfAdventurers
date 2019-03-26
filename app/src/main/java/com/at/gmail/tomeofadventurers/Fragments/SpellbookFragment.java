@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 
@@ -39,6 +40,8 @@ public class SpellbookFragment extends Fragment
     TextView spellDesc;
     TextView spellCount;
 
+    String charID;
+
 
     @Nullable
     @Override
@@ -49,6 +52,12 @@ public class SpellbookFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         spellbookListView = (ListView) view.findViewById(R.id.listViewSpellbook);
+
+        CharacterDBAccess myCharDBAccess;
+        myCharDBAccess = CharacterDBAccess.getInstance(getContext());
+        myCharDBAccess.open();
+        charID = myCharDBAccess.findSelectedCharacter();
+
         myDatabaseAccess = DatabaseAccess.getInstance(this.getContext());
         myDatabaseAccess.open();
         spellNames = myDatabaseAccess.fillSpellbook();
@@ -87,8 +96,7 @@ public class SpellbookFragment extends Fragment
 
         data.close();
 
-        spellCount.setText("QTY: " + Integer.toString(myDatabaseAccess.getExistingSpellCount
-                (slug)));
+        spellCount.setText("QTY: " + Integer.toString(myDatabaseAccess.getExistingSpellCount(slug, charID)));
     }
 
     private void getSlugFromListView()
@@ -137,17 +145,17 @@ public class SpellbookFragment extends Fragment
                         @Override
                         public void onClick(View v)
                         {
-                            int spellCount = myDatabaseAccess.getExistingSpellCount(finalSpellSlug);
+                            int spellCount = myDatabaseAccess.getExistingSpellCount(finalSpellSlug, charID);
 
                             if (spellCount > 1)
                             {
                                 myDatabaseAccess.removeFromSpellbooksCount(finalSpellSlug,
-                                                                           spellCount - 1);
+                                                                           spellCount - 1, charID);
                                 //remove 1 from count
                                 getSpellInfo(finalSpellSlug, myDialog);
                             } else
                             {
-                                myDatabaseAccess.deleteItemFromSpellbook(finalSpellSlug);
+                                myDatabaseAccess.deleteItemFromSpellbook(finalSpellSlug, charID);
                                 adapter.remove(adapter.getItem(i));
                                 adapter.notifyDataSetChanged();
                                 myDialog.dismiss();
