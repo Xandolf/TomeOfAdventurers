@@ -48,6 +48,7 @@ public class SetAbilityScoresFragment extends Fragment {
         BUS=BusProvider.getInstance();
         //Register the bus
         BUS.register(this);
+
         //Initialize the text views. A lot of this should be moved to a recycler view but this is a
         //'fast' n sloppy implementation
         validInput=false;
@@ -163,20 +164,13 @@ public class SetAbilityScoresFragment extends Fragment {
         });//end OnClickListener
 
 
-        //Go to Set Name
+        //Go to Select Skills
         buttonGoToSelectSkills.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
                 //Send the ability scores to the BUS
                 BUS.post(sendAbilityScores());
-
-                //Unregister the BUS
-//                BUS.unregister(this);
-
-                //Transfer to Select Name Fragment
-//                FragmentManager fragManager = getFragmentManager();
-//                fragManager.beginTransaction().replace(R.id.fragment_container, new SelectNameFragment()).commit();
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
@@ -186,10 +180,9 @@ public class SetAbilityScoresFragment extends Fragment {
             }
         });
 
+
         //disable the button to proceed
         disableButton(buttonGoToSelectSkills);
-
-
 
         return view;
     }//end OnCreateView
@@ -217,7 +210,6 @@ public class SetAbilityScoresFragment extends Fragment {
 
 //
 //    I will want to call this function when they press the next button.
-//    I may not be able to pass it an argument as a parameter???
 //    I should make sure that all the values are valid first.
 //    the procedure is to register with the BUS. Post the producing function Then unregistering.
     @Produce
