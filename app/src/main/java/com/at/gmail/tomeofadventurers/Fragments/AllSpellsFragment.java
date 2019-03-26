@@ -169,7 +169,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         schoolSpinner.setAdapter(schoolSpinnerAdapter);
         schoolSpinner.setOnItemSelectedListener(this);
         //creates spinner view for ordering results
-        String[] orderArray = {"Order", "Name", "Spell Level", "School"};
+        String[] orderArray = {"Order", "Name", "Spell Level", "School "};
         Spinner orderSpinner = view.findViewById(R.id.allSpellsOrderSpinner);
         ArrayAdapter<String> orderSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, orderArray);
         orderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -458,7 +458,7 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
         {
             orderBy = "spell_level";
         }
-        else if (spinnerSelection == "School")
+        else if (spinnerSelection == "School ")
         {
             orderBy = "school";
         }
