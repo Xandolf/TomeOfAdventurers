@@ -32,21 +32,21 @@ public class SelectRaceFragment extends Fragment {
     int abilityScores[] = new int[6];
 
     //variables
-    Button buttonToClass;
-    Button buttonMoreInfo;
+    Button buttonToClass, buttonMoreInfo;
     TextView textViewDisplayText;
     Spinner spinnerRace, spinnerSubRace;
     Bus BUS;
     String[] raceIds;
-    String selectedRaceId;
-
-    SubRaceDatabaseAccess subRaceDatabaseAccess;
     String[] subRaceIds;
     String[] subRaceNames;
+    String[] stringRaceList;
+    String selectedRaceId;
     String selectedSubRaceId;
-    ArrayAdapter<String> subRaceListAdapter;
 
+    SubRaceDatabaseAccess subRaceDatabaseAccess;
     RaceDatabaseAccess raceDatabaseAccess;
+
+    ArrayAdapter<String> subRaceListAdapter;
 
     //Dialog popupTest;
     Dialog testDialog;
@@ -54,7 +54,6 @@ public class SelectRaceFragment extends Fragment {
     Button buttonClosePopup;
 
     //string alternatives
-    String[] stringRaceList;
     ArrayAdapter<String> raceListAdapter;
 
     @Nullable
@@ -135,6 +134,7 @@ public class SelectRaceFragment extends Fragment {
                 textViewDisplayText.setText("Nothing Selected");
             }
         });
+
 
         return view;
     }
@@ -235,12 +235,8 @@ public class SelectRaceFragment extends Fragment {
     {
         Race race = new Race();
         race.setRaceName(selectedRaceId);
+        race.setSubRaceId(selectedSubRaceId);
         return race;
-    }
-
-
-    public int[] getAbilityScores(){
-        return new int[]{abilityScores[0], abilityScores[1], abilityScores[2], abilityScores[3], abilityScores[4], abilityScores[5]};
     }
 
 
