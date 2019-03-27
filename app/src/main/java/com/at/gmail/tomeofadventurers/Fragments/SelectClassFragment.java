@@ -102,6 +102,7 @@ public class SelectClassFragment extends Fragment
         buttonToClassProperties.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                BUS.post(sendDnDClass());
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
                 SetAbilityScoresFragment frag = new SetAbilityScoresFragment();

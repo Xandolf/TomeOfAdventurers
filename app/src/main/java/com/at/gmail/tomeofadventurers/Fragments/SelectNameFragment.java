@@ -120,6 +120,8 @@ public class SelectNameFragment extends Fragment {
     {
         raceName = race.getRaceName();
     }
+
+
     @Subscribe
     void getAbilityScores(AbilityScoreSender abilityScoreSender)
     { abilityScores = abilityScoreSender.getAbilityScores();}
