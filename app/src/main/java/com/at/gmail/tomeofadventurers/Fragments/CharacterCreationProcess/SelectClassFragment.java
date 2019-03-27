@@ -1,4 +1,4 @@
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
 import android.app.Dialog;
 import android.support.v4.app.Fragment;

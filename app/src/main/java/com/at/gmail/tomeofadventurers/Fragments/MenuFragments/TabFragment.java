@@ -1,5 +1,5 @@
 //This fragment loads and displays multiple fragments
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.MenuFragments;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

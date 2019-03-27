@@ -1,4 +1,4 @@
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.MenuFragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -223,12 +223,12 @@ public class CharacterSheetFragment extends Fragment {
 //
 //    }
 
-    @Subscribe
-    public void getClass (DnDClass dnDClass)
-    {
-        className=dnDClass.getClassName();
-    }
-    private void toastMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
+//    @Subscribe
+//    public void getClass (DnDClass dnDClass)
+//    {
+//        className=dnDClass.getSubClassId();
+//    }
+//    private void toastMessage(String message) {
+//        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+//
 }

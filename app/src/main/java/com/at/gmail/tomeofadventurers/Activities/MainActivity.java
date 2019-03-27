@@ -1,7 +1,6 @@
 package com.at.gmail.tomeofadventurers.Activities;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,15 +15,13 @@ import android.view.MenuItem;
 
 import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
 import com.at.gmail.tomeofadventurers.Classes.Character;
-import com.at.gmail.tomeofadventurers.Fragments.AllItemsFragment;
-import com.at.gmail.tomeofadventurers.Fragments.AllSpellsFragment;
-import com.at.gmail.tomeofadventurers.Fragments.CharacterSheetFragment;
-import com.at.gmail.tomeofadventurers.Fragments.DiceFragment;
-import com.at.gmail.tomeofadventurers.Fragments.FirebaseFragment;
-import com.at.gmail.tomeofadventurers.Fragments.HomeFragment;
-import com.at.gmail.tomeofadventurers.Fragments.InventoryFragment;
-import com.at.gmail.tomeofadventurers.Fragments.SpellbookFragment;
-import com.at.gmail.tomeofadventurers.Fragments.TabFragment;
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.AllItemsFragment;
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.AllSpellsFragment;
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.DiceFragment;
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.FirebaseFragment;
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.InventoryFragment;
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.SpellbookFragment;
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.TabFragment;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;

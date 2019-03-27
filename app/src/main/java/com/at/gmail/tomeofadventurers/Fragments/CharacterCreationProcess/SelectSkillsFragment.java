@@ -1,4 +1,4 @@
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -405,7 +405,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
     @Subscribe
     public void getClass(DnDClass dnDClass)
     {
-        className = dnDClass.getClassName();
+        className = dnDClass.getSubClassId();
     }
 
 }
