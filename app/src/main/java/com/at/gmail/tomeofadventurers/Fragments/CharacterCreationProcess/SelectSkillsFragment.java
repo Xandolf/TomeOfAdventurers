@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,8 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
 import com.at.gmail.tomeofadventurers.R;
@@ -29,6 +32,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
             perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
             stealthButton, survivalButton;
     String className;
+    ClassDatabaseAccess myDatabaseAccess;
 
     Bus BUS;
     //0 = Not Proficient, 1 = Proficient, 2 = Expertise
@@ -42,6 +46,10 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_select_skills, container, false);
         super.onCreate(savedInstanceState);
+
+        //Open Database
+        myDatabaseAccess = ClassDatabaseAccess.getInstance(this.getContext());
+        myDatabaseAccess.open();
 
         buttonGoToSelectName = view.findViewById(R.id.buttonGoToEnterName);
         //Get the instance of the bus
@@ -125,7 +133,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         });
         //disableButton(buttonGoToSelectName);
 
-
+        selectableProficiencies(getContext());
         //preDeterminedProficiencies();
         //nonSelectableProficiencies();
 
@@ -133,14 +141,33 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
+
+
+
     public void preDeterminedProficiencies() {
         acrobaticsButton.setChecked(true);
         acrobaticsButton.setEnabled(false);
 
     }
 
-    public void nonSelectableProficiencies() {
-        animalHandlingButton.setEnabled(false);
+    public void selectableProficiencies(Context myContext) {
+        myDatabaseAccess = ClassDatabaseAccess.getInstance(myContext);
+        myDatabaseAccess.open();
+        boolean[] proficiencyOptions = myDatabaseAccess.getClassOptionProficiencies(myContext,"Barbarian");
+        CheckBox[] skillArray = {acrobaticsButton, animalHandlingButton, arcanaButton, athleticsButton, deceptionButton,
+                historyButton, insightButton, intimidationButton, investigationButton, medicineButton, natureButton,
+                perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
+                stealthButton, survivalButton};
+        for(int i=0; i<17;i++){
+            skillArray[i].setEnabled(false);
+        }
+
+        for(int i=0; i<17;i++) {
+            if(proficiencyOptions[i]){
+                skillArray[i].setEnabled(true);
+            }
+        }
+        myDatabaseAccess.close();
     }
 
     public void checkExpendedPoints() {
@@ -166,7 +193,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
             }
         }
         //preDeterminedProficiencies();
-        //nonSelectableProficiencies();
+        selectableProficiencies(getContext());
     }
     //Toast message for testing. Feel free to delete if no longer needed.
     public void toastMessage(String message) {

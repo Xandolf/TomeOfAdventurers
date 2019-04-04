@@ -5,7 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.at.gmail.tomeofadventurers.R;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ClassDatabaseAccess
@@ -120,6 +124,38 @@ public class ClassDatabaseAccess
         }
 
         return raceDescription;
+    }
+
+    public boolean[] getClassOptionProficiencies(Context myContext, String className){
+        String [] skillNames = myContext.getResources().getStringArray(R.array.Skills);
+        boolean[] proficiencyOptions = {false, false, false, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false, false};
+        String [] queryData    ={"","","","","",""};
+
+        String query           = "select proficiency_choices0,proficiency_choices1," +
+                "proficiency_choices2,proficiency_choices3,proficiency_choices4," +
+                "proficiency_choices5 from classes where name = '" + className + "'";
+        Cursor cursor          = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+//            for(int i = 0; i<5; i++){
+//                queryData[i]=cursor.getString(i);
+//            }
+            queryData[0]=cursor.getString(0);
+            queryData[1]=cursor.getString(1);
+            queryData[2]=cursor.getString(2);
+            queryData[3]=cursor.getString(3);
+            queryData[4]=cursor.getString(4);
+            queryData[5]=cursor.getString(5);
+        }
+        cursor.close();
+        for(int i =0; i<5; i++){
+            if(Arrays.asList(skillNames).contains(queryData[i])) {
+                proficiencyOptions[i]=true;
+            }
+        }
+
+        return proficiencyOptions;
     }
 
 }
