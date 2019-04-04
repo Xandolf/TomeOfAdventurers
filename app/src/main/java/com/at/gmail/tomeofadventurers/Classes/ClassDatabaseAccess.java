@@ -138,24 +138,33 @@ public class ClassDatabaseAccess
         Cursor cursor          = database.rawQuery(query, null);
 
         while(cursor.moveToNext()){
-//            for(int i = 0; i<5; i++){
-//                queryData[i]=cursor.getString(i);
-//            }
-            queryData[0]=cursor.getString(0);
-            queryData[1]=cursor.getString(1);
-            queryData[2]=cursor.getString(2);
-            queryData[3]=cursor.getString(3);
-            queryData[4]=cursor.getString(4);
-            queryData[5]=cursor.getString(5);
-        }
+            for(int i = 0; i<5; i++){
+                queryData[i]=cursor.getString(i);
+            }
+
         cursor.close();
-        for(int i =0; i<5; i++){
-            if(Arrays.asList(skillNames).contains(queryData[i])) {
-                proficiencyOptions[i]=true;
+        for(int i =0; i<18; i++){
+            for(int j =0; j<6; j++){
+                if(skillNames[i].equals(queryData[j])){
+                    proficiencyOptions[i]=true;
+                }
             }
         }
-
+        }
         return proficiencyOptions;
+    }
+
+    public int getProficiencyPointCount(String className){
+        int choiceAmount=0;
+        String query ="select proficiency_choices_amount from classes where name = '"+className+"'";
+        Cursor cursor          = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+            choiceAmount = cursor.getInt(0);
+        }
+        cursor.close();
+
+        return choiceAmount;
     }
 
 }

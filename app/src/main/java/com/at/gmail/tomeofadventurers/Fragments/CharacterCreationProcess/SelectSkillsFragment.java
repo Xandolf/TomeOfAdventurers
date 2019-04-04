@@ -51,6 +51,8 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         myDatabaseAccess = ClassDatabaseAccess.getInstance(this.getContext());
         myDatabaseAccess.open();
 
+        skillCount = myDatabaseAccess.getProficiencyPointCount("Rogue");
+
         buttonGoToSelectName = view.findViewById(R.id.buttonGoToEnterName);
         //Get the instance of the bus
         BUS = BusProvider.getInstance();
@@ -153,16 +155,16 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
     public void selectableProficiencies(Context myContext) {
         myDatabaseAccess = ClassDatabaseAccess.getInstance(myContext);
         myDatabaseAccess.open();
-        boolean[] proficiencyOptions = myDatabaseAccess.getClassOptionProficiencies(myContext,"Barbarian");
+        boolean[] proficiencyOptions = myDatabaseAccess.getClassOptionProficiencies(myContext,"Rogue");
         CheckBox[] skillArray = {acrobaticsButton, animalHandlingButton, arcanaButton, athleticsButton, deceptionButton,
                 historyButton, insightButton, intimidationButton, investigationButton, medicineButton, natureButton,
                 perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
                 stealthButton, survivalButton};
-        for(int i=0; i<17;i++){
+        for(int i=0; i<18;i++){
             skillArray[i].setEnabled(false);
         }
 
-        for(int i=0; i<17;i++) {
+        for(int i=0; i<18;i++) {
             if(proficiencyOptions[i]){
                 skillArray[i].setEnabled(true);
             }
@@ -178,22 +180,22 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         //If all skill points are used, disables all unchecked skills
         if (skillCount == 0) {
             //enableButton(buttonGoToSelectName);
-            for (int i = 0; i < skillArray.length; i++) {
+            for (int i = 0; i < 18; i++) {
                 if (!skillArray[i].isChecked()) {
                     skillArray[i].setEnabled(false);
                 }
             }
-        //If a skill points > 0 then all unchecked skills will be enabled.
+        //If skill points > 0 then all unchecked skills will be enabled.
         } else {
             //disableButton(buttonGoToSelectName);
-            for (int i = 0; i < skillArray.length; i++) {
+            for (int i = 0; i < 18; i++) {
                 if (!skillArray[i].isChecked()) {
-                    skillArray[i].setEnabled(true);
+                    selectableProficiencies(getContext());
                 }
             }
         }
         //preDeterminedProficiencies();
-        selectableProficiencies(getContext());
+
     }
     //Toast message for testing. Feel free to delete if no longer needed.
     public void toastMessage(String message) {

@@ -213,6 +213,8 @@ public class SelectClassFragment extends Fragment
     {
         DnDClass dnDClass = new DnDClass();
         dnDClass.setSubClassId(selectedSubClassID);
+
         return dnDClass;
     }
+
 }
