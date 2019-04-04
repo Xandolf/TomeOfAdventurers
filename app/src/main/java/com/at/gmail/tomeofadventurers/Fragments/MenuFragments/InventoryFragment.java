@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Fragments.MenuFragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,10 +42,13 @@ public class InventoryFragment extends Fragment {
     TextView weight;
     TextView platinum, gold, electrum, silver, copper;
     Dialog currencyConverterDialog;
-    Button currencyConverterBttn, closeBttn;
+    Button currencyConverterBttn, closeBttn, convertBttn;
     Spinner currencyTypeSpinner1,currencyTypeSpinner2;
     String[] currencyTypes;
     ArrayAdapter<String> currencyTypesAdapter;
+    String spinnerSelection1, spinnerSelection2;
+    SeekBar convertPercentBar;
+    int seekBarProgress;
 
 
     @Nullable
@@ -116,21 +121,46 @@ public class InventoryFragment extends Fragment {
 
                 currencyTypeSpinner1 = currencyConverterDialog.findViewById(R.id.spinnerCurrencyType1);
                 currencyTypeSpinner2 = currencyConverterDialog.findViewById(R.id.spinnerCurrencyType2);
+                convertPercentBar = currencyConverterDialog.findViewById(R.id.seekBar);
                 addItemsToSpinners();
 
-// TODO currency conversion logic
-//                currencyTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                        //
-//                    }
-//
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> adapterView) {
-////                        txtvwDisplayText.setText("Nothing Selected");
-//                    }
-//                });
+
+                currencyTypeSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                        spinnerSelection1 = adapterView.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
+                });
+
+                currencyTypeSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                        spinnerSelection2 = adapterView.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
+                });
+
+                convertBttn = (Button) currencyConverterDialog.findViewById(R.id.convertButton);
+
+                convertBttn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        seekBarProgress = convertPercentBar.getProgress();
+                        toastMessage(Integer.toString(seekBarProgress));
+                        myDatabaseAccess.convertCurrency(spinnerSelection1,spinnerSelection2, seekBarProgress);
+                        //Update textviews in inventory for copper and silver
+                        setCurrencyTextViews();
+                    }
+                });
 
                 currencyConverterDialog.show();
             }
@@ -146,4 +176,29 @@ public class InventoryFragment extends Fragment {
         currencyTypeSpinner1.setAdapter(currencyTypesAdapter);
         currencyTypeSpinner2.setAdapter(currencyTypesAdapter);
     }
+
+    public void setCurrencyTextViews(){
+
+        String[] currencyValues = myDatabaseAccess.inventoryCurrency();
+
+        TextView txtView1 = (TextView) ((Activity)getContext()).findViewById(R.id.textViewInventoryCopper);
+        txtView1.setText(currencyValues[4]+"cp");
+
+        TextView txtView2 = (TextView) ((Activity)getContext()).findViewById(R.id.textViewInventorySilver);
+        txtView2.setText(currencyValues[3]+"sp");
+
+        TextView txtView3 = (TextView) ((Activity)getContext()).findViewById(R.id.textViewInventoryElectrum);
+        txtView3.setText(currencyValues[2]+"ep");
+
+        TextView txtView4 = (TextView) ((Activity)getContext()).findViewById(R.id.textViewInventoryGold);
+        txtView4.setText(currencyValues[1]+"gp");
+
+        TextView txtView5 = (TextView) ((Activity)getContext()).findViewById(R.id.textViewInventoryPlatinum);
+        txtView5.setText(currencyValues[0]+"pp");
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
 }
