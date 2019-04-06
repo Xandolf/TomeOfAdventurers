@@ -1,6 +1,7 @@
 package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.SubClassDatabaseAccess;
@@ -30,8 +32,10 @@ public class SelectClassFragment extends Fragment
 {
     String classIds[];
     String subClassIds[];
+    String classNames[];
     String selectedClassId;
     String selectedSubClassID;
+    String selectedClassName;
 
     //variables
     Button buttonToClassProperties;
@@ -58,8 +62,9 @@ public class SelectClassFragment extends Fragment
        super.onCreate(savedInstanceState);
 
         //Get the instance of the bus
-        BUS = BusProvider.getInstance();
-        BUS.register(this);
+//        BUS = BusProvider.getInstance();
+//        BUS.register(this);
+
         //TextView variables
         textViewDisplayText = view.findViewById(R.id.txtvwJSONResultClass);
         textViewDisplayText.setText("Initial Setting Text");
@@ -102,6 +107,16 @@ public class SelectClassFragment extends Fragment
         buttonToClassProperties.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+//                BUS.post(sendDnDClass());
+//                toastMessage(selectedClassName);
+
+                CharacterDBAccess characterDBAccess;
+                characterDBAccess = CharacterDBAccess.getInstance(getContext());
+                characterDBAccess.open();
+
+                characterDBAccess.saveClass(selectedClassName);
+                characterDBAccess.close();
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
                 SetAbilityScoresFragment frag = new SetAbilityScoresFragment();
@@ -124,7 +139,7 @@ public class SelectClassFragment extends Fragment
     }
     @Override
     public void onPause(){
-        BUS.unregister(this);
+//        BUS.unregister(this);
         super.onPause();
     }
 
@@ -139,7 +154,9 @@ public class SelectClassFragment extends Fragment
         classDatabaseAccess.open();
 
         classIds = classDatabaseAccess.getClassIds();
-        String[] classNames = classDatabaseAccess.getClassNames(classIds);
+        classNames = classDatabaseAccess.getClassNames(classIds);
+
+        classDatabaseAccess.close();
 
         classListAdapter = new ArrayAdapter<>(this.getActivity(),
                                               android.R.layout.simple_spinner_item,
@@ -151,11 +168,13 @@ public class SelectClassFragment extends Fragment
 
     public void selectAndParse(AdapterView adapterView, int i)
     {
+        selectedClassName = classNames[i];
         selectedClassId = classIds[i];
         subClassDatabaseAccess = SubClassDatabaseAccess.getInstance(this.getContext());
         subClassDatabaseAccess.open();
         subClassIds = subClassDatabaseAccess.getSubClassIdsFor(selectedClassId);
         String subClassNames[] = subClassDatabaseAccess.getSubClassNames(subClassIds);
+        subClassDatabaseAccess.close();
         subClassListAdapter = new ArrayAdapter<String>(this.getActivity(),
                                                        android.R.layout.simple_spinner_item,
                                                        subClassNames);
@@ -208,13 +227,14 @@ public class SelectClassFragment extends Fragment
     //  BUS.register(this)
     //  BUS.post(sendDnDClass("CLASSNAME"))
     //  BUS.unregister(this)
-    @Produce
-    public DnDClass sendDnDClass()
-    {
-        DnDClass dnDClass = new DnDClass();
-        dnDClass.setSubClassId(selectedSubClassID);
-
-        return dnDClass;
-    }
+//    @Produce
+//    public DnDClass sendDnDClass()
+//    {
+//        DnDClass dnDClass = new DnDClass();
+//        dnDClass.setSubClassId(selectedSubClassID);
+//        dnDClass.setClassName(selectedClassName);
+//
+//        return dnDClass;
+//    }
 
 }

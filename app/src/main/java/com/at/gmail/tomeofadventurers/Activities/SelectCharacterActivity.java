@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Adapters.SelectCharacterAdapter;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
@@ -50,10 +51,23 @@ public class SelectCharacterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 charDBAccess.clearSelectedCharacters();
-                Intent createCharacter = new Intent(getApplicationContext(), CreateCharacterActivity.class);
-                startActivity(createCharacter);
+
+                boolean insertCharacter = charDBAccess.initializeCharacter(); //creates id and selects new char
+
+                if (insertCharacter)
+                {
+                    Intent createCharacter = new Intent(getApplicationContext(), CreateCharacterActivity.class);
+                    startActivity(createCharacter);
+
+                } else {
+                    toastMessage("Something went wrong");
+                }
             }
         });
+    }
+
+    public void toastMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }
