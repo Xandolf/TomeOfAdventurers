@@ -44,7 +44,7 @@ public class CharacterSheetFragment extends Fragment {
     String className="";
 
     //FIXME WOW
-    boolean skillProficiencies[] ={ true,false,true,false,false,true,true,true,false,true,false,true,false,true,true,false,true,false};
+    boolean skillProficiencies[] = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
 
 

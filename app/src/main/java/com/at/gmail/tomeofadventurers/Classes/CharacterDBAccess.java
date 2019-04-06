@@ -442,6 +442,7 @@ public class CharacterDBAccess {
         char rand_char1 = alphabet[rand_int2];
 
         String charID = Integer.toString(rand_int1)+rand_char1;
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("Selected", 1);
         contentValues.put("id", charID);
