@@ -20,6 +20,7 @@ import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
+import com.at.gmail.tomeofadventurers.Fragments.SelectNameFragment;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;

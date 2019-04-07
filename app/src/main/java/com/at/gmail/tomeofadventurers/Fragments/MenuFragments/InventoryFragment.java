@@ -155,7 +155,7 @@ public class InventoryFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         seekBarProgress = convertPercentBar.getProgress();
-                        toastMessage(Integer.toString(seekBarProgress));
+//                        toastMessage(Integer.toString(seekBarProgress));  For testing seekbar only
                         myDatabaseAccess.convertCurrency(spinnerSelection1,spinnerSelection2, seekBarProgress);
                         //Update textviews in inventory for copper and silver
                         setCurrencyTextViews();
