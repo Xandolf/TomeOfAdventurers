@@ -3,7 +3,7 @@ This class holds the dice roller logic that creates and displays a random number
 dice selected. If multiple dice are selected it will add them and display the sum.
 */
 
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.MenuFragments;
 //Deleted Fragment import
 import android.os.Bundle;
 import android.support.annotation.NonNull;

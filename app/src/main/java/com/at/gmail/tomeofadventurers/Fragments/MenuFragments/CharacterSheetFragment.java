@@ -1,4 +1,4 @@
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.MenuFragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,7 +44,7 @@ public class CharacterSheetFragment extends Fragment {
     String className="";
 
     //FIXME WOW
-    boolean skillProficiencies[] ={ true,false,true,false,false,true,true,true,false,true,false,true,false,true,true,false,true,false};
+    boolean skillProficiencies[] = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
 
 
@@ -230,5 +230,6 @@ public class CharacterSheetFragment extends Fragment {
 //    }
 //    private void toastMessage(String message) {
 //        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+//
 
 }

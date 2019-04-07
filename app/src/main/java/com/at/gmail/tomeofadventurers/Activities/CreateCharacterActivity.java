@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.at.gmail.tomeofadventurers.Fragments.SelectRaceFragment;
+import com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess.SelectRaceFragment;
 import com.at.gmail.tomeofadventurers.R;
 
 

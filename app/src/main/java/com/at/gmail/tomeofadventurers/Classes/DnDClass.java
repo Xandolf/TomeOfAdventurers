@@ -1,5 +1,7 @@
 package com.at.gmail.tomeofadventurers.Classes;
 
+import android.content.Context;
+
 public class DnDClass {
     private String subClassId;
 
@@ -10,6 +12,8 @@ public class DnDClass {
     private String [] equipment;
     private boolean [] skillProficiencies;
     private boolean [] savingThrows;
+    private String className;
+
 
     public void setSubClassId(String subClassId)
     {
@@ -19,6 +23,8 @@ public class DnDClass {
     {
         return this.subClassId;
     }
+    public String getClassName(){return this.className;}
+    public void setClassName(String myClassName){this.className = myClassName;}
 
     //Alex Code
     public void setHP(int HP){this.HP = HP;}

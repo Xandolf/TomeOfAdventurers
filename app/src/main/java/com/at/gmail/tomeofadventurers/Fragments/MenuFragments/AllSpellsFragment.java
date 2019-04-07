@@ -1,4 +1,4 @@
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.MenuFragments;
 
 import android.app.Dialog;
 import android.database.Cursor;

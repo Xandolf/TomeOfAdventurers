@@ -1,11 +1,10 @@
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
 import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.Race;
 import com.at.gmail.tomeofadventurers.Classes.RaceDatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.SubRaceDatabaseAccess;
@@ -29,7 +29,7 @@ import com.squareup.otto.Produce;
 
 public class SelectRaceFragment extends Fragment {
     //Global Variables
-    int abilityScores[] = new int[6];
+//    int abilityScores[] = new int[6];
 
     //variables
     Button buttonToClass, buttonMoreInfo;
@@ -42,6 +42,8 @@ public class SelectRaceFragment extends Fragment {
     String[] stringRaceList;
     String selectedRaceId;
     String selectedSubRaceId;
+    String selectedRaceName;
+    String selectedSubRaceName;
 
     SubRaceDatabaseAccess subRaceDatabaseAccess;
     RaceDatabaseAccess raceDatabaseAccess;
@@ -63,8 +65,8 @@ public class SelectRaceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         //Get the instance of the bus
-        BUS = BusProvider.getInstance();
-        BUS.register(this);
+//        BUS = BusProvider.getInstance();
+//        BUS.register(this);
 
         //TextView variables
         textViewDisplayText = (TextView) view.findViewById(R.id.txtvwJSONResultRace);
@@ -97,14 +99,21 @@ public class SelectRaceFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+//                BUS.post(sendRace());
+                CharacterDBAccess characterDBAccess;
+                characterDBAccess = CharacterDBAccess.getInstance(getContext());
+                characterDBAccess.open();
 
+                characterDBAccess.saveRace(selectedRaceName);
+                characterDBAccess.saveSubRace(selectedSubRaceName);
+
+                characterDBAccess.close();
 
                 android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
                 SelectClassFragment frag = new SelectClassFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
-
 
             }
         });
@@ -124,6 +133,7 @@ public class SelectRaceFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
+                selectedSubRaceName = subRaceNames[i];
                 selectedSubRaceId=subRaceIds[i];
                 enableButton(buttonToClass);
             }
@@ -141,7 +151,7 @@ public class SelectRaceFragment extends Fragment {
 
     @Override
     public void onPause(){
-        BUS.unregister(this);
+//        BUS.unregister(this);
         super.onPause();
     }
 
@@ -159,7 +169,7 @@ public class SelectRaceFragment extends Fragment {
         raceDatabaseAccess.open();
 
         raceIds = raceDatabaseAccess.getRaceKeys();
-        String[] stringRaceList = raceDatabaseAccess.getRaceNames(raceIds);
+        stringRaceList = raceDatabaseAccess.getRaceNames(raceIds);
 
         raceListAdapter = new ArrayAdapter<>(this.getActivity(),
                                              android.R.layout.simple_spinner_item,
@@ -173,6 +183,8 @@ public class SelectRaceFragment extends Fragment {
     {
         selectedRaceId = raceIds[i];
         String alignmentText = raceDatabaseAccess.getDescriptionOfRace(selectedRaceId);
+
+        selectedRaceName = stringRaceList[i];
 
         textViewDisplayText.setText(alignmentText);
         subRaceDatabaseAccess = SubRaceDatabaseAccess.getInstance(this.getContext());
@@ -230,14 +242,14 @@ public class SelectRaceFragment extends Fragment {
     //  BUS.register(this)
     //  BUS.post(sendRace("RACENAME"))
     //  BUS.unregister(this)
-    @Produce
-    public Race sendRace()
-    {
-        Race race = new Race();
-        race.setRaceName(selectedRaceId);
-        race.setSubRaceId(selectedSubRaceId);
-        return race;
-    }
+//    @Produce
+//    public Race sendRace()
+//    {
+//        Race race = new Race();
+//        race.setRaceName(selectedRaceId);
+//        race.setSubRaceId(selectedSubRaceId);
+//        return race;
+//    }
 
 
 }

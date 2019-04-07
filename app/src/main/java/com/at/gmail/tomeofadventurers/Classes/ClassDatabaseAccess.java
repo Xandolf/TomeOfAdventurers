@@ -5,7 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.at.gmail.tomeofadventurers.R;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ClassDatabaseAccess
@@ -120,6 +124,47 @@ public class ClassDatabaseAccess
         }
 
         return raceDescription;
+    }
+
+    public boolean[] getClassOptionProficiencies(Context myContext, String className){
+        String [] skillNames = myContext.getResources().getStringArray(R.array.Skills);
+        boolean[] proficiencyOptions = {false, false, false, false, false, false, false, false,
+                false, false, false, false, false, false, false, false, false, false};
+        String [] queryData    ={"","","","","",""};
+
+        String query           = "select proficiency_choices0,proficiency_choices1," +
+                "proficiency_choices2,proficiency_choices3,proficiency_choices4," +
+                "proficiency_choices5 from classes where name = '" + className + "'";
+        Cursor cursor          = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+            for(int i = 0; i<5; i++){
+                queryData[i]=cursor.getString(i);
+            }
+
+        cursor.close();
+        for(int i =0; i<18; i++){
+            for(int j =0; j<6; j++){
+                if(skillNames[i].equals(queryData[j])){
+                    proficiencyOptions[i]=true;
+                }
+            }
+        }
+        }
+        return proficiencyOptions;
+    }
+
+    public int getProficiencyPointCount(String className){
+        int choiceAmount=0;
+        String query ="select proficiency_choices_amount from classes where name = '"+className+"'";
+        Cursor cursor          = database.rawQuery(query, null);
+
+        while(cursor.moveToNext()){
+            choiceAmount = cursor.getInt(0);
+        }
+        cursor.close();
+
+        return choiceAmount;
     }
 
 }
