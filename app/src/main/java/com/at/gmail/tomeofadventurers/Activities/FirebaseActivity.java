@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -42,12 +43,23 @@ public class FirebaseActivity extends AppCompatActivity {
     ProgressBar progressBar;                    //Progress bar declared
     GoogleSignInClient mGoogleSignInClient;     //Google sign in client declared
     FirebaseFirestore db;                       //Database from Firebase
+    CharacterDBAccess characterDBAccess;
+    String charName, charRace, charClass;
+    int charMaxHealth, charCurrentHealth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase);
+
+        characterDBAccess = CharacterDBAccess.getInstance(getApplicationContext());
+        characterDBAccess.open();
+        charName = characterDBAccess.loadCharacterName();
+        charRace = characterDBAccess.loadCharacterRace();
+        charClass = characterDBAccess.loadCharacterClass();
+        charMaxHealth = characterDBAccess.loadCharacterMaxHP();
+        charCurrentHealth = characterDBAccess.loadCharacterCurrentHP();
 
         button_login = findViewById(R.id.login);            //button_login maps to login button in XML activity_firebase file
         button_logout = findViewById(R.id.logout);          //button_logout maps to logout button in XML activity_firebase file
@@ -142,8 +154,12 @@ public class FirebaseActivity extends AppCompatActivity {
 
         Map<String, Object> userDefault = new HashMap<>();
 
-        userDefault.put("name", ""); //I would like to change this to be the users characters
-        userDefault.put("hp", 0);
+        userDefault.put("name", charName );
+        userDefault.put("race", charRace);
+        userDefault.put("class", charClass);
+        userDefault.put("max_hp", charMaxHealth);
+        userDefault.put("current_hp", charCurrentHealth);
+
         db.collection("users").document(user.getUid())
                 .set(userDefault)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -178,7 +194,7 @@ public class FirebaseActivity extends AppCompatActivity {
         }
         else{
 
-            text.setText(getString(R.string.firebase_login));
+            text.setText("Firebase login");
             Picasso.get().load(R.drawable.firebase_logo).into(image);
             button_login.setVisibility(View.VISIBLE);
             button_logout.setVisibility(View.INVISIBLE);
@@ -188,6 +204,7 @@ public class FirebaseActivity extends AppCompatActivity {
     }
 
     void Logout(){
+
         FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut().addOnCompleteListener(this,
                 task -> updateUI(null));
