@@ -63,7 +63,6 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
     String sortingCategory = "%";
     String sortingOrder = "name";
     EditText allItemsSearchBar;
-    ImageButton allItemsSearchButton;
 
     String charID;
 
@@ -169,35 +168,15 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
         orderSpinner.setOnItemSelectedListener(this);
 
         allItemsSearchBar = view.findViewById(R.id.allItemsSearchBar);
-        allItemsSearchButton = view.findViewById(R.id.allItemsSearchButton);
-//        allItemsSearchBar.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String search = allItemsSearchBar.getText().toString();
-//                if (search.equals("") || search.equals(" ") || search.equals("Search"))
-//                {
-//                    sortingName = "%";
-//                }
-//                else
-//                {
-//                    sortingName = "%" + search + "%";
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-
-        allItemsSearchButton.setOnClickListener(new View.OnClickListener() {
+        allItemsSearchBar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 String search = allItemsSearchBar.getText().toString();
                 if (search.equals("") || search.equals(" ") || search.equals("Search"))
                 {
@@ -211,6 +190,11 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
                 itemNames = myDatabaseAccess.allItemSearchSort(sortingName, sortingCategory, sortingOrder);
                 adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
                 itemBookListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
