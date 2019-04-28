@@ -579,7 +579,7 @@ public class DatabaseAccess {
     public List<String> allItemSearchSort(String name, String equipmentCategory, String order)
     {
         List<String> list = new ArrayList<>();
-        String query = "SELECT * FROM items WHERE (name LIKE '" + name + "' AND equipment_category LIKE '" + equipmentCategory + "') ORDER BY " + order;
+        String query = "SELECT * FROM items WHERE (name LIKE '" + name + "' COLLATE NOCASE AND equipment_category LIKE '" + equipmentCategory + "') ORDER BY " + order;
 
         Cursor result = database.rawQuery(query, null);
         result.moveToFirst();

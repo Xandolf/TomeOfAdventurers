@@ -22,14 +22,14 @@
         android:id="@+id/listViewItembook"
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
-        android:layout_height="476dp"
+        android:layout_height="445dp"
 
         android:layout_marginTop="8dp"
         android:layout_marginBottom="48dp"
         android:divider="@color/colorPrimaryDark"
         android:dividerHeight="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allItemsOrderSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/allItemsSearchBar"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -46,4 +46,22 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/allItemsCategorySpinner"
         app:layout_constraintTop_toBottomOf="@+id/createItemBtn" />
+
+    <EditText
+        android:id="@+id/allItemsSearchBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allItemsCategorySpinner" />
+
+    <ImageButton
+        android:id="@+id/allItemsSearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/allItemsSearchBar"
+        app:layout_constraintTop_toBottomOf="@+id/allItemsOrderSpinner"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
 </android.support.constraint.ConstraintLayout>

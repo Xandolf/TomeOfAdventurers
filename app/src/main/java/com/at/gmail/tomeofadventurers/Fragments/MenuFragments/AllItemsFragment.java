@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +62,8 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
     String sortingName = "%";
     String sortingCategory = "%";
     String sortingOrder = "name";
+    EditText allItemsSearchBar;
+    ImageButton allItemsSearchButton;
 
     String charID;
 
@@ -161,6 +167,52 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
         orderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         orderSpinner.setAdapter(orderSpinnerAdapter);
         orderSpinner.setOnItemSelectedListener(this);
+
+        allItemsSearchBar = view.findViewById(R.id.allItemsSearchBar);
+        allItemsSearchButton = view.findViewById(R.id.allItemsSearchButton);
+//        allItemsSearchBar.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                String search = allItemsSearchBar.getText().toString();
+//                if (search.equals("") || search.equals(" ") || search.equals("Search"))
+//                {
+//                    sortingName = "%";
+//                }
+//                else
+//                {
+//                    sortingName = "%" + search + "%";
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
+
+        allItemsSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = allItemsSearchBar.getText().toString();
+                if (search.equals("") || search.equals(" ") || search.equals("Search"))
+                {
+                    sortingName = "%";
+                }
+                else
+                {
+                    sortingName = "%" + search + "%";
+                }
+
+                itemNames = myDatabaseAccess.allItemSearchSort(sortingName, sortingCategory, sortingOrder);
+                adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
+                itemBookListView.setAdapter(adapter);
+            }
+        });
 
 
         return view;
