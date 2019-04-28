@@ -148,12 +148,20 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
         });
 
         //creates spinner view for item category filtering
-        String[] categoryArray = {"Weapon", "Armor", "Adventuring Gear", "Tools", "Mounts and Vehicles"};
+        String[] categoryArray = {"Category", "Weapon", "Armor", "Adventuring Gear", "Tools", "Mounts and Vehicles"};
         Spinner categorySpinner = view.findViewById(R.id.allItemsCategorySpinner);
         ArrayAdapter<String> categorySpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, categoryArray);
         categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categorySpinnerAdapter);
         categorySpinner.setOnItemSelectedListener(this);
+        //creates spinner view for item ordering
+        String[] orderArray = {"Order", "Name", "Damage", "Weight"};
+        Spinner orderSpinner = view.findViewById(R.id.allItemsOrderSpinner);
+        ArrayAdapter<String> orderSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, orderArray);
+        orderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        orderSpinner.setAdapter(orderSpinnerAdapter);
+        orderSpinner.setOnItemSelectedListener(this);
+
 
         return view;
     }
@@ -303,7 +311,11 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String spinnerSelection = parent.getItemAtPosition(position).toString();
 
-        if (spinnerSelection == "Weapon")
+        if (spinnerSelection == "Category")
+        {
+            sortingCategory = "%";
+        }
+        else if (spinnerSelection == "Weapon")
         {
             sortingCategory = "Weapon";
         }
@@ -323,7 +335,26 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
         {
             sortingCategory = "Mounts and Vehicles";
         }
+        else if (spinnerSelection == "Order")
+        {
+            sortingOrder = "name";
+        }
+        else if (spinnerSelection == "Damage")
+        {
+            sortingOrder = "[damage/dice_value] * [damage/dice_count] DESC";
+        }
+        else if (spinnerSelection == "Weight")
+        {
+            sortingOrder = "weight DESC";
+        }
+        else if (spinnerSelection == "Name")
+        {
+            sortingOrder = "name";
+        }
 
+
+
+        //"Order", "Name", "Damage", "Weight", "Tools", "Mounts and Vehicles"}
         itemNames = myDatabaseAccess.allItemSearchSort(sortingName, sortingCategory, sortingOrder);
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
         itemBookListView.setAdapter(adapter);
