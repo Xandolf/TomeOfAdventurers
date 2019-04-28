@@ -575,4 +575,20 @@ public class DatabaseAccess {
         result.close();
         return list;
     }
+    //filtering and sorting for allitems
+    public List<String> allItemSearchSort(String name, String equipmentCategory, String order)
+    {
+        List<String> list = new ArrayList<>();
+        String query = "SELECT * FROM items WHERE (name LIKE '" + name + "' AND equipment_category LIKE '" + equipmentCategory + "') ORDER BY " + order;
+
+        Cursor result = database.rawQuery(query, null);
+        result.moveToFirst();
+        while (!result.isAfterLast()) {
+            list.add(result.getString(1));
+            result.moveToNext();
+        }
+
+        result.close();
+        return list;
+    }
 }

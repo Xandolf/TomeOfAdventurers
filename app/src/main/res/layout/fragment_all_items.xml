@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,14 +13,27 @@
         android:id="@+id/createItemBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/createItem" />
+        android:layout_marginTop="8dp"
+        android:text="@string/createItem"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ListView
         android:id="@+id/listViewItembook"
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="476dp"
 
+        android:layout_marginBottom="48dp"
         android:divider="@color/colorPrimaryDark"
-        android:dividerHeight="1dp" />
-</LinearLayout>
+        android:dividerHeight="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Spinner
+        android:id="@+id/allItemsCategorySpinner"
+        android:layout_width="166dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createItemBtn" />
+</android.support.constraint.ConstraintLayout>

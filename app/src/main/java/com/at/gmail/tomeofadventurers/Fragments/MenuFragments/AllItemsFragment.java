@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import java.util.List;
 
 
 
-public class AllItemsFragment extends Fragment {
+public class AllItemsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
 //General Listview Variables
     ListView itemBookListView;
@@ -53,6 +54,10 @@ public class AllItemsFragment extends Fragment {
     EditText createItemDesc;
     Button createItemClose;
     Button createItemAddItem;
+//item sorting/searching variables
+    String sortingName = "%";
+    String sortingCategory = "%";
+    String sortingOrder = "name";
 
     String charID;
 
@@ -141,6 +146,14 @@ public class AllItemsFragment extends Fragment {
                 });
             }
         });
+
+        //creates spinner view for item category filtering
+        String[] categoryArray = {"Weapon", "Armor", "Adventuring Gear", "Tools", "Mounts and Vehicles"};
+        Spinner categorySpinner = view.findViewById(R.id.allItemsCategorySpinner);
+        ArrayAdapter<String> categorySpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, categoryArray);
+        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categorySpinnerAdapter);
+        categorySpinner.setOnItemSelectedListener(this);
 
         return view;
     }
@@ -284,5 +297,40 @@ public class AllItemsFragment extends Fragment {
 
     private void toastMessage(String message){
         Toast.makeText(getActivity(),message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String spinnerSelection = parent.getItemAtPosition(position).toString();
+
+        if (spinnerSelection == "Weapon")
+        {
+            sortingCategory = "Weapon";
+        }
+        else if (spinnerSelection == "Armor")
+        {
+            sortingCategory = "Armor";
+        }
+        else if (spinnerSelection == "Adventuring Gear")
+        {
+            sortingCategory = "Adventuring Gear";
+        }
+        else if (spinnerSelection == "Tools")
+        {
+            sortingCategory = "Tools";
+        }
+        else if (spinnerSelection == "Mounts and Vehicles")
+        {
+            sortingCategory = "Mounts and Vehicles";
+        }
+
+        itemNames = myDatabaseAccess.allItemSearchSort(sortingName, sortingCategory, sortingOrder);
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
+        itemBookListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
