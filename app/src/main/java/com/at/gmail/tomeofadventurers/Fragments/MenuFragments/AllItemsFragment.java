@@ -400,4 +400,16 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    public void setSortingName(String sortingName) {
+        this.sortingName = sortingName;
+    }
+
+    public void setSortingCategory(String sortingCategory) {
+        this.sortingCategory = sortingCategory;
+    }
+
+    public void setSortingOrder(String sortingOrder) {
+        this.sortingOrder = sortingOrder;
+    }
 }
