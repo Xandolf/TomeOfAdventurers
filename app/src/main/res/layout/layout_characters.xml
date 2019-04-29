@@ -15,5 +15,6 @@
         android:background="@drawable/parchment2"
         android:gravity="center"
         android:text="CharName"
-        android:textColor="#000" />
+        android:textColor="#fff"
+        android:textSize="24sp" />
 </LinearLayout>

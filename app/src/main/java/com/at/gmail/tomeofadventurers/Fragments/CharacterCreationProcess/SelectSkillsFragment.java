@@ -36,7 +36,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
     String className;
     ClassDatabaseAccess myDatabaseAccess;
 
-    Bus BUS;
+//    Bus BUS;
     //0 = Not Proficient, 1 = Proficient, 2 = Expertise
     int[] skillProficiencies = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //19 options for all skills
     //Player can select 2 skills from provided skills

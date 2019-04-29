@@ -5,5 +5,6 @@
     <color name="colorAccent">#d40535</color>
     <color name="backgroundTan">#f4cb89</color>
     <color name="colorTan">#f4cb89</color>
+    <color name="colorWhite">#000000</color>
 
 </resources>

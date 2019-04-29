@@ -129,6 +129,22 @@ public class CharacterDBAccess {
         return dclass;
     }
 
+    public String getCharacterClass(String charName)
+    {
+        String query = "SELECT Class FROM characters WHERE Name = '"+charName+"'" ;
+        Cursor data = database.rawQuery(query, null);
+
+        String dclass = "_";
+
+        while (data.moveToNext()) {
+            dclass = data.getString(0);
+        }
+
+        data.close();
+
+        return dclass;
+    }
+
     public String loadCharacterRace()
     {
         String query = "SELECT Race FROM characters WHERE Selected = 1";
