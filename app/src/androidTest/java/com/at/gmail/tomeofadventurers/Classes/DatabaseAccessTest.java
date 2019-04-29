@@ -107,14 +107,14 @@ public class DatabaseAccessTest {
     @Test
     public void searchSort() {
         initializeDB();
-        Cursor cursor = database.rawQuery("SELECT * FROM spells WHERE (class1 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class2 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class3 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class4 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class5 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class6 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class7 LIKE 'http://www.dnd5eapi.co/api/classes/4') AND spell_level LIKE '2' AND school LIKE 'http://www.dnd5eapi.co/api/magic-schools/1' ORDER BY name", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM spells WHERE name LIKE '%' AND (class1 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class2 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class3 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class4 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class5 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class6 LIKE 'http://www.dnd5eapi.co/api/classes/4' OR class7 LIKE 'http://www.dnd5eapi.co/api/classes/4') AND spell_level LIKE '2' AND school LIKE 'http://www.dnd5eapi.co/api/magic-schools/1' ORDER BY name", null);
         List<String> expected = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             expected.add(cursor.getString(1));
             cursor.moveToNext();
         }
-        List<String> result = myDatabaseAccess.searchSort("http://www.dnd5eapi.co/api/classes/4", "2", "http://www.dnd5eapi.co/api/magic-schools/1", "name");
+        List<String> result = myDatabaseAccess.searchSort("%","http://www.dnd5eapi.co/api/classes/4", "2", "http://www.dnd5eapi.co/api/magic-schools/1", "name");
         assertEquals(expected, result);
     }
 
