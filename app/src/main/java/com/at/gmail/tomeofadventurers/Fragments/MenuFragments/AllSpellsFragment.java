@@ -482,20 +482,4 @@ public class AllSpellsFragment extends Fragment implements AdapterView.OnItemSel
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
-
-    public void setClassURL(String classURL) {
-        this.classURL = classURL;
-    }
-
-    public void setSpellLevel(String spellLevel) {
-        this.spellLevel = spellLevel;
-    }
-
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
-    }
-
-    public void setSpellSchool(String spellSchool) {
-        this.spellSchool = spellSchool;
-    }
 }

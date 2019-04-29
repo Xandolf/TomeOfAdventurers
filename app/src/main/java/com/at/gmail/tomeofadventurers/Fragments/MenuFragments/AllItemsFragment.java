@@ -388,9 +388,6 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
             sortingOrder = "name";
         }
 
-
-
-        //"Order", "Name", "Damage", "Weight", "Tools", "Mounts and Vehicles"}
         itemNames = myDatabaseAccess.allItemSearchSort(sortingName, sortingCategory, sortingOrder);
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
         itemBookListView.setAdapter(adapter);
@@ -399,17 +396,5 @@ public class AllItemsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public void setSortingName(String sortingName) {
-        this.sortingName = sortingName;
-    }
-
-    public void setSortingCategory(String sortingCategory) {
-        this.sortingCategory = sortingCategory;
-    }
-
-    public void setSortingOrder(String sortingOrder) {
-        this.sortingOrder = sortingOrder;
     }
 }
