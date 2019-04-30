@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/DDPic"
+        android:layout_width="319dp"
+        android:layout_height="153dp"
+        android:src="@drawable/ddpic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        />
+    <TextView
+        android:id="@+id/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:layout_below="@id/DDPic"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="Click below to access \n online features!"/>
+
     <Button
         android:id="@+id/googleLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="246dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_centerHorizontal="true"
+        android:text="Online \n Features!"
+        android:layout_marginTop="90dp"
+        android:layout_below="@+id/Text"/>
+</RelativeLayout>
