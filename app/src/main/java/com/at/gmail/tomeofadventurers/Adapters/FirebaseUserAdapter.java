@@ -2,6 +2,7 @@ package com.at.gmail.tomeofadventurers.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,18 +23,18 @@ public class FirebaseUserAdapter extends RecyclerView.Adapter<FirebaseUserAdapte
 
 
     private Context mContext;
-    //private ArrayList<FirebaseUser> mFireUsers= new ArrayList<>();
-    private ArrayList<String> mImages = new ArrayList<>();
-    private ArrayList<String> mEmails = new ArrayList<>();
-    private ArrayList<String> mUserNames = new ArrayList<>();
+    private ArrayList<FirebaseUser> mFireUsers= new ArrayList<>();
+    //private ArrayList<String> mImages = new ArrayList<>();
+    //private ArrayList<String> mEmails = new ArrayList<>();
+    //private ArrayList<String> mUserNames = new ArrayList<>();
 
-    public FirebaseUserAdapter(Context context, ArrayList<String> images, ArrayList<String> emails, ArrayList<String> userNames){
+    public FirebaseUserAdapter(Context context, ArrayList<FirebaseUser> FireUsers){//ArrayList<String> images, ArrayList<String> emails, ArrayList<String> userNames){
 
         mContext = context;
-        //mFireUsers = FireUsers;
-        mImages = images;
-        mEmails = emails;
-        mUserNames = userNames;
+        mFireUsers = FireUsers;
+        //mImages = images;
+        //mEmails = emails;
+        //mUserNames = userNames;
     }
 
     @NonNull
@@ -51,17 +52,17 @@ public class FirebaseUserAdapter extends RecyclerView.Adapter<FirebaseUserAdapte
 
         Glide.with(mContext)
                 .asBitmap()
-                .load(mImages.get(i))
+                .load( mFireUsers.get(i).GetProfilePic())//mImages.get(i))
                 .into(viewHolder.image);
 
-        viewHolder.email.setText(mEmails.get(i));
-        viewHolder.userName.setText(mUserNames.get(i));
+        viewHolder.email.setText( mFireUsers.get(i).GetEmail());//mEmails.get(i));
+        viewHolder.userName.setText(mFireUsers.get(i).GetUserName());//mUserNames.get(i));
 
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, mEmails.get(i),Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mFireUsers.get(i).GetEmail(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -69,7 +70,7 @@ public class FirebaseUserAdapter extends RecyclerView.Adapter<FirebaseUserAdapte
 
     @Override
     public int getItemCount() {
-        return mEmails.size();
+        return mFireUsers.size();//mEmails.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -77,7 +78,7 @@ public class FirebaseUserAdapter extends RecyclerView.Adapter<FirebaseUserAdapte
         ImageView image;
         TextView email;
         TextView userName;
-        RelativeLayout parentLayout;
+        CardView parentLayout;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);

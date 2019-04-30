@@ -40,7 +40,7 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayList<String> mUserEmails = new ArrayList<>();
     private ArrayList<String> mUserNames = new ArrayList();
 
-    //private  ArrayList<FirebaseUser> mFireUsersList = new ArrayList<>();
+    private  ArrayList<FirebaseUser> mFireUsersList = new ArrayList<>();
     private FirebaseUserAdapter mFirebaseUserAdapter;
     private DocumentSnapshot mLastQueriedDocument;
 
@@ -74,13 +74,15 @@ public class ChatActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
 
                     for(QueryDocumentSnapshot document: task.getResult()) {
-                        String userPic = String.valueOf(document.getDocumentReference("ProfilePic"));//My made up Firebase user class
-                        String userEmail = String.valueOf(document.getDocumentReference("email"));//My made up Firebase user class
-                        String userName = String.valueOf(document.getDocumentReference("UserName"));//My made up Firebase user class
+                        FirebaseUser FireUser = document.toObject(FirebaseUser.class);
+                       // String userPic = String.valueOf(document.getDocumentReference("ProfilePic"));//My made up Firebase user class
+                       // String userEmail = String.valueOf(document.getDocumentReference("email"));//My made up Firebase user class
+                        //String userName = String.valueOf(document.getDocumentReference("UserName"));//My made up Firebase user class
 
                         //mImageUrls.add(userPic);
-                        mUserEmails.add(userEmail);
-                        mUserNames.add(userName);
+                        //mUserEmails.add(userEmail);
+                        //mUserNames.add(userName);
+                        mFireUsersList.add(FireUser);
                     }
 
                     mFirebaseUserAdapter.notifyDataSetChanged();
@@ -100,7 +102,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void initRecyclerView(){
 
-        mFirebaseUserAdapter = new FirebaseUserAdapter(this, mImageUrls, mUserEmails, mUserNames);
+        mFirebaseUserAdapter = new FirebaseUserAdapter(this, mFireUsersList);
 
         mRecyclerView.setAdapter(mFirebaseUserAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -5,14 +5,14 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class FirebaseUser {
 
-    private String email;
-    private String userName;
-    private String profilePic;
-    private String charName;
-    private String charRace;
-    private String charClass;
-    private int charMaxHP;
-    private int charCurrentHP;
+    public String email;
+    public String userName;
+    public String profilePic;
+    public String charName;
+    public String charRace;
+    public String charClass;
+    public int charMaxHP;
+    public int charCurrentHP;
 
     public FirebaseUser(){
 
