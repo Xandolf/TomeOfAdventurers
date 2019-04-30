@@ -27,6 +27,8 @@ import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import static java.sql.Types.NULL;
+
 public class CharacterSheetFragment extends Fragment {
 
     Character currentPlayerCharacter;
@@ -95,6 +97,9 @@ public class CharacterSheetFragment extends Fragment {
         //Used to load PlayerCharacter
 //        BUS = BusProvider.getInstance();
 //        BUS.register(this);
+
+        //progress bar pop up to edit hit points
+        progressBar = view.findViewById(R.id.progressBar);
 
 //        toastMessage("Im in");
         textViewCharacterName = view.findViewById(R.id.textViewCharacterName);
@@ -177,10 +182,6 @@ public class CharacterSheetFragment extends Fragment {
             }
         });
 
-        //progress bar pop up to edit hit points
-        progressBar = view.findViewById(R.id.progressBar);
-
-
         progressBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,6 +205,7 @@ public class CharacterSheetFragment extends Fragment {
 
                             healthEditDialog.dismiss();
                         }
+                        characterDBAccess.saveCurrentHP(currentHitPoints);
                     }
 
                 });
@@ -220,6 +222,7 @@ public class CharacterSheetFragment extends Fragment {
 
                             healthEditDialog.dismiss();
                         }
+                        characterDBAccess.saveCurrentHP(currentHitPoints);
                     }
 
                 });
