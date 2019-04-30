@@ -12,17 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Adapters.AbilityScoreAdapter;
 import com.at.gmail.tomeofadventurers.Adapters.SkillsListAdapter;
-import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Character;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
-import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 
 public class CharacterSheetFragment extends Fragment {
 
@@ -72,7 +68,7 @@ public class CharacterSheetFragment extends Fragment {
         characterDBAccess.open();
 
         name = characterDBAccess.loadCharacterName();
-        className = characterDBAccess.loadCharacterClass();
+        className = characterDBAccess.loadCharacterClassName();
         hitDiceValue = characterDBAccess.loadCharacterHitDice();
         armorClassValue = characterDBAccess.loadCharacterArmorClass();
         speedValue = characterDBAccess.loadCharacterSpeed();

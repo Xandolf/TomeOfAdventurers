@@ -1,4 +1,4 @@
-package com.at.gmail.tomeofadventurers.Fragments;
+package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.at.gmail.tomeofadventurers.Classes.Character;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.Race;
+import com.at.gmail.tomeofadventurers.Classes.SubClassDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -51,10 +52,6 @@ public class SelectNameFragment extends Fragment {
         raceName="NA";
         className="NA";
 
-        //Get Instance of the BUS
-//        BUS = BusProvider.getInstance();
-//        BUS.register(this);
-        //Define Variables
         editTextCharacterName = view.findViewById(R.id.editTextCharacterName);
 
         //Button to Create Character (essentially finish the process of creating a character atm)
@@ -67,7 +64,13 @@ public class SelectNameFragment extends Fragment {
 
                 characterDBAccess = CharacterDBAccess.getInstance(getContext());
                 characterDBAccess.open();
-
+                String class_id = characterDBAccess.loadCharacterClassId();
+                characterDBAccess.close();
+                SubClassDatabaseAccess subClassDatabaseAccess = SubClassDatabaseAccess.getInstance(getContext());
+                subClassDatabaseAccess.open();
+                HP=subClassDatabaseAccess.getHitDie(class_id);
+                subClassDatabaseAccess.close();
+                characterDBAccess.open();
                 characterDBAccess.saveName(name);
                 characterDBAccess.saveCurrentHP(HP); //full hp to start
                 characterDBAccess.saveMaxHp(HP);

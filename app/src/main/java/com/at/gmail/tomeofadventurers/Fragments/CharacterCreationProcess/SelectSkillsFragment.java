@@ -14,17 +14,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.DnDClass;
-import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
-import com.at.gmail.tomeofadventurers.Fragments.SelectNameFragment;
+import com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess.SelectNameFragment;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Produce;
-import com.squareup.otto.Subscribe;
 
 public class SelectSkillsFragment extends Fragment implements View.OnClickListener {
 
@@ -53,7 +47,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         CharacterDBAccess characterDBAccess;
         characterDBAccess = CharacterDBAccess.getInstance(getContext());
         characterDBAccess.open();
-        className = characterDBAccess.loadCharacterClass();      //retrieve class name from db
+        className = characterDBAccess.loadCharacterClassId();      //retrieve class name from db
 
         //Open Database
         myDatabaseAccess = ClassDatabaseAccess.getInstance(this.getContext());
@@ -64,9 +58,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         myDatabaseAccess.close();
 
         buttonGoToSelectName = view.findViewById(R.id.buttonGoToEnterName);
-        //Get the instance of the bus
-//        BUS = BusProvider.getInstance();
-//        BUS.register(this);
+
 
 
         acrobaticsButton = view.findViewById(R.id.radio_acrobatics);
@@ -128,11 +120,6 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
             public void onClick(View v) {
 
 
-                //Send the ability scores to the BUS
-//                BUS.post(proficiencySender());
-
-                //Unregister the BUS
-//                BUS.unregister(this);
                 calculateSkillModifiers(); //sample oversimplified function, needs to be enhanced, just add +2 to prof skills for modifier for now
 
                 characterDBAccess.saveSkillProficiencies(skillProficiencies);
@@ -140,9 +127,9 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
 
                 characterDBAccess.close();
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragTrans = fragmentManager.beginTransaction();
-                SelectNameFragment frag = new SelectNameFragment();
+                FragmentManager     fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragTrans       = fragmentManager.beginTransaction();
+                SelectNameFragment  frag            = new SelectNameFragment();
                 fragTrans.replace(R.id.fragment_container, frag);
                 fragTrans.commit();
             }
@@ -444,6 +431,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
     //Function that makes a button visible and enabled
     public void enableButton(Button passButton) {
         passButton.setEnabled(true);
+
         passButton.setVisibility(View.VISIBLE);
     }
 

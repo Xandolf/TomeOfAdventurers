@@ -40,18 +40,26 @@
                 android:layout_marginEnd="44dp"
                 android:text="    Score"
                 app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
+                android:imeOptions="actionDone"
                 tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                tools:padding="8dp"
+                />
 
             <TextView
-                android:id="@+id/textViewAbilityScoreModifierHeader"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:layout_marginEnd="44dp"
-                android:text="Modifier"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
-                tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                android:id = "@+id/textView4"
+                android:layout_width = "94dp"
+                android:layout_height = "wrap_content"
+                android:text = "Racial Bonus" /><TextView
+            android:id = "@+id/textViewAbilityScoreModifierHeader"
+            android:layout_width = "match_parent"
+            android:layout_height = "34dp"
+            android:layout_marginEnd = "44dp"
+            android:text = "Modifier"
+            android:textColor = "@color/common_google_signin_btn_text_dark_focused"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toStartOf = "@+id/editTextIntScore"
+            tools:layout_editor_absoluteY = "111dp"
+            tools:padding = "8dp" />
         </TableRow>
 
         <TableRow
@@ -75,19 +83,28 @@
                 android:layout_width="33dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:imeOptions="actionDone"
                 android:inputType="number"
                 tools:layout_editor_absoluteX="118dp"
                 tools:layout_editor_absoluteY="41dp"
                 tools:padding="8dp" />
 
             <TextView
-                android:id="@+id/textViewStrModifier"
-                android:layout_width="55dp"
-                android:layout_height="34dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
-                tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                android:id = "@+id/textViewRacialBonusStr"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "TextView"
+                android:textAlignment = "center" /><TextView
+            android:id = "@+id/textViewStrModifier"
+            android:layout_width = "55dp"
+            android:layout_height = "34dp"
+            android:layout_marginEnd = "44dp"
+            android:textAlignment = "textEnd"
+            android:textColor = "@color/common_google_signin_btn_text_dark_focused"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toStartOf = "@+id/editTextIntScore"
+            tools:layout_editor_absoluteY = "111dp"
+            tools:padding = "8dp" />
         </TableRow>
 
         <TableRow
@@ -107,19 +124,28 @@
                 android:layout_width="33dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:imeOptions="actionDone"
                 android:inputType="number"
                 tools:layout_editor_absoluteX="118dp"
                 tools:layout_editor_absoluteY="41dp"
                 tools:padding="8dp" />
 
             <TextView
-                android:id="@+id/textViewDexModifier"
-                android:layout_width="55dp"
-                android:layout_height="34dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
-                tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                android:id = "@+id/textViewRacialBonusDex"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "TextView"
+                android:textAlignment = "center" /><TextView
+            android:id = "@+id/textViewDexModifier"
+            android:layout_width = "55dp"
+            android:layout_height = "34dp"
+            android:layout_marginEnd = "44dp"
+            android:textAlignment = "textEnd"
+            android:textColor = "@color/common_google_signin_btn_text_dark_focused"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toStartOf = "@+id/editTextIntScore"
+            tools:layout_editor_absoluteY = "111dp"
+            tools:padding = "8dp" />
         </TableRow>
 
         <TableRow
@@ -140,18 +166,27 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
+                android:imeOptions="actionDone"
                 tools:layout_editor_absoluteX="118dp"
                 tools:layout_editor_absoluteY="41dp"
                 tools:padding="8dp" />
 
             <TextView
-                android:id="@+id/textViewConModifier"
-                android:layout_width="55dp"
-                android:layout_height="34dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
-                tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                android:id = "@+id/textViewRacialBonusCon"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "TextView"
+                android:textAlignment = "center" /><TextView
+            android:id = "@+id/textViewConModifier"
+            android:layout_width = "55dp"
+            android:layout_height = "34dp"
+            android:layout_marginEnd = "44dp"
+            android:textAlignment = "textEnd"
+            android:textColor = "@color/common_google_signin_btn_text_dark_focused"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toStartOf = "@+id/editTextIntScore"
+            tools:layout_editor_absoluteY = "111dp"
+            tools:padding = "8dp" />
         </TableRow>
 
         <TableRow
@@ -172,18 +207,27 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
+                android:imeOptions="actionDone"
                 tools:layout_editor_absoluteX="118dp"
                 tools:layout_editor_absoluteY="41dp"
                 tools:padding="8dp" />
 
             <TextView
-                android:id="@+id/textViewIntModifier"
-                android:layout_width="55dp"
-                android:layout_height="34dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
-                tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                android:id = "@+id/textViewRacialBonusInt"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "TextView"
+                android:textAlignment = "center" /><TextView
+            android:id = "@+id/textViewIntModifier"
+            android:layout_width = "55dp"
+            android:layout_height = "34dp"
+            android:layout_marginEnd = "44dp"
+            android:textAlignment = "textEnd"
+            android:textColor = "@color/common_google_signin_btn_text_dark_focused"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toStartOf = "@+id/editTextIntScore"
+            tools:layout_editor_absoluteY = "111dp"
+            tools:padding = "8dp" />
         </TableRow>
 
         <TableRow
@@ -204,18 +248,27 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
+                android:imeOptions="actionDone"
                 tools:layout_editor_absoluteX="118dp"
                 tools:layout_editor_absoluteY="41dp"
                 tools:padding="8dp" />
 
             <TextView
-                android:id="@+id/textViewWisModifier"
-                android:layout_width="55dp"
-                android:layout_height="34dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
-                tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                android:id = "@+id/textViewRacialBonusWis"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "TextView"
+                android:textAlignment = "center" /><TextView
+            android:id = "@+id/textViewWisModifier"
+            android:layout_width = "55dp"
+            android:layout_height = "34dp"
+            android:layout_marginEnd = "44dp"
+            android:textAlignment = "textEnd"
+            android:textColor = "@color/common_google_signin_btn_text_dark_focused"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toStartOf = "@+id/editTextIntScore"
+            tools:layout_editor_absoluteY = "111dp"
+            tools:padding = "8dp" />
         </TableRow>
 
         <TableRow
@@ -236,18 +289,27 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number"
+                android:imeOptions="actionDone"
                 tools:layout_editor_absoluteX="118dp"
                 tools:layout_editor_absoluteY="41dp"
                 tools:padding="8dp" />
 
             <TextView
-                android:id="@+id/textViewChaModifier"
-                android:layout_width="55dp"
-                android:layout_height="34dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIntScore"
-                tools:layout_editor_absoluteY="111dp"
-                tools:padding="8dp" />
+                android:id = "@+id/textViewRacialBonusCha"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "TextView"
+                android:textAlignment = "center" /><TextView
+            android:id = "@+id/textViewChaModifier"
+            android:layout_width = "55dp"
+            android:layout_height = "34dp"
+            android:layout_marginEnd = "44dp"
+            android:textAlignment = "textEnd"
+            android:textColor = "@color/common_google_signin_btn_text_dark_focused"
+            android:textStyle = "bold"
+            app:layout_constraintEnd_toStartOf = "@+id/editTextIntScore"
+            tools:layout_editor_absoluteY = "111dp"
+            tools:padding = "8dp" />
         </TableRow>
     </TableLayout>
 

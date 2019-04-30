@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class CharacterDBAccess {
 
@@ -113,9 +116,44 @@ public class CharacterDBAccess {
         return name;
     }
 
-    public String loadCharacterClass()
+    public String loadCharacterClassName()
     {
-        String query = "SELECT Class FROM characters WHERE Selected = 1";
+        String baseRaceId= getBaseRaceIdFor(loadCharacterClassId());
+
+        String query = "SELECT name FROM classes WHERE id = '" +baseRaceId+"'";
+        Cursor data = database.rawQuery(query, null);
+
+        String dclass = "_";
+
+        while (data.moveToNext()) {
+            dclass = data.getString(0);
+        }
+
+        data.close();
+
+        return dclass;
+    }
+    public String getBaseRaceIdFor(String subClass_id)
+    {
+        String baseClassId = null;
+        String query      = "SELECT class_id FROM subclasses WHERE id='" + subClass_id + "'";
+        Cursor cursor     = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (!cursor.isAfterLast())
+        {
+            baseClassId = (cursor.getString(0));
+        } else
+        {
+            Log.d(TAG, "getBaseRaceIdFor: " + subClass_id + " cursor not found.");
+        }
+        cursor.close();
+
+        return baseClassId;
+    }
+
+
+    public String loadCharacterClassId()
+    {      String query = "SELECT Class FROM characters WHERE Selected = 1";
         Cursor data = database.rawQuery(query, null);
 
         String dclass = "_";
@@ -132,6 +170,22 @@ public class CharacterDBAccess {
     public String loadCharacterRace()
     {
         String query = "SELECT Race FROM characters WHERE Selected = 1";
+        Cursor data = database.rawQuery(query, null);
+
+        String race = "_";
+
+        while (data.moveToNext()) {
+            race = data.getString(0);
+        }
+
+        data.close();
+
+        return race;
+    }
+
+    public String loadCharacterSubRace()
+    {
+        String query = "SELECT Subrace FROM characters WHERE Selected = 1";
         Cursor data = database.rawQuery(query, null);
 
         String race = "_";
@@ -560,6 +614,14 @@ public class CharacterDBAccess {
 
         query = "UPDATE characters SET Cha = '"+ abilityScores[5] +"' WHERE Selected = 1";
         database.execSQL(query);
+
+
+        int abilityScoreModifiers[] = new int[6];
+        for (int i = 0; i < 6; i++)
+        {
+            abilityScoreModifiers[i] = (abilityScores[i] - 10) / 2;
+        }
+        saveAbilityScoresModifiers(abilityScoreModifiers);
 
     }
 
