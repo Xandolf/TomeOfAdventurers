@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +28,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -37,7 +39,7 @@ public class FirebaseActivity extends AppCompatActivity {
 
     static final int GOOGLE_SIGN = 123;
     FirebaseAuth mAuth;                         //Firebase authenticator declared
-    Button button_login,button_logout;          //Buttons for log in and log out declared
+    Button button_login,button_logout, chat_button;          //Buttons for log in and log out declared
     TextView text;                              //Text variable declared
     ImageView image;                            //Image variable declared
     ProgressBar progressBar;                    //Progress bar declared
@@ -63,6 +65,7 @@ public class FirebaseActivity extends AppCompatActivity {
 
         button_login = findViewById(R.id.login);            //button_login maps to login button in XML activity_firebase file
         button_logout = findViewById(R.id.logout);          //button_logout maps to logout button in XML activity_firebase file
+        chat_button = findViewById(R.id.chatButton);
         text = findViewById(R.id.text);                     //text maps to text display in XML activity_firebase file
         image = findViewById(R.id.image);                   //image maps to the image in XML activity_firebase file
         progressBar = findViewById(R.id.progress_circular);  //progressbar maps to progress_circular in XML activity_firebase file
@@ -79,8 +82,31 @@ public class FirebaseActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this,googleSignInOptions);     //mGoogleSignInClient gets the client by using GoogleSignInOptions
 
-        button_login.setOnClickListener(v -> SignInGoogle());//When user clicks login button it will run SignInGoogle
-        button_logout.setOnClickListener(v -> Logout());
+        //button_login.setOnClickListener(v -> SignInGoogle());//When user clicks login button it will run SignInGoogle
+        button_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SignInGoogle();
+            }
+        });
+
+        //button_logout.setOnClickListener(v -> Logout());
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Logout();
+            }
+        });
+
+        chat_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chatIntent = new Intent(FirebaseActivity.this, ChatActivity.class);
+                startActivity(chatIntent);
+            }
+        });
+
+
 
         if(mAuth.getCurrentUser() != null){
             FirebaseUser user = mAuth.getCurrentUser();
@@ -90,10 +116,12 @@ public class FirebaseActivity extends AppCompatActivity {
 
     }
 
+
+
     void SignInGoogle(){
         progressBar.setVisibility(View.VISIBLE);
 
-        Intent signIntent =mGoogleSignInClient.getSignInIntent();
+        Intent signIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signIntent, GOOGLE_SIGN);
     }
 
@@ -120,6 +148,8 @@ public class FirebaseActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
 
         Log.d("TAG","firebaseAuthWithGoogle: " + account.getId());
@@ -138,7 +168,8 @@ public class FirebaseActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
 
-                        putUserInDatabase(user, db);
+                        putUserInDatabase(user);
+
                     }
                     else {
                         progressBar.setVisibility(View.INVISIBLE);
@@ -150,10 +181,41 @@ public class FirebaseActivity extends AppCompatActivity {
                 });
     }
 
-    private void putUserInDatabase(FirebaseUser user, FirebaseFirestore db) {
+    private void putUserInDatabase(FirebaseUser user) {
 
-        Map<String, Object> userDefault = new HashMap<>();
+        db = FirebaseFirestore.getInstance();
 
+       com.at.gmail.tomeofadventurers.Classes.FirebaseUser fireUser = new com.at.gmail.tomeofadventurers.Classes.FirebaseUser();
+
+        fireUser.setEmail( user.getEmail() );
+        fireUser.setUserName( user.getDisplayName() );
+        fireUser.setProfilePic( String.valueOf( user.getPhotoUrl()) );
+        fireUser.setCharName(charName);
+        fireUser.setCharRace(charRace);
+        fireUser.setCharClass(charClass);
+        fireUser.setCharMaxHP(charMaxHealth);
+        fireUser.setCharCurrentHP(charCurrentHealth);
+
+        DocumentReference newUser = db.collection("users").document(user.getUid());
+
+        newUser.set(fireUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("TAG","Document created");
+                }
+
+                else{
+                    Log.d("TAG","Document FAILED");
+                }
+            }
+        });
+
+       /* Map<String, Object> userDefault = new HashMap<>();
+
+        userDefault.put("email", user.getEmail());
+        userDefault.put("UserName", user.getDisplayName());
+        userDefault.put("ProfilePic", String.valueOf( user.getPhotoUrl()) );
         userDefault.put("name", charName );
         userDefault.put("race", charRace);
         userDefault.put("class", charClass);
@@ -173,7 +235,8 @@ public class FirebaseActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Log.w("TAG", "Error writing document", e);
                     }
-                });
+                });*/
+
     }
 
 
@@ -191,6 +254,7 @@ public class FirebaseActivity extends AppCompatActivity {
             Picasso.get().load(photo).into(image);
             button_login.setVisibility(View.INVISIBLE);
             button_logout.setVisibility(View.VISIBLE);
+            chat_button.setVisibility(View.VISIBLE);
         }
         else{
 
@@ -198,6 +262,7 @@ public class FirebaseActivity extends AppCompatActivity {
             Picasso.get().load(R.drawable.firebase_logo).into(image);
             button_login.setVisibility(View.VISIBLE);
             button_logout.setVisibility(View.INVISIBLE);
+            chat_button.setVisibility(View.INVISIBLE);
 
             Toast.makeText(this, "Signed out!", Toast.LENGTH_SHORT).show();
         }
