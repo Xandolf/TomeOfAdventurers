@@ -39,7 +39,7 @@ public class FirebaseActivity extends AppCompatActivity {
 
     static final int GOOGLE_SIGN = 123;
     FirebaseAuth mAuth;                         //Firebase authenticator declared
-    Button button_login,button_logout, chat_button;          //Buttons for log in and log out declared
+    Button button_login, button_logout, chat_button, backToSheet;          //Buttons for log in and log out declared
     TextView text;                              //Text variable declared
     ImageView image;                            //Image variable declared
     ProgressBar progressBar;                    //Progress bar declared
@@ -66,6 +66,7 @@ public class FirebaseActivity extends AppCompatActivity {
         button_login = findViewById(R.id.login);            //button_login maps to login button in XML activity_firebase file
         button_logout = findViewById(R.id.logout);          //button_logout maps to logout button in XML activity_firebase file
         chat_button = findViewById(R.id.chatButton);
+        backToSheet = findViewById(R.id.backBtn);
         text = findViewById(R.id.text);                     //text maps to text display in XML activity_firebase file
         image = findViewById(R.id.image);                   //image maps to the image in XML activity_firebase file
         progressBar = findViewById(R.id.progress_circular);  //progressbar maps to progress_circular in XML activity_firebase file
@@ -103,6 +104,14 @@ public class FirebaseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent chatIntent = new Intent(FirebaseActivity.this, ChatActivity.class);
                 startActivity(chatIntent);
+            }
+        });
+
+        backToSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainIntent = new Intent(FirebaseActivity.this, MainActivity.class);
+                startActivity(mainIntent);
             }
         });
 
