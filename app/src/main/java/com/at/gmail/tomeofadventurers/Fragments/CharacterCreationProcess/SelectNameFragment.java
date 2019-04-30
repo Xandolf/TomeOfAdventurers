@@ -37,9 +37,9 @@ public class SelectNameFragment extends Fragment {
     Bus BUS;
 
     //Alex Code
-    int [] hitDice = {8,8};
-    int charSpeed = 0;
-    int HP = 0;
+    int [] hitDice = {8,8}; //dummy values need to be replaced
+    int charSpeed = 20;
+    int HP = 16;
     CharacterDBAccess characterDBAccess;
 
     @Nullable
@@ -51,10 +51,9 @@ public class SelectNameFragment extends Fragment {
         raceName="NA";
         className="NA";
 
-
         //Get Instance of the BUS
-        BUS = BusProvider.getInstance();
-        BUS.register(this);
+//        BUS = BusProvider.getInstance();
+//        BUS.register(this);
         //Define Variables
         editTextCharacterName = view.findViewById(R.id.editTextCharacterName);
 
@@ -69,15 +68,27 @@ public class SelectNameFragment extends Fragment {
                 characterDBAccess = CharacterDBAccess.getInstance(getContext());
                 characterDBAccess.open();
 
-                Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP, hitDice);
+                characterDBAccess.saveName(name);
+                characterDBAccess.saveCurrentHP(HP); //full hp to start
+                characterDBAccess.saveMaxHp(HP);
+                characterDBAccess.saveSpeed(charSpeed);
+                characterDBAccess.saveHitDice(hitDice);
+                characterDBAccess.savePassivePerception(13);  //hard coded example
+                characterDBAccess.saveProficiencyBonus(2); //hard coded example
+                characterDBAccess.saveArmorClass(12); //hard coded example
 
-                boolean insertCharacter = characterDBAccess.saveCharacter(newCharacter);
-
-                if (insertCharacter) {
-                    toastMessage("Character Successfully Created!");
-                } else {
-                    toastMessage("Something went wrong");
-                }
+                characterDBAccess.close();
+//
+//                Character newCharacter = new Character(name, abilityScores, raceName, className, charSpeed, HP, hitDice);
+//
+//
+//                boolean insertCharacter = characterDBAccess.saveCharacter(newCharacter);
+//
+//                if (insertCharacter) {
+//                    toastMessage("Character Successfully Created!");
+//                } else {
+//                    toastMessage("Something went wrong");
+//                }
 
 
 
@@ -90,7 +101,6 @@ public class SelectNameFragment extends Fragment {
                 //Direct to Character Sheet fragment
                 Intent switcher = new Intent(getActivity(), MainActivity.class);
                 startActivity(switcher);
-
 
             }
         });
@@ -110,28 +120,28 @@ public class SelectNameFragment extends Fragment {
     //Then create a charater using these variables
     //Then call BUS.post(sendCharacter("CREATED CHARACTER"));
     //BUS.unregister(this);
-    @Subscribe
-    public void getClass(DnDClass dnDClass)
-    {
-        className = dnDClass.getSubClassId();
-    }
-    @Subscribe
-    void getRace (Race race)
-    {
-        raceName = race.getRaceName();
-    }
-    @Subscribe
-    void getAbilityScores(AbilityScoreSender abilityScoreSender)
-    { abilityScores = abilityScoreSender.getAbilityScores();}
-
-    //Alex Code
-    @Subscribe
-    public void getSpeed(Race race){
-        charSpeed = race.getSpeed();
-        toastMessage(String.valueOf(charSpeed));
-    }
-    @Subscribe
-    public void getHP(DnDClass dnDClass){HP = dnDClass.getHP();}
+//    @Subscribe
+//    public void getClass(DnDClass dnDClass)
+//    {
+//        className = dnDClass.getClassName();
+//    }
+//    @Subscribe
+//    public void getRace (Race race)
+//    {
+//        raceName = race.getRaceName();
+//    }
+//    @Subscribe
+//    public void getAbilityScores(AbilityScoreSender abilityScoreSender)
+//    { abilityScores = abilityScoreSender.getAbilityScores();}
+//
+//    //Alex Code
+//    @Subscribe
+//    public void getSpeed(Race race){
+//        charSpeed = race.getSpeed();
+//        toastMessage(String.valueOf(charSpeed));
+//    }
+//    @Subscribe
+//    public void getHP(DnDClass dnDClass){HP = dnDClass.getHP();}
 //    @Subscribe
 //    public void getHitDice(DnDClass dnDClass){hitDice = dnDClass.getHitDice();}
 

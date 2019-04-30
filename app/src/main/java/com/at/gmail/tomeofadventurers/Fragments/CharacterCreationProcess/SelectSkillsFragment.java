@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,8 +15,12 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
+import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
+import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
+import com.at.gmail.tomeofadventurers.Fragments.SelectNameFragment;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -29,12 +34,14 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
             perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
             stealthButton, survivalButton;
     String className;
+    ClassDatabaseAccess myDatabaseAccess;
 
-    Bus BUS;
+//    Bus BUS;
     //0 = Not Proficient, 1 = Proficient, 2 = Expertise
     int[] skillProficiencies = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //19 options for all skills
     //Player can select 2 skills from provided skills
     int skillCount = 2;
+    int [] skillModifiers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
 
     @Nullable
@@ -43,10 +50,23 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         View view = inflater.inflate(R.layout.fragment_select_skills, container, false);
         super.onCreate(savedInstanceState);
 
+        CharacterDBAccess characterDBAccess;
+        characterDBAccess = CharacterDBAccess.getInstance(getContext());
+        characterDBAccess.open();
+        className = characterDBAccess.loadCharacterClass();      //retrieve class name from db
+
+        //Open Database
+        myDatabaseAccess = ClassDatabaseAccess.getInstance(this.getContext());
+        myDatabaseAccess.open();
+
+        skillCount = myDatabaseAccess.getProficiencyPointCount(className);
+
+        myDatabaseAccess.close();
+
         buttonGoToSelectName = view.findViewById(R.id.buttonGoToEnterName);
         //Get the instance of the bus
-        BUS = BusProvider.getInstance();
-        BUS.register(this);
+//        BUS = BusProvider.getInstance();
+//        BUS.register(this);
 
 
         acrobaticsButton = view.findViewById(R.id.radio_acrobatics);
@@ -103,17 +123,22 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         survivalButton = view.findViewById(R.id.radio_survival);
         survivalButton.setOnClickListener(this);
 
-
         buttonGoToSelectName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 //Send the ability scores to the BUS
-                BUS.post(proficiencySender());
+//                BUS.post(proficiencySender());
 
                 //Unregister the BUS
 //                BUS.unregister(this);
+                calculateSkillModifiers(); //sample oversimplified function, needs to be enhanced, just add +2 to prof skills for modifier for now
+
+                characterDBAccess.saveSkillProficiencies(skillProficiencies);
+                characterDBAccess.saveSkillModifiers(skillModifiers);
+
+                characterDBAccess.close();
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
@@ -125,7 +150,7 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         });
         //disableButton(buttonGoToSelectName);
 
-
+        selectableProficiencies(getContext());
         //preDeterminedProficiencies();
         //nonSelectableProficiencies();
 
@@ -139,8 +164,24 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
 
     }
 
-    public void nonSelectableProficiencies() {
-        animalHandlingButton.setEnabled(false);
+    public void selectableProficiencies(Context myContext) {
+        myDatabaseAccess = ClassDatabaseAccess.getInstance(myContext);
+        myDatabaseAccess.open();
+        boolean[] proficiencyOptions = myDatabaseAccess.getClassOptionProficiencies(myContext,className);
+        CheckBox[] skillArray = {acrobaticsButton, animalHandlingButton, arcanaButton, athleticsButton, deceptionButton,
+                historyButton, insightButton, intimidationButton, investigationButton, medicineButton, natureButton,
+                perceptionButton, performanceButton, persuasionButton, religionButton, slightOfHandButton,
+                stealthButton, survivalButton};
+        for(int i=0; i<18;i++){
+            skillArray[i].setEnabled(false);
+        }
+
+        for(int i=0; i<18;i++) {
+            if(proficiencyOptions[i]){
+                skillArray[i].setEnabled(true);
+            }
+        }
+        myDatabaseAccess.close();
     }
 
     public void checkExpendedPoints() {
@@ -151,22 +192,22 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         //If all skill points are used, disables all unchecked skills
         if (skillCount == 0) {
             //enableButton(buttonGoToSelectName);
-            for (int i = 0; i < skillArray.length; i++) {
+            for (int i = 0; i < 18; i++) {
                 if (!skillArray[i].isChecked()) {
                     skillArray[i].setEnabled(false);
                 }
             }
-        //If a skill points > 0 then all unchecked skills will be enabled.
+        //If skill points > 0 then all unchecked skills will be enabled.
         } else {
             //disableButton(buttonGoToSelectName);
-            for (int i = 0; i < skillArray.length; i++) {
+            for (int i = 0; i < 18; i++) {
                 if (!skillArray[i].isChecked()) {
-                    skillArray[i].setEnabled(true);
+                    selectableProficiencies(getContext());
                 }
             }
         }
         //preDeterminedProficiencies();
-        //nonSelectableProficiencies();
+
     }
     //Toast message for testing. Feel free to delete if no longer needed.
     public void toastMessage(String message) {
@@ -383,6 +424,17 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    public void calculateSkillModifiers()  //Just a simple example to calculate modifiers, needs more to go off of to be accurate
+    {
+        for(int i = 0; i < 18; i++)
+        {
+            if(skillProficiencies[i] == 1)
+            {
+                skillModifiers[i] += 2;
+            }
+        }
+    }
+
     //Function that makes a button invisible and disabled
     public void disableButton(Button passButton) {
         passButton.setEnabled(false);
@@ -396,16 +448,16 @@ public class SelectSkillsFragment extends Fragment implements View.OnClickListen
     }
 
 
-    @Produce
-    SkillProficiencySender proficiencySender() {
-        SkillProficiencySender skillProficiencySender = new SkillProficiencySender(skillProficiencies);
-        return skillProficiencySender;
-    }
-
-    @Subscribe
-    public void getClass(DnDClass dnDClass)
-    {
-        className = dnDClass.getSubClassId();
-    }
+//    @Produce
+//    public SkillProficiencySender proficiencySender() {
+//        SkillProficiencySender skillProficiencySender = new SkillProficiencySender(skillProficiencies);
+//        return skillProficiencySender;
+//    }
+//
+//    @Subscribe
+//    public void getClass(DnDClass dnDClass)
+//    {
+//        className = dnDClass.getClassName();
+//    }
 
 }

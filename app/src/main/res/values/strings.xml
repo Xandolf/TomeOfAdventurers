@@ -1,4 +1,4 @@
-<resources>
+ <resources>
     <string name="app_name">Tome Of Adventurers</string>
     <string name="teamEmailAddress">TomeOfAdventurers@gmail.com</string>
     <string name="charCreat">Create Character</string>
@@ -123,11 +123,11 @@
     </string-array>
 
     <string-array name="currencyList">
-        <item>Platinum</item>
-        <item>Gold</item>
-        <item>Electrum</item>
-        <item>Silver</item>
-        <item>Copper</item>
+        <item>platinum</item>
+        <item>gold</item>
+        <item>electrum</item>
+        <item>silver</item>
+        <item>copper</item>
     </string-array>
 
     <string name="home">Home</string>

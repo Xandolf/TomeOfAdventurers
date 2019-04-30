@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
 import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
@@ -34,6 +35,7 @@ public class SetAbilityScoresFragment extends Fragment {
     boolean validInput;
     Bus BUS;
     int [] abilityScores={0,0,0,0,0,0};
+    int [] abilityScoreModifiers;
 
 
     @Override
@@ -44,10 +46,10 @@ public class SetAbilityScoresFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-        //Get the Instance of the BUS
-        BUS=BusProvider.getInstance();
-        //Register the bus
-        BUS.register(this);
+//        //Get the Instance of the BUS
+//        BUS=BusProvider.getInstance();
+//        //Register the bus
+//        BUS.register(this);
 
         //Initialize the text views. A lot of this should be moved to a recycler view but this is a
         //'fast' n sloppy implementation
@@ -169,8 +171,18 @@ public class SetAbilityScoresFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                abilityScoreModifiers = getAllAbilityScoreModifiers();
+
                 //Send the ability scores to the BUS
-                BUS.post(sendAbilityScores());
+//                BUS.post(sendAbilityScores());
+                CharacterDBAccess characterDBAccess;
+                characterDBAccess = CharacterDBAccess.getInstance(getContext());
+                characterDBAccess.open();
+
+                characterDBAccess.saveAbilityScores(abilityScores);
+                characterDBAccess.saveAbilityScoresModifiers(abilityScoreModifiers);
+
+                characterDBAccess.close();
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
@@ -189,10 +201,19 @@ public class SetAbilityScoresFragment extends Fragment {
 
     @Override
     public void onPause(){
-        BUS.unregister(this);
+//        BUS.unregister(this);
         super.onPause();
     }
 
+    public int[] getAllAbilityScoreModifiers()
+    {
+        int abilityScoreModifiers[] = new int[6];
+        for (int i = 0; i < 6; i++)
+        {
+            abilityScoreModifiers[i] = (abilityScores[i] - 10) / 2;
+        }
+        return abilityScoreModifiers;
+    }
 
 
     //Function that makes a button invisible and disabled
@@ -212,9 +233,9 @@ public class SetAbilityScoresFragment extends Fragment {
 //    I will want to call this function when they press the next button.
 //    I should make sure that all the values are valid first.
 //    the procedure is to register with the BUS. Post the producing function Then unregistering.
-    @Produce
-    public AbilityScoreSender sendAbilityScores()
-    {
-       return new AbilityScoreSender(abilityScores);
-    }
+//    @Produce
+//    public AbilityScoreSender sendAbilityScores()
+//    {
+//       return new AbilityScoreSender(abilityScores);
+//    }
 }

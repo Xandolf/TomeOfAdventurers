@@ -96,7 +96,7 @@ public class CharacterDBAccess {
         return charID;
     }
 
-//Below functions mainly used to fill character sheet fragment
+//Below functions mainly used to fill character sheet fragment --------------------------------------
     public String loadCharacterName()
     {
         String query = "SELECT Name FROM characters WHERE Selected = 1";
@@ -116,6 +116,22 @@ public class CharacterDBAccess {
     public String loadCharacterClass()
     {
         String query = "SELECT Class FROM characters WHERE Selected = 1";
+        Cursor data = database.rawQuery(query, null);
+
+        String dclass = "_";
+
+        while (data.moveToNext()) {
+            dclass = data.getString(0);
+        }
+
+        data.close();
+
+        return dclass;
+    }
+
+    public String getCharacterClass(String charName)
+    {
+        String query = "SELECT Class FROM characters WHERE Name = '"+charName+"'" ;
         Cursor data = database.rawQuery(query, null);
 
         String dclass = "_";
@@ -405,12 +421,6 @@ public class CharacterDBAccess {
         return pP;
     }
 
-    public void saveCurrentHP(int currentHP)
-    {
-        String query = "UPDATE characters SET CurrentHitPoints = '"+ currentHP +"' WHERE Selected = 1";
-        database.execSQL(query);
-    }
-
     public boolean[] loadSkillProficiencies()
     {
         boolean[] skillProficiencies = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}; //18 total
@@ -435,8 +445,318 @@ public class CharacterDBAccess {
 
         return skillProficiencies;
     }
+//below functions used primarily in character creation -------------------------------------------
+    public boolean initializeCharacter()
+    {
+        Random rand = new Random();
 
-    public boolean saveCharacter(Character aCharacter)
+        int rand_int1 = rand.nextInt(1000);
+        int rand_int2 = rand.nextInt(27); //used to choose letter
+
+        char[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+
+        char rand_char1 = alphabet[rand_int2];
+
+        String charID = Integer.toString(rand_int1)+rand_char1;
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Selected", 1);
+        contentValues.put("id", charID);
+        contentValues.put("Name", "NA");   //dummy filler name till updated
+        contentValues.put("Race", "NA");
+        contentValues.put("Class", "NA");
+        contentValues.put("HitDice", "0"+"d"+"0");
+        contentValues.put("AC", 0);
+        contentValues.put("Speed", 0);
+        contentValues.put("CurrentHitPoints", 0);
+        contentValues.put("MaxHitPoints", 0);
+
+        contentValues.put("Str", 0);
+        contentValues.put("Dex", 0);
+        contentValues.put("Con", 0);
+        contentValues.put("Int", 0);
+        contentValues.put("Wis", 0);
+        contentValues.put("Cha", 0);
+
+        contentValues.put("StrMod", 0);
+        contentValues.put("DexMod", 0);
+        contentValues.put("ConMod", 0);
+        contentValues.put("IntMod", 0);
+        contentValues.put("WisMod", 0);
+        contentValues.put("ChaMod", 0);
+
+        contentValues.put("Acrobatics", 0);
+        contentValues.put("AnimalHandling", 0);
+        contentValues.put("Arcana", 0);
+        contentValues.put("Athletics", 0);
+        contentValues.put("Deception", 0);
+        contentValues.put("History", 0);
+        contentValues.put("Insight", 0);
+        contentValues.put("Intimidation", 0);
+        contentValues.put("Investigation", 0);
+        contentValues.put("Medicine", 0);
+        contentValues.put("Nature", 0);
+        contentValues.put("Perception", 0);
+        contentValues.put("Performance", 0);
+        contentValues.put("Persuasion", 0);
+        contentValues.put("Religion", 0);
+        contentValues.put("SleightOfHand", 0);
+        contentValues.put("Stealth", 0);
+        contentValues.put("Survival", 0);
+
+        contentValues.put("AcrobaticsProf", 0);
+        contentValues.put("AnimalHandlingProf", 0);
+        contentValues.put("ArcanaProf", 0);
+        contentValues.put("AthleticsProf", 0);
+        contentValues.put("DeceptionProf", 0);
+        contentValues.put("HistoryProf", 0);
+        contentValues.put("InsightProf", 0);
+        contentValues.put("IntimidationProf", 0);
+        contentValues.put("InvestigationProf", 0);
+        contentValues.put("MedicineProf", 0);
+        contentValues.put("NatureProf", 0);
+        contentValues.put("PerceptionProf", 0);
+        contentValues.put("PerformanceProf", 0);
+        contentValues.put("PersuasionProf", 0);
+        contentValues.put("ReligionProf", 0);
+        contentValues.put("SleightOfHandProf", 0);
+        contentValues.put("StealthProf", 0);
+        contentValues.put("SurvivalProf", 0);
+
+        long result = database.insert("characters", null, contentValues);
+
+        //if data is inserted incorrectly it will return -1
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void saveCurrentHP(int currentHP)
+    {
+        String query = "UPDATE characters SET CurrentHitPoints = '"+ currentHP +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveRace(String raceName)
+    {
+        String query = "UPDATE characters SET Race = '"+ raceName +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveSubRace(String subRaceName)
+    {
+        String query = "UPDATE characters SET Subrace = '"+ subRaceName +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveClass(String className)
+    {
+        String query = "UPDATE characters SET Class = '"+ className +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveAbilityScores(int[] abilityScores)
+    {
+        String query = "UPDATE characters SET Str = '"+ abilityScores[0] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Dex = '"+ abilityScores[1] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Con = '"+ abilityScores[2] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Int = '"+ abilityScores[3] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Wis = '"+ abilityScores[4] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Cha = '"+ abilityScores[5] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+    }
+
+    public void saveAbilityScoresModifiers(int[] abilityScoresModifiers)
+    {
+        String query = "UPDATE characters SET StrMod = '"+ abilityScoresModifiers[0] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET DexMod = '"+ abilityScoresModifiers[1] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET ConMod = '"+ abilityScoresModifiers[2] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET IntMod = '"+ abilityScoresModifiers[3] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET WisMod = '"+ abilityScoresModifiers[4] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET ChaMod = '"+ abilityScoresModifiers[5] +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveSkillModifiers(int[] skillModifiers)
+    {
+        String query = "UPDATE characters SET Acrobatics = '"+ skillModifiers[0] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET AnimalHandling = '"+ skillModifiers[1] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Arcana = '"+ skillModifiers[2] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Athletics = '"+ skillModifiers[3] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Deception = '"+ skillModifiers[4] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET History = '"+ skillModifiers[5] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Insight = '"+ skillModifiers[6] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Intimidation = '"+ skillModifiers[7] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Investigation = '"+ skillModifiers[8] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Medicine = '"+ skillModifiers[9] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Nature = '"+ skillModifiers[10] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Perception = '"+ skillModifiers[11] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Performance = '"+ skillModifiers[12] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Persuasion = '"+ skillModifiers[13] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Religion = '"+ skillModifiers[14] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET SleightOfHand = '"+ skillModifiers[15] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Stealth = '"+ skillModifiers[16] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET Survival = '"+ skillModifiers[17] +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveSkillProficiencies(int[] dbSkillProficiencies)
+    {
+        String query = "UPDATE characters SET AcrobaticsProf = '"+ dbSkillProficiencies[0] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET AnimalHandlingProf = '"+ dbSkillProficiencies[1] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET ArcanaProf = '"+ dbSkillProficiencies[2] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET AthleticsProf = '"+ dbSkillProficiencies[3] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET DeceptionProf = '"+ dbSkillProficiencies[4] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET HistoryProf = '"+ dbSkillProficiencies[5] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET InsightProf = '"+ dbSkillProficiencies[6] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET IntimidationProf = '"+ dbSkillProficiencies[7] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET InvestigationProf = '"+ dbSkillProficiencies[8] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET MedicineProf = '"+ dbSkillProficiencies[9] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET NatureProf = '"+ dbSkillProficiencies[10] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET PerceptionProf = '"+ dbSkillProficiencies[11] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET PerformanceProf = '"+ dbSkillProficiencies[12] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET PersuasionProf = '"+ dbSkillProficiencies[13] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET ReligionProf = '"+ dbSkillProficiencies[14] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET SleightOfHandProf = '"+ dbSkillProficiencies[15] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET StealthProf = '"+ dbSkillProficiencies[16] +"' WHERE Selected = 1";
+        database.execSQL(query);
+
+        query = "UPDATE characters SET SurvivalProf = '"+ dbSkillProficiencies[17] +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveMaxHp(int maxHP)
+    {
+        String query = "UPDATE characters SET MaxHitPoints = '"+ maxHP +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveName(String name)
+    {
+        String query = "UPDATE characters SET Name = '"+ name +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveHitDice(int[] hitDiceArray)
+    {
+        String query = "UPDATE characters SET HitDice = '"+ hitDiceArray[0]+"d"+hitDiceArray[1] +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveArmorClass(int armorClass)
+    {
+        String query = "UPDATE characters SET AC = '"+ armorClass +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveSpeed(int speed)
+    {
+        String query = "UPDATE characters SET Speed = '"+ speed +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void saveProficiencyBonus(int profBonus)
+    {
+        String query = "UPDATE characters SET ProfBonus = '"+ profBonus +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public void savePassivePerception(int passivePerception)
+    {
+        String query = "UPDATE characters SET PassivePerception = '"+ passivePerception +"' WHERE Selected = 1";
+        database.execSQL(query);
+    }
+
+    public boolean saveCharacter(Character aCharacter) //not being used at moment
     {
         Random rand = new Random();
 
@@ -480,7 +800,7 @@ public class CharacterDBAccess {
         }
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("Selected", 1);  //need to have id for new items later!!
+        contentValues.put("Selected", 1);
         contentValues.put("id", charID);
         contentValues.put("Name", name);
         contentValues.put("Race", race);
