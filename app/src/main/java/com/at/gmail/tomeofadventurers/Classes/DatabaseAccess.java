@@ -559,10 +559,10 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
     //filters results by first 3 inputs, then orders it in ascending order by the 4th (ie name from A to Z, level from lowest to highest, etc)
-    public List<String> searchSort(String classURL, String level, String school, String order)
+    public List<String> searchSort(String spellName, String classURL, String level, String school, String order)
     {
         List<String> list = new ArrayList<>();
-        String query = "SELECT * FROM spells WHERE (class1 LIKE '" + classURL + "' OR class2 LIKE '" + classURL + "' OR class3 LIKE '" + classURL
+        String query = "SELECT * FROM spells WHERE name LIKE '" + spellName + "' COLLATE NOCASE AND (class1 LIKE '" + classURL + "' OR class2 LIKE '" + classURL + "' OR class3 LIKE '" + classURL
             + "' OR class4 LIKE '" + classURL + "' OR class5 LIKE '" + classURL +"' OR class6 LIKE '" + classURL +"' OR class7 LIKE '" + classURL
             + "') AND spell_level LIKE '" + level + "' AND school LIKE '" + school + "' ORDER BY " + order;
 
@@ -572,6 +572,22 @@ public class DatabaseAccess {
             list.add(result.getString(1));
             result.moveToNext();
         }
+        result.close();
+        return list;
+    }
+    //filtering and sorting for allitems
+    public List<String> allItemSearchSort(String name, String equipmentCategory, String order)
+    {
+        List<String> list = new ArrayList<>();
+        String query = "SELECT * FROM items WHERE (name LIKE '" + name + "' COLLATE NOCASE AND equipment_category LIKE '" + equipmentCategory + "') ORDER BY " + order;
+
+        Cursor result = database.rawQuery(query, null);
+        result.moveToFirst();
+        while (!result.isAfterLast()) {
+            list.add(result.getString(1));
+            result.moveToNext();
+        }
+
         result.close();
         return list;
     }
