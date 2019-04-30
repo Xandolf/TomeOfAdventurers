@@ -196,8 +196,13 @@ public class CharacterSheetFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (progressBar != null) {
-                            //String value = hitPointValue.getText().toString();
-                            heal = Integer.parseInt(hitPointValue.getText().toString());
+                            String value = hitPointValue.getText().toString();
+                            if(value.equals("")){
+                                heal = 0;
+                            }
+                            else{
+                                heal = Integer.parseInt(value);
+                            }
                             progressBar.incrementProgressBy(heal);
                             currentHitPoints = progressBar.getProgress();
                             displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
@@ -213,8 +218,13 @@ public class CharacterSheetFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (progressBar != null) {
-                            //String value = hitPointValue.getText().toString();
-                            heal = Integer.parseInt(hitPointValue.getText().toString());
+                            String value = hitPointValue.getText().toString();
+                            if(value.equals("")){
+                                heal = 0;
+                            }
+                            else{
+                                heal = Integer.parseInt(value);
+                            }
                             progressBar.incrementProgressBy(-heal);
                             currentHitPoints = progressBar.getProgress();
                             displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
