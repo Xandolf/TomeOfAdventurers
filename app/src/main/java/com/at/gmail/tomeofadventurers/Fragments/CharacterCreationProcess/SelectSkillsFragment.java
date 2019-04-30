@@ -14,17 +14,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.DatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.DnDClass;
-import com.at.gmail.tomeofadventurers.Classes.SkillProficiencySender;
-import com.at.gmail.tomeofadventurers.Fragments.SelectNameFragment;
 import com.at.gmail.tomeofadventurers.R;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Produce;
-import com.squareup.otto.Subscribe;
 
 public class SelectSkillsFragment extends Fragment implements View.OnClickListener {
 
