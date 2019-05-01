@@ -169,7 +169,8 @@ public class CharacterDBAccess {
 
     public String getCharacterClass(String charName)
     {
-        String query = "SELECT Class FROM characters WHERE Name = '"+charName+"'" ;
+//        String query = "SELECT Class FROM characters WHERE Name = '"+charName+"'" ;
+        String query = "select class_name from subclasses where id = (select Class from characters where Name = '"+charName+"')";
         Cursor data = database.rawQuery(query, null);
 
         String dclass = "_";
@@ -505,7 +506,7 @@ public class CharacterDBAccess {
         Random rand = new Random();
 
         int rand_int1 = rand.nextInt(1000);
-        int rand_int2 = rand.nextInt(27); //used to choose letter
+        int rand_int2 = rand.nextInt(26); //used to choose letter
 
         char[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 
