@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             linearLayout.setBackgroundResource(R.drawable.warlock);
         }
         else if(className.equals("Wizard")){
-            linearLayout.setBackgroundResource(R.drawable.wizard);
+            linearLayout.setBackgroundResource(R.drawable.wizard2);
         }
         //Update character name and class
         characterName = headerView.findViewById(R.id.character_menu_name);
