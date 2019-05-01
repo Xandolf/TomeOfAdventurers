@@ -214,7 +214,6 @@ public class Character
     }
 
     //Ability Scores
-    //TODO DECIDE HOW WE WANT TO NAME THESE Functions (ALL?)
 
     public int[] getAbilityScores()
     {

@@ -110,7 +110,7 @@ public class SubRaceDatabaseAccess
 
 
 
-    int [] getTotalAbilityScoreBonusesForSubrace(String subrace_id){
+    public int [] getTotalAbilityScoreBonusesForSubrace(String subrace_id){
         String race_id = getBaseRaceIdFor(subrace_id);
         int [] baseRaceAbilityScoreBonuses = getBaseRaceAbilityScoreBonuses(race_id);
         int [] subRaceAbiliityScoreBonuses = getSubRaceAbilityScoreBonuses(subrace_id);
@@ -146,7 +146,7 @@ public class SubRaceDatabaseAccess
     {
         int[] abilityScoreBonuses = new int[6];
         String query = "SELECT str_bonus, dex_bonus, con_bonus, int_bonus, " +
-                "wis_bonus, cha_bonus FROM sub_races WHERE id='" + id + "'";
+                "wis_bonus, cha_bonus FROM subraces WHERE id='" + id + "'";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         int i = 0;

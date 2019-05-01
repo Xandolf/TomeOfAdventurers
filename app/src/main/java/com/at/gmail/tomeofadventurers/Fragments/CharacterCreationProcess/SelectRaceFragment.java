@@ -105,7 +105,7 @@ public class SelectRaceFragment extends Fragment {
                 characterDBAccess.open();
 
                 characterDBAccess.saveRace(selectedRaceName);
-                characterDBAccess.saveSubRace(selectedSubRaceName);
+                characterDBAccess.saveSubRace(selectedSubRaceId);
 
                 characterDBAccess.close();
 
