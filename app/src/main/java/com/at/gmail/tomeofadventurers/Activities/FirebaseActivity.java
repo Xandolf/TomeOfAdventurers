@@ -59,7 +59,7 @@ public class FirebaseActivity extends AppCompatActivity {
         characterDBAccess.open();
         charName = characterDBAccess.loadCharacterName();
         charRace = characterDBAccess.loadCharacterRace();
-        charClass = characterDBAccess.loadCharacterClass();
+        charClass = characterDBAccess.loadCharacterClassName();
         charMaxHealth = characterDBAccess.loadCharacterMaxHP();
         charCurrentHealth = characterDBAccess.loadCharacterCurrentHP();
 

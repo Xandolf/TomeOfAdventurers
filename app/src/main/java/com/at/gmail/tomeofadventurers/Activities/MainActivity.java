@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         characterDBAccess.open();
 
         name = characterDBAccess.loadCharacterName();
-        className = characterDBAccess.loadCharacterClass();
+        className = characterDBAccess.loadCharacterClassName();
 
 //        BUS = BusProvider.getInstance();
 //        BUS.register(this); //You must register with the BUS to produce or subscribe but not to post
