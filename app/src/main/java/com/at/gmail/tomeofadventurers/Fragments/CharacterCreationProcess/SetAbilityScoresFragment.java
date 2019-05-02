@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Fragments.CharacterCreationProcess;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -7,15 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
-import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
+import com.at.gmail.tomeofadventurers.Classes.SubRaceDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Produce;
 
 //
 ///**
@@ -32,22 +33,29 @@ public class SetAbilityScoresFragment extends Fragment {
     Button buttonCalculateModifiers, buttonGoToSelectSkills;
     TextView textViewStrModifier, textViewDexModifier, textViewConModifier, textViewIntModifier, textViewWisModifier, textViewChaModifier;
     boolean validInput;
-    Bus BUS;
     int [] abilityScores={0,0,0,0,0,0};
+    int [] abilityScoreModifiers;
+    int[] abilityScoreBonuses;
+    View view;
 
+    CharacterDBAccess characterDBAccess;
+    SubRaceDatabaseAccess subRaceDatabaseAccess;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_set_ability_scores, container, false);
+        view =  inflater.inflate(R.layout.fragment_set_ability_scores, container, false);
         super.onCreate(savedInstanceState);
 
-
-        //Get the Instance of the BUS
-        BUS=BusProvider.getInstance();
-        //Register the bus
-        BUS.register(this);
+        characterDBAccess = CharacterDBAccess.getInstance(getContext());
+        characterDBAccess.open();
+        String subRaceId = characterDBAccess.loadCharacterSubRace();
+        characterDBAccess.close();
+        subRaceDatabaseAccess = SubRaceDatabaseAccess.getInstance(getContext());
+        subRaceDatabaseAccess.open();
+        abilityScoreBonuses = subRaceDatabaseAccess.getTotalAbilityScoreBonusesForSubrace(subRaceId);
+        subRaceDatabaseAccess.close();
 
         //Initialize the text views. A lot of this should be moved to a recycler view but this is a
         //'fast' n sloppy implementation
@@ -66,6 +74,24 @@ public class SetAbilityScoresFragment extends Fragment {
         textViewWisModifier= view.findViewById(R.id.textViewWisModifier);
         textViewChaModifier = view.findViewById(R.id.textViewChaModifier);
         buttonGoToSelectSkills = view.findViewById(R.id.buttonGoToSelectSkills);
+        TextView textViewRacialBonusStr = view.findViewById(R.id.textViewRacialBonusStr);
+        TextView textViewRacialBonusDex = view.findViewById(R.id.textViewRacialBonusDex);
+        TextView textViewRacialBonusCon = view.findViewById(R.id.textViewRacialBonusCon);
+        TextView textViewRacialBonusInt = view.findViewById(R.id.textViewRacialBonusInt);
+        TextView textViewRacialBonusWis = view.findViewById(R.id.textViewRacialBonusWis);
+        TextView textViewRacialBonusCha = view.findViewById(R.id.textViewRacialBonusCha);
+        String text = "+"+String.valueOf(abilityScoreBonuses[0]);
+        textViewRacialBonusStr.setText(text);
+        text = "+"+String.valueOf(abilityScoreBonuses[1]);
+        textViewRacialBonusDex.setText(text);
+        text = "+"+String.valueOf(abilityScoreBonuses[2]);
+        textViewRacialBonusCon.setText(text);
+        text = "+"+String.valueOf(abilityScoreBonuses[3]);
+        textViewRacialBonusInt.setText(text);
+        text = "+"+String.valueOf(abilityScoreBonuses[4]);
+        textViewRacialBonusWis.setText(text);
+        text = "+"+String.valueOf(abilityScoreBonuses[5]);
+        textViewRacialBonusCha.setText(text);
 
 
         buttonCalculateModifiers.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +106,8 @@ public class SetAbilityScoresFragment extends Fragment {
                 {
                     stringScore = editTextStr.getText().toString();
                     score = Integer.parseInt(stringScore);
-                    abilityScores[0]=score;
-                    mod = (score-10)/2;
+                    abilityScores[0]=score+abilityScoreBonuses[0];
+                    mod = (abilityScores[0]-10)/2;
                     if(mod>=0) stringMod = "+";
                     stringMod += Integer.toString(mod);
                     textViewStrModifier.setText(stringMod);
@@ -93,8 +119,8 @@ public class SetAbilityScoresFragment extends Fragment {
                 {
                     stringScore = editTextDex.getText().toString();
                     score = Integer.parseInt(stringScore);
-                    abilityScores[1]=score;
-                    mod = (score-10)/2;
+                    abilityScores[1]=score+abilityScoreBonuses[1];
+                    mod = (abilityScores[1]-10)/2;
                     if(mod>=0) stringMod = "+";
                     stringMod += Integer.toString(mod);
                     textViewDexModifier.setText(stringMod);
@@ -106,8 +132,8 @@ public class SetAbilityScoresFragment extends Fragment {
                 {
                     stringScore = editTextCon.getText().toString();
                     score = Integer.parseInt(stringScore);
-                    abilityScores[2]=score;
-                    mod = (score-10)/2;
+                    abilityScores[2]=score+abilityScoreBonuses[2];
+                    mod = (abilityScores[2]-10)/2;
                     if(mod>=0) stringMod = "+";
                     stringMod += Integer.toString(mod);
                     textViewConModifier.setText(stringMod);
@@ -119,8 +145,8 @@ public class SetAbilityScoresFragment extends Fragment {
                 {
                     stringScore = editTextInt.getText().toString();
                     score = Integer.parseInt(stringScore);
-                    abilityScores[3]=score;
-                    mod = (score-10)/2;
+                    abilityScores[3]=score+abilityScoreBonuses[3];
+                    mod = (abilityScores[3]-10)/2;
                     if(mod>=0) stringMod = "+";
                     stringMod += Integer.toString(mod);
                     textViewIntModifier.setText(stringMod);
@@ -132,8 +158,8 @@ public class SetAbilityScoresFragment extends Fragment {
                 {
                     stringScore = editTextWis.getText().toString();
                     score = Integer.parseInt(stringScore);
-                    abilityScores[4]=score;
-                    mod = (score-10)/2;
+                    abilityScores[4]=score+abilityScoreBonuses[4];
+                    mod = (abilityScores[4]-10)/2;
                     if(mod>=0) stringMod = "+";
                     stringMod += Integer.toString(mod);
                     textViewWisModifier.setText(stringMod);
@@ -145,8 +171,8 @@ public class SetAbilityScoresFragment extends Fragment {
                 {
                     stringScore = editTextCha.getText().toString();
                     score = Integer.parseInt(stringScore);
-                    abilityScores[5]=score;
-                    mod = (score-10)/2;
+                    abilityScores[5]=score+abilityScoreBonuses[5];
+                    mod = (abilityScores[5]-10)/2;
                     if(mod>=0) stringMod = "+";
                     stringMod += Integer.toString(mod);
                     textViewChaModifier.setText(stringMod);
@@ -169,8 +195,15 @@ public class SetAbilityScoresFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //Send the ability scores to the BUS
-                BUS.post(sendAbilityScores());
+                abilityScoreModifiers = getAllAbilityScoreModifiers();
+                CharacterDBAccess characterDBAccess;
+                characterDBAccess = CharacterDBAccess.getInstance(getContext());
+                characterDBAccess.open();
+
+                characterDBAccess.saveAbilityScores(abilityScores);
+                characterDBAccess.saveAbilityScoresModifiers(abilityScoreModifiers);
+
+                characterDBAccess.close();
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
@@ -189,10 +222,18 @@ public class SetAbilityScoresFragment extends Fragment {
 
     @Override
     public void onPause(){
-        BUS.unregister(this);
         super.onPause();
     }
 
+    public int[] getAllAbilityScoreModifiers()
+    {
+        int abilityScoreModifiers[] = new int[6];
+        for (int i = 0; i < 6; i++)
+        {
+            abilityScoreModifiers[i] = (abilityScores[i] - 10) / 2;
+        }
+        return abilityScoreModifiers;
+    }
 
 
     //Function that makes a button invisible and disabled
@@ -204,6 +245,7 @@ public class SetAbilityScoresFragment extends Fragment {
     //Function that makes a button visible and enabled
     public void enableButton(Button passButton){
         passButton.setEnabled(true);
+        view.clearFocus();
         passButton.setVisibility(View.VISIBLE);
     }
 
@@ -212,9 +254,9 @@ public class SetAbilityScoresFragment extends Fragment {
 //    I will want to call this function when they press the next button.
 //    I should make sure that all the values are valid first.
 //    the procedure is to register with the BUS. Post the producing function Then unregistering.
-    @Produce
-    public AbilityScoreSender sendAbilityScores()
-    {
-       return new AbilityScoreSender(abilityScores);
-    }
+//    @Produce
+//    public AbilityScoreSender sendAbilityScores()
+//    {
+//       return new AbilityScoreSender(abilityScores);
+//    }
 }

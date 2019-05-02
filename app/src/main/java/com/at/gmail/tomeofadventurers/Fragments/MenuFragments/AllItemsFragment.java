@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +30,7 @@ import java.util.List;
 
 
 
-public class AllItemsFragment extends Fragment {
+public class AllItemsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
 //General Listview Variables
     ListView itemBookListView;
@@ -53,6 +58,11 @@ public class AllItemsFragment extends Fragment {
     EditText createItemDesc;
     Button createItemClose;
     Button createItemAddItem;
+//item sorting/searching variables
+    String sortingName = "%";
+    String sortingCategory = "%";
+    String sortingOrder = "name";
+    EditText allItemsSearchBar;
 
     String charID;
 
@@ -141,6 +151,53 @@ public class AllItemsFragment extends Fragment {
                 });
             }
         });
+
+        //creates spinner view for item category filtering
+        String[] categoryArray = {"Category", "Weapon", "Armor", "Adventuring Gear", "Tools", "Mounts and Vehicles"};
+        Spinner categorySpinner = view.findViewById(R.id.allItemsCategorySpinner);
+        ArrayAdapter<String> categorySpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, categoryArray);
+        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categorySpinnerAdapter);
+        categorySpinner.setOnItemSelectedListener(this);
+        //creates spinner view for item ordering
+        String[] orderArray = {"Order", "Name", "Damage", "Weight"};
+        Spinner orderSpinner = view.findViewById(R.id.allItemsOrderSpinner);
+        ArrayAdapter<String> orderSpinnerAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, orderArray);
+        orderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        orderSpinner.setAdapter(orderSpinnerAdapter);
+        orderSpinner.setOnItemSelectedListener(this);
+
+        allItemsSearchBar = view.findViewById(R.id.allItemsSearchBar);
+        allItemsSearchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String search = allItemsSearchBar.getText().toString();
+                if (search.equals("") || search.equals(" ") || search.equals("Search"))
+                {
+                    sortingName = "%";
+                }
+                else
+                {
+                    sortingName = "%" + search + "%";
+                }
+
+                itemNames = myDatabaseAccess.allItemSearchSort(sortingName, sortingCategory, sortingOrder);
+                adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
+                itemBookListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         return view;
     }
@@ -284,5 +341,60 @@ public class AllItemsFragment extends Fragment {
 
     private void toastMessage(String message){
         Toast.makeText(getActivity(),message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String spinnerSelection = parent.getItemAtPosition(position).toString();
+
+        if (spinnerSelection == "Category")
+        {
+            sortingCategory = "%";
+        }
+        else if (spinnerSelection == "Weapon")
+        {
+            sortingCategory = "Weapon";
+        }
+        else if (spinnerSelection == "Armor")
+        {
+            sortingCategory = "Armor";
+        }
+        else if (spinnerSelection == "Adventuring Gear")
+        {
+            sortingCategory = "Adventuring Gear";
+        }
+        else if (spinnerSelection == "Tools")
+        {
+            sortingCategory = "Tools";
+        }
+        else if (spinnerSelection == "Mounts and Vehicles")
+        {
+            sortingCategory = "Mounts and Vehicles";
+        }
+        else if (spinnerSelection == "Order")
+        {
+            sortingOrder = "name";
+        }
+        else if (spinnerSelection == "Damage")
+        {
+            sortingOrder = "[damage/dice_value] * [damage/dice_count] DESC";
+        }
+        else if (spinnerSelection == "Weight")
+        {
+            sortingOrder = "weight DESC";
+        }
+        else if (spinnerSelection == "Name")
+        {
+            sortingOrder = "name";
+        }
+
+        itemNames = myDatabaseAccess.allItemSearchSort(sortingName, sortingCategory, sortingOrder);
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemNames);
+        itemBookListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

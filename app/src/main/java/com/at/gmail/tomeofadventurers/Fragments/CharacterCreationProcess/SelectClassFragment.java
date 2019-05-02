@@ -17,30 +17,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.at.gmail.tomeofadventurers.Classes.BusProvider;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.ClassDatabaseAccess;
-import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.Classes.SubClassDatabaseAccess;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Produce;
 
 
 public class SelectClassFragment extends Fragment
 {
     String classIds[];
     String subClassIds[];
+    String classNames[];
     String selectedClassId;
     String selectedSubClassID;
+    String selectedClassName;
 
     //variables
     Button buttonToClassProperties;
     TextView textViewDisplayText;
     Spinner spinnerClass, spinnerSubClass;
     Button buttonMoreInfo;
-    Bus BUS;
 
-    //Dialog popup test
     Dialog testDialog;
     TextView textViewPassAttributes;
     Button buttonClosePopup;
@@ -57,9 +55,7 @@ public class SelectClassFragment extends Fragment
        View view=inflater.inflate(R.layout.fragment_select_class,container,false);
        super.onCreate(savedInstanceState);
 
-        //Get the instance of the bus
-        BUS = BusProvider.getInstance();
-        BUS.register(this);
+
         //TextView variables
         textViewDisplayText = view.findViewById(R.id.txtvwJSONResultClass);
         textViewDisplayText.setText("Initial Setting Text");
@@ -73,7 +69,7 @@ public class SelectClassFragment extends Fragment
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-                selectAndParse(adapterView, i);
+                populateSecondSpinner(adapterView, i);
             }
 
             @Override
@@ -102,6 +98,14 @@ public class SelectClassFragment extends Fragment
         buttonToClassProperties.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                CharacterDBAccess characterDBAccess;
+                characterDBAccess = CharacterDBAccess.getInstance(getContext());
+                characterDBAccess.open();
+
+                characterDBAccess.saveClass(selectedSubClassID);
+                characterDBAccess.close();
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragTrans = fragmentManager.beginTransaction();
                 SetAbilityScoresFragment frag = new SetAbilityScoresFragment();
@@ -124,7 +128,6 @@ public class SelectClassFragment extends Fragment
     }
     @Override
     public void onPause(){
-        BUS.unregister(this);
         super.onPause();
     }
 
@@ -139,7 +142,9 @@ public class SelectClassFragment extends Fragment
         classDatabaseAccess.open();
 
         classIds = classDatabaseAccess.getClassIds();
-        String[] classNames = classDatabaseAccess.getClassNames(classIds);
+        classNames = classDatabaseAccess.getClassNames(classIds);
+
+        classDatabaseAccess.close();
 
         classListAdapter = new ArrayAdapter<>(this.getActivity(),
                                               android.R.layout.simple_spinner_item,
@@ -149,13 +154,15 @@ public class SelectClassFragment extends Fragment
     }
 
 
-    public void selectAndParse(AdapterView adapterView, int i)
+    public void populateSecondSpinner(AdapterView adapterView, int i)
     {
+        selectedClassName = classNames[i];
         selectedClassId = classIds[i];
         subClassDatabaseAccess = SubClassDatabaseAccess.getInstance(this.getContext());
         subClassDatabaseAccess.open();
         subClassIds = subClassDatabaseAccess.getSubClassIdsFor(selectedClassId);
         String subClassNames[] = subClassDatabaseAccess.getSubClassNames(subClassIds);
+        subClassDatabaseAccess.close();
         subClassListAdapter = new ArrayAdapter<String>(this.getActivity(),
                                                        android.R.layout.simple_spinner_item,
                                                        subClassNames);
@@ -202,17 +209,4 @@ public class SelectClassFragment extends Fragment
         testDialog.show();
     }
 
-    //Here is a function that will produce a race.
-    // Pass it a string that holds the name of the race you are trying to pass.
-    // You will want to call it in the format when you switch to the next stage
-    //  BUS.register(this)
-    //  BUS.post(sendDnDClass("CLASSNAME"))
-    //  BUS.unregister(this)
-    @Produce
-    public DnDClass sendDnDClass()
-    {
-        DnDClass dnDClass = new DnDClass();
-        dnDClass.setSubClassId(selectedSubClassID);
-        return dnDClass;
-    }
 }

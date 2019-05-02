@@ -12,9 +12,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.at.gmail.tomeofadventurers.Classes.AbilityScoreSender;
 import com.at.gmail.tomeofadventurers.Classes.Character;
+import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.AllItemsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.AllSpellsFragment;
 import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.DiceFragment;
@@ -30,6 +35,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     //public Bus BUS; // I declared it as a variable for easy reference. Not sure if it needs to be public or private
     public int [] abilityScores = {5,8,10,13,20,15};
+    TextView characterName, characterClass;
+    CharacterDBAccess characterDBAccess;
+    LinearLayout linearLayout;
+    String name = "";
+    String className = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +50,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        characterDBAccess = CharacterDBAccess.getInstance(this);
+        characterDBAccess.open();
+
+        name = characterDBAccess.loadCharacterName();
+        className = characterDBAccess.loadCharacterClassName();
+
 //        BUS = BusProvider.getInstance();
 //        BUS.register(this); //You must register with the BUS to produce or subscribe but not to post
 //        BUS.post(sendCharacter());
@@ -47,6 +64,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView =findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        View headerView = navigationView.getHeaderView(0);
+        linearLayout = headerView.findViewById(R.id.header);
+        if(className.equals("Barbarian"))
+        {
+            linearLayout.setBackgroundResource(R.drawable.barbarian);
+        }
+        else if(className.equals("Bard")){
+            linearLayout.setBackgroundResource(R.drawable.bard);
+        }
+        else if(className.equals("Cleric")){
+            linearLayout.setBackgroundResource(R.drawable.cleric);
+        }
+        else if(className.equals("Druid")){
+            linearLayout.setBackgroundResource(R.drawable.druid);
+        }
+        else if(className.equals("Fighter")){
+            linearLayout.setBackgroundResource(R.drawable.fighter);
+        }
+        else if(className.equals("Monk")){
+            linearLayout.setBackgroundResource(R.drawable.monk);
+        }
+        else if(className.equals("Paladin")){
+            linearLayout.setBackgroundResource(R.drawable.paladin);
+        }
+        else if(className.equals("Ranger")){
+            linearLayout.setBackgroundResource(R.drawable.ranger);
+        }
+        else if(className.equals("Rogue")){
+            linearLayout.setBackgroundResource(R.drawable.rogue);
+        }
+        else if(className.equals("Sorcerer")){
+            linearLayout.setBackgroundResource(R.drawable.sorcerer);
+        }
+        else if(className.equals("Warlock")){
+            linearLayout.setBackgroundResource(R.drawable.warlock);
+        }
+        else if(className.equals("Wizard")){
+            linearLayout.setBackgroundResource(R.drawable.wizard2);
+        }
+        //Update character name and class
+        characterName = headerView.findViewById(R.id.character_menu_name);
+        characterName.setText(name);
+        characterClass = headerView.findViewById(R.id.class_menu_name);
+        characterClass.setText(className);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -67,7 +130,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
             //        new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
+
         }
+
     }
 
     @Override

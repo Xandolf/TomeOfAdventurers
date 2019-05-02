@@ -2,6 +2,7 @@ package com.at.gmail.tomeofadventurers.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,11 +49,63 @@ public class SelectCharacterAdapter extends RecyclerView.Adapter<SelectCharacter
     //i holds position
     @Override
     public void onBindViewHolder(@NonNull final SelectCharacterAdapterViewHolder selectCharacterAdapterViewHolder, final int i) {
+        String charClass;
 
         selectCharacterAdapterViewHolder.textViewCharacterName.setText(charNames.get(i));
 
         myCharacterDBAccess = CharacterDBAccess.getInstance(myContext);
         myCharacterDBAccess.open();
+
+        charClass = myCharacterDBAccess.getCharacterClass(charNames.get(i));
+
+        if(charClass.equals("Barbarian"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.barbarian);
+        }
+        else if(charClass.equals("Bard"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.bard);
+        }
+        else if(charClass.equals("Cleric"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.cleric);
+        }
+        else if(charClass.equals("Druid"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.druid);
+        }
+        else if(charClass.equals("Fighter"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.fighter);
+        }
+        else if(charClass.equals("Monk"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.monk);
+        }
+        else if(charClass.equals("Paladin"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.paladin);
+        }
+        else if(charClass.equals("Ranger"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.ranger);
+        }
+        else if(charClass.equals("Rogue"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.rogue);
+        }
+        else if(charClass.equals("Sorcerer"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.sorcerer);
+        }
+        else if(charClass.equals("Warlock"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.warlock);
+        }
+        else if(charClass.equals("Wizard"))
+        {
+            selectCharacterAdapterViewHolder.textViewCharacterName.setBackgroundResource(R.drawable.wizard2);
+        }
 
         selectCharacterAdapterViewHolder.parentLayout.setOnClickListener(new View.OnClickListener()
         {

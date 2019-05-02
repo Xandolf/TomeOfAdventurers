@@ -1,4 +1,4 @@
-<resources>
+ <resources>
     <string name="app_name">Tome Of Adventurers</string>
     <string name="teamEmailAddress">TomeOfAdventurers@gmail.com</string>
     <string name="charCreat">Create Character</string>
@@ -22,31 +22,31 @@
     </string-array>
 
     <string name="AbilityScoreName">Ability Score Name</string>
-    <string name = "Strength">Strength</string>
-    <string name = "Dexterity">Dexterity</string>
-    <string name = "Constitution">Constitution</string>
-    <string name = "Intelligence">Intelligence</string>
-    <string name = "Wisdom">Wisdom</string>
-    <string name = "Charisma">Charisma</string>
+    <string name="Strength">Strength</string>
+    <string name="Dexterity">Dexterity</string>
+    <string name="Constitution">Constitution</string>
+    <string name="Intelligence">Intelligence</string>
+    <string name="Wisdom">Wisdom</string>
+    <string name="Charisma">Charisma</string>
 
-    <string name = "Acrobatics">Acrobatics</string>
-    <string name = "AnimalHandling">Animal Handling</string>
-    <string name = "Arcana">Arcana</string>
-    <string name = "Athletics">Athletics</string>
-    <string name = "Deception">Deception</string>
-    <string name = "History">History</string>
-    <string name = "Insight">Insight</string>
-    <string name = "Intimidation">Intimidation</string>
-    <string name = "Investigation">Investigation</string>
-    <string name = "Medicine">Medicine</string>
-    <string name = "Nature">Nature</string>
-    <string name = "Perception">Perception</string>
-    <string name = "Performance">Performance</string>
-    <string name = "Persuasion">Persuasion</string>
-    <string name = "Religion">Religion</string>
-    <string name = "SlightOfHand">Slight of Hand</string>
-    <string name = "Stealth">Stealth</string>
-    <string name = "Survival">Survival</string>
+    <string name="Acrobatics">Acrobatics</string>
+    <string name="AnimalHandling">Animal Handling</string>
+    <string name="Arcana">Arcana</string>
+    <string name="Athletics">Athletics</string>
+    <string name="Deception">Deception</string>
+    <string name="History">History</string>
+    <string name="Insight">Insight</string>
+    <string name="Intimidation">Intimidation</string>
+    <string name="Investigation">Investigation</string>
+    <string name="Medicine">Medicine</string>
+    <string name="Nature">Nature</string>
+    <string name="Perception">Perception</string>
+    <string name="Performance">Performance</string>
+    <string name="Persuasion">Persuasion</string>
+    <string name="Religion">Religion</string>
+    <string name="SlightOfHand">Slight of Hand</string>
+    <string name="Stealth">Stealth</string>
+    <string name="Survival">Survival</string>
 
     <string-array name="Skills">
         <item>Acrobatics</item>
@@ -123,11 +123,11 @@
     </string-array>
 
     <string-array name="currencyList">
-        <item>Platinum</item>
-        <item>Gold</item>
-        <item>Electrum</item>
-        <item>Silver</item>
-        <item>Copper</item>
+        <item>platinum</item>
+        <item>gold</item>
+        <item>electrum</item>
+        <item>silver</item>
+        <item>copper</item>
     </string-array>
 
     <string name="home">Home</string>

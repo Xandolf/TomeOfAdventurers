@@ -1,5 +1,6 @@
 package com.at.gmail.tomeofadventurers.Fragments.MenuFragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,47 +10,51 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Adapters.AbilityScoreAdapter;
 import com.at.gmail.tomeofadventurers.Adapters.SkillsListAdapter;
-import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Character;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
-import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.R;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
+
+import static java.sql.Types.NULL;
 
 public class CharacterSheetFragment extends Fragment {
 
     Character currentPlayerCharacter;
     ImageButton buttonLowerHitPoints, buttonIncreaseHitPoints;
+    Button healButton, damageButton;
     ProgressBar progressBar;
     RecyclerView abilityScoreRecycler, skillsRecyclerView;
     AbilityScoreAdapter abilityScoreAdapter;
     SkillsListAdapter skillsListAdapter;
-    String [] abilityScoreNames,skillNames;
+    String[] abilityScoreNames, skillNames;
     TextView textViewHitPointValue, textViewClassName, textViewCharacterName;
     String displayHitPoints;
     View view;
     Bus BUS;
-    int skillModifiers[]= {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    int abilityScores[] = {10,10,10,10,10,10};
-    int [] abilityScoreModifiers={0,0,0,0,0,0};
+    int skillModifiers[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    int abilityScores[] = {10, 10, 10, 10, 10, 10};
+    int[] abilityScoreModifiers = {0, 0, 0, 0, 0, 0};
     String name = "NA";
-    String className="";
+    String className = "";
+    Dialog healthEditDialog;
+    EditText hitPointValue;
+    int heal = 0;
+    int damage = 0;
 
     //FIXME WOW
-    boolean skillProficiencies[] ={ true,false,true,false,false,true,true,true,false,true,false,true,false,true,true,false,true,false};
-
+    boolean skillProficiencies[] = {true, false, true, false, false, true, true, true, false, true, false, true, false, true, true, false, true, false};
 
 
     int currentHitPoints;
-    int maxHitPoints =0;
+    int maxHitPoints = 0;
 
     //Alex Code
     TextView textViewSpeedValue, textViewHitDiceValue, textViewArmorClass, textViewProfBonus, textViewPassivePerception;
@@ -72,7 +77,7 @@ public class CharacterSheetFragment extends Fragment {
         characterDBAccess.open();
 
         name = characterDBAccess.loadCharacterName();
-        className = characterDBAccess.loadCharacterClass();
+        className = characterDBAccess.loadCharacterClassName();
         hitDiceValue = characterDBAccess.loadCharacterHitDice();
         armorClassValue = characterDBAccess.loadCharacterArmorClass();
         speedValue = characterDBAccess.loadCharacterSpeed();
@@ -89,31 +94,34 @@ public class CharacterSheetFragment extends Fragment {
 //        BUS = BusProvider.getInstance();
 //        BUS.register(this);
 
+        //progress bar pop up to edit hit points
+        progressBar = view.findViewById(R.id.progressBar);
+
 //        toastMessage("Im in");
         textViewCharacterName = view.findViewById(R.id.textViewCharacterName);
         textViewCharacterName.setText(name);
 
 
-        textViewClassName=view.findViewById(R.id.textViewClassName);
+        textViewClassName = view.findViewById(R.id.textViewClassName);
         textViewClassName.setText(className);
 
         textViewArmorClass = view.findViewById(R.id.textViewArmorClassValue);
         textViewArmorClass.setText(armorClassValue);
 
         textViewProfBonus = view.findViewById(R.id.textViewProficencyBonusValue);
-        textViewProfBonus.setText("+"+Integer.toString(profBonus));
+        textViewProfBonus.setText("+" + Integer.toString(profBonus));
 
         textViewPassivePerception = view.findViewById(R.id.textViewPassivePerceptionValue);
-        textViewPassivePerception.setText("+"+passivePerception);
+        textViewPassivePerception.setText("+" + passivePerception);
 
         //Load in the ability scores
 //        if (currentPlayerCharacter!=null)  abilityScores = currentPlayerCharacter.getAbilityScores();
         abilityScoreRecycler = view.findViewById(R.id.recyclerViewAbilityScores);
         abilityScoreRecycler.setHasFixedSize(true);
-        abilityScoreRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        abilityScoreRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.);
         abilityScoreNames = getResources().getStringArray(R.array.AbilityScores);
-        abilityScoreAdapter = new AbilityScoreAdapter(getContext(), abilityScoreNames,abilityScores,abilityScoreModifiers);
+        abilityScoreAdapter = new AbilityScoreAdapter(getContext(), abilityScoreNames, abilityScores, abilityScoreModifiers);
         abilityScoreRecycler.setAdapter(abilityScoreAdapter);
 
         //load in skills
@@ -122,13 +130,13 @@ public class CharacterSheetFragment extends Fragment {
         skillsRecyclerView.setNestedScrollingEnabled(false);
         skillsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         skillNames = getResources().getStringArray(R.array.Skills);
-        skillsListAdapter = new SkillsListAdapter(getContext(),skillNames, skillProficiencies,skillModifiers);
+        skillsListAdapter = new SkillsListAdapter(getContext(), skillNames, skillProficiencies, skillModifiers);
         skillsRecyclerView.setAdapter(skillsListAdapter);
 
         //Health bar ..............................................................................
-        textViewHitPointValue =view.findViewById(R.id.textViewHealthValue);
-        buttonLowerHitPoints =view.findViewById(R.id.buttonLowerHealth);
-        buttonIncreaseHitPoints =view.findViewById(R.id.buttonIncreaseHealth);
+        textViewHitPointValue = view.findViewById(R.id.textViewHealthValue);
+        buttonLowerHitPoints = view.findViewById(R.id.buttonLowerHealth);
+        buttonIncreaseHitPoints = view.findViewById(R.id.buttonIncreaseHealth);
 
         //Initialize Health Bar Values
 //        if (currentPlayerCharacter!=null) {
@@ -140,39 +148,95 @@ public class CharacterSheetFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setMax(maxHitPoints);
         progressBar.setProgress(currentHitPoints);
-        displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
+        displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
 
         //these functions need to cause a pop-up that will ask the user for a value to heal/damage
         textViewHitPointValue.setText(displayHitPoints);
-        buttonLowerHitPoints.setOnClickListener(new View.OnClickListener()
-        {
+        buttonLowerHitPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (progressBar != null)
-                {
+                if (progressBar != null) {
                     progressBar.incrementProgressBy(-1);
-                    currentHitPoints =progressBar.getProgress();
-                    displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
+                    currentHitPoints = progressBar.getProgress();
+                    displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
                 }
                 characterDBAccess.saveCurrentHP(currentHitPoints);
             }
         });
 
-        buttonIncreaseHitPoints.setOnClickListener(new View.OnClickListener()
-        {
+        buttonIncreaseHitPoints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( progressBar != null)
-                {
+                if (progressBar != null) {
                     progressBar.incrementProgressBy(1);
-                    currentHitPoints =progressBar.getProgress();
-                    displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
+                    currentHitPoints = progressBar.getProgress();
+                    displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
                 }
                 characterDBAccess.saveCurrentHP(currentHitPoints);
             }
         });
+
+        progressBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                healthEditDialog = new Dialog(getContext());
+                healthEditDialog.setContentView(R.layout.popup_healthedit);
+
+                damageButton =healthEditDialog.findViewById(R.id.damageButton);
+                healButton = healthEditDialog.findViewById(R.id.healButton);
+                hitPointValue = healthEditDialog.findViewById(R.id.hitPointValue);
+
+                healButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (progressBar != null) {
+                            String value = hitPointValue.getText().toString();
+                            if(value.equals("")){
+                                heal = 0;
+                            }
+                            else{
+                                heal = Integer.parseInt(value);
+                            }
+                            progressBar.incrementProgressBy(heal);
+                            currentHitPoints = progressBar.getProgress();
+                            displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
+                            textViewHitPointValue.setText(displayHitPoints);
+
+                            healthEditDialog.dismiss();
+                        }
+                        characterDBAccess.saveCurrentHP(currentHitPoints);
+                    }
+
+                });
+                damageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (progressBar != null) {
+                            String value = hitPointValue.getText().toString();
+                            if(value.equals("")){
+                                heal = 0;
+                            }
+                            else{
+                                heal = Integer.parseInt(value);
+                            }
+                            progressBar.incrementProgressBy(-heal);
+                            currentHitPoints = progressBar.getProgress();
+                            displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
+                            textViewHitPointValue.setText(displayHitPoints);
+
+                            healthEditDialog.dismiss();
+                        }
+                        characterDBAccess.saveCurrentHP(currentHitPoints);
+                    }
+
+                });
+                healthEditDialog.show();
+            }
+        });
+
+
         //......................................................................................
 
         //Alex Code
@@ -186,7 +250,9 @@ public class CharacterSheetFragment extends Fragment {
 
         return view;
     }//end OnCreate
-//    @Override
+
+
+    //    @Override
 //    public void onResume(){
 //        super.onResume();
 //    }

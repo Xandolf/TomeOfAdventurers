@@ -1,11 +1,16 @@
 package com.at.gmail.tomeofadventurers.Classes;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.TextView;
+
+import com.at.gmail.tomeofadventurers.Fragments.MenuFragments.InventoryFragment;
+import com.at.gmail.tomeofadventurers.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -296,6 +301,117 @@ public class DatabaseAccess {
         return  currencyValues;
     }
 
+    public int getCurrencyAmount(String desiredCurrency)
+    {
+        String query = "select count from inventories where idchar = (select id from characters where Selected = 1) and id = '"+ desiredCurrency +"'";
+        Cursor data = database.rawQuery(query, null);
+
+        String amountString = "_";
+        int amount;
+
+        while (data.moveToNext()) {
+            amountString = data.getString(0);
+        }
+
+        data.close();
+
+        amount = Integer.parseInt(amountString);
+
+        return amount;
+    }
+
+    public void convertCurrency(String myCurrencyType, String desiredCurrencyType, int percent)
+    {
+        int myCurrencyAmt, desiredCurrencyAmt, leftOverCurrencyAmount, myCurrencyAmtPercent;
+        double myCurrencyAmtPercentDouble;
+        int divisor = 1, multiplier = 1; //initialize
+
+        myCurrencyAmt = getCurrencyAmount(myCurrencyType);
+        myCurrencyAmtPercentDouble = myCurrencyAmt * (percent*0.01);
+        myCurrencyAmtPercent = (int) Math.round(myCurrencyAmtPercentDouble);
+        leftOverCurrencyAmount = myCurrencyAmt - myCurrencyAmtPercent;
+
+        if((myCurrencyType.equals("copper") && desiredCurrencyType.equals("silver")) || (myCurrencyType.equals("silver") && desiredCurrencyType.equals("gold"))
+        || (myCurrencyType.equals("gold") && desiredCurrencyType.equals("platinum")))
+        {
+            divisor = 10;
+        }
+        else if((myCurrencyType.equals("copper") && desiredCurrencyType.equals("electrum")))
+        {
+            divisor = 50;
+        }
+        else if((myCurrencyType.equals("copper") && desiredCurrencyType.equals("gold")) || (myCurrencyType.equals("silver") && desiredCurrencyType.equals("platinum")))
+        {
+            divisor = 100;
+        }
+        else if ((myCurrencyType.equals("copper") && desiredCurrencyType.equals("platinum")))
+        {
+            divisor = 1000;
+        }
+        else if ((myCurrencyType.equals("silver") && desiredCurrencyType.equals("electrum")))
+        {
+            divisor = 5;
+        }
+        else if ((myCurrencyType.equals("electrum") && desiredCurrencyType.equals("gold")))
+        {
+            divisor = 2;
+        }
+        else if ((myCurrencyType.equals("electrum") && desiredCurrencyType.equals("platinum")))
+        {
+            divisor = 20;
+        }
+        else if ((myCurrencyType.equals("silver") && desiredCurrencyType.equals("copper")) || (myCurrencyType.equals("gold") && desiredCurrencyType.equals("silver"))
+        || (myCurrencyType.equals("platinum") && desiredCurrencyType.equals("gold")))
+        {
+            multiplier = 10;
+        }
+        else if ((myCurrencyType.equals("electrum") && desiredCurrencyType.equals("copper")))
+        {
+            multiplier = 50;
+        }
+        else if ((myCurrencyType.equals("electrum") && desiredCurrencyType.equals("silver")))
+        {
+            multiplier = 5;
+        }
+        else if ((myCurrencyType.equals("gold") && desiredCurrencyType.equals("copper")) || (myCurrencyType.equals("platinum") && desiredCurrencyType.equals("silver")))
+        {
+            multiplier = 100;
+        }
+        else if ((myCurrencyType.equals("gold") && desiredCurrencyType.equals("electrum")))
+        {
+            multiplier = 2;
+        }
+        else if ((myCurrencyType.equals("platinum") && desiredCurrencyType.equals("copper")))
+        {
+            multiplier = 1000;
+        }
+        else if ((myCurrencyType.equals("platinum") && desiredCurrencyType.equals("electrum")))
+        {
+            multiplier = 20;
+        }
+
+        //--------------------------------------------------------------- main formula below
+
+        if(!myCurrencyType.equals(desiredCurrencyType))
+        {
+            desiredCurrencyAmt = ((myCurrencyAmtPercent/divisor)*multiplier) + getCurrencyAmount(desiredCurrencyType);
+            myCurrencyAmt = (myCurrencyAmtPercent%divisor) + leftOverCurrencyAmount;  //left over currency remains that currency i.e 55cp/10, 5 cp remains 5 becomes sp
+        }
+        else //case where currency types match
+        {
+            desiredCurrencyAmt = myCurrencyAmt;
+        }
+
+        String query1 = "UPDATE inventories SET count = '"+ myCurrencyAmt +"' WHERE idchar = (select id from characters where Selected = 1)" +
+                "and id = '"+ myCurrencyType +"'";
+        database.execSQL(query1);
+
+        String query2 = "UPDATE inventories SET count = '"+ desiredCurrencyAmt +"' WHERE idchar = (select id from characters where Selected = 1)" +
+                "and id = '"+ desiredCurrencyType +"'";
+        database.execSQL(query2);
+
+    }
+
     //Spells database functions -----------------------------------------------------------------
     public List<String> getSpellNames() {
         List<String> list = new ArrayList<>();
@@ -443,10 +559,10 @@ public class DatabaseAccess {
         database.execSQL(query);
     }
     //filters results by first 3 inputs, then orders it in ascending order by the 4th (ie name from A to Z, level from lowest to highest, etc)
-    public List<String> searchSort(String classURL, String level, String school, String order)
+    public List<String> searchSort(String spellName, String classURL, String level, String school, String order)
     {
         List<String> list = new ArrayList<>();
-        String query = "SELECT * FROM spells WHERE (class1 LIKE '" + classURL + "' OR class2 LIKE '" + classURL + "' OR class3 LIKE '" + classURL
+        String query = "SELECT * FROM spells WHERE name LIKE '" + spellName + "' COLLATE NOCASE AND (class1 LIKE '" + classURL + "' OR class2 LIKE '" + classURL + "' OR class3 LIKE '" + classURL
             + "' OR class4 LIKE '" + classURL + "' OR class5 LIKE '" + classURL +"' OR class6 LIKE '" + classURL +"' OR class7 LIKE '" + classURL
             + "') AND spell_level LIKE '" + level + "' AND school LIKE '" + school + "' ORDER BY " + order;
 
@@ -456,6 +572,22 @@ public class DatabaseAccess {
             list.add(result.getString(1));
             result.moveToNext();
         }
+        result.close();
+        return list;
+    }
+    //filtering and sorting for allitems
+    public List<String> allItemSearchSort(String name, String equipmentCategory, String order)
+    {
+        List<String> list = new ArrayList<>();
+        String query = "SELECT * FROM items WHERE (name LIKE '" + name + "' COLLATE NOCASE AND equipment_category LIKE '" + equipmentCategory + "') ORDER BY " + order;
+
+        Cursor result = database.rawQuery(query, null);
+        result.moveToFirst();
+        while (!result.isAfterLast()) {
+            list.add(result.getString(1));
+            result.moveToNext();
+        }
+
         result.close();
         return list;
     }
