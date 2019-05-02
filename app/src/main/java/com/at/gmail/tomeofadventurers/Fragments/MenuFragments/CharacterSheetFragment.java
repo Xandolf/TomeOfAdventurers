@@ -222,6 +222,8 @@ public class CharacterSheetFragment extends Fragment {
                             displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                             textViewHitPointValue.setText(displayHitPoints);
 
+                            FirebaseUpdateHealth(currentHitPoints);
+
                             healthEditDialog.dismiss();
                         }
                         characterDBAccess.saveCurrentHP(currentHitPoints);
@@ -243,6 +245,8 @@ public class CharacterSheetFragment extends Fragment {
                             currentHitPoints = progressBar.getProgress();
                             displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                             textViewHitPointValue.setText(displayHitPoints);
+
+                            FirebaseUpdateHealth(currentHitPoints);
 
                             healthEditDialog.dismiss();
                         }
