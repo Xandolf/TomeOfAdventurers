@@ -7,6 +7,7 @@ public class FirebaseUser {
 
     public String email;
     public String userName;
+    public String userUID;
     public String profilePic;
     public String charName;
     public String charRace;
@@ -16,7 +17,9 @@ public class FirebaseUser {
 
     public FirebaseUser(){
 
+        email = "";
         userName = "";
+        userUID = "";
         profilePic = "";
         charName = "";
         charRace = "";
@@ -26,10 +29,11 @@ public class FirebaseUser {
 
     }
 
-    public FirebaseUser(String email, String userName, String profilePic, String charName, String charRace, String charClass, int charMaxHP, int charCurrentHP){
+    public FirebaseUser(String email, String userName, String userUID, String profilePic, String charName, String charRace, String charClass, int charMaxHP, int charCurrentHP){
 
         this.email = email;
         this.userName = userName;
+        this.userUID = userUID;
         this.profilePic = profilePic;
         this.charName = charName;
         this.charRace = charRace;
@@ -43,6 +47,8 @@ public class FirebaseUser {
     public String GetEmail(){ return email; }
 
     public String GetUserName(){ return userName; }
+
+    public String GetUserUID(){ return userUID; }
 
     public String GetProfilePic(){ return profilePic; }
 
@@ -62,6 +68,8 @@ public class FirebaseUser {
     public void setEmail(String email) { this.email = email; }
 
     public void setUserName(String userName) { this.userName = userName; }
+
+    public  void setUserUID(String userUID) { this.userUID = userUID; }
 
     public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
 

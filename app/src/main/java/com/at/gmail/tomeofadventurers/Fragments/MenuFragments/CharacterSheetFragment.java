@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,15 @@ import com.at.gmail.tomeofadventurers.Classes.Character;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -142,6 +152,11 @@ public class CharacterSheetFragment extends Fragment {
         progressBar.setProgress(currentHitPoints);
         displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
 
+        //Firebase function stuff
+
+
+        //Firebase------------
+
         //these functions need to cause a pop-up that will ask the user for a value to heal/damage
         textViewHitPointValue.setText(displayHitPoints);
         buttonLowerHitPoints.setOnClickListener(new View.OnClickListener()
@@ -154,6 +169,8 @@ public class CharacterSheetFragment extends Fragment {
                     currentHitPoints =progressBar.getProgress();
                     displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
+
+                    FirebaseUpdateHealth(currentHitPoints);
                 }
                 characterDBAccess.saveCurrentHP(currentHitPoints);
             }
@@ -166,9 +183,11 @@ public class CharacterSheetFragment extends Fragment {
                 if ( progressBar != null)
                 {
                     progressBar.incrementProgressBy(1);
-                    currentHitPoints =progressBar.getProgress();
+                    currentHitPoints =progressBar.getProgress(); //curretn hitpoints
                     displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
+
+                    FirebaseUpdateHealth(currentHitPoints);
                 }
                 characterDBAccess.saveCurrentHP(currentHitPoints);
             }
@@ -185,7 +204,46 @@ public class CharacterSheetFragment extends Fragment {
 
 
         return view;
-    }//end OnCreate
+    }
+
+    //Firebase stuff
+    public void FirebaseUpdateHealth(int cp){
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() != null){
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            Log.d("TAG","USER IS LOGGED IN");
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            //String userEmail = user.getEmail();
+            DocumentReference dr = db.collection("users").document(user.getUid());
+            dr.update("charCurrentHP", cp);
+            /*
+            Query mQuery = db.collection("users");
+            mQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            com.at.gmail.tomeofadventurers.Classes.FirebaseUser FireUser = document.toObject(com.at.gmail.tomeofadventurers.Classes.FirebaseUser.class);
+                            Log.d("TAG","USER IS PULLED FROM DATABASE" + FireUser.GetEmail() + " " + userEmail);
+
+                            if(FireUser.GetEmail().equals(userEmail)){
+                                Log.d("TAG","USER AND CURRENT USER MATCH");
+                                FireUser.setCharCurrentHP(FireUser.GetCurrentHP() + x);
+                                dr.set(FireUser);
+                                break;
+                            }
+                        }
+                    }
+                }
+            });*/
+        }
+    }
+
+    //end OnCreate
 //    @Override
 //    public void onResume(){
 //        super.onResume();
