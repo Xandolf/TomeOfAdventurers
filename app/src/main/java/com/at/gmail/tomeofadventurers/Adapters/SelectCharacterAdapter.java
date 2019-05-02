@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,10 @@ import android.widget.Toast;
 import com.at.gmail.tomeofadventurers.Activities.MainActivity;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
 import com.at.gmail.tomeofadventurers.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -120,6 +125,8 @@ public class SelectCharacterAdapter extends RecyclerView.Adapter<SelectCharacter
 
                 toastMessage(name+" selected");
 
+                FirebaseUpdateChar();
+
                 Intent switcher = new Intent(myContext, MainActivity.class);
                 myContext.startActivity(switcher);
             }
@@ -147,5 +154,36 @@ public class SelectCharacterAdapter extends RecyclerView.Adapter<SelectCharacter
             textViewCharacterName = itemView.findViewById(R.id.CharacterNameTextView);
             parentLayout = itemView.findViewById(R.id.linearLayout);
         }
+    }
+
+
+    public void FirebaseUpdateChar(){
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() != null){
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            Log.d("TAG","USER IS LOGGED IN");
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            //String userEmail = user.getEmail();
+            DocumentReference updateChar = db.collection("users").document(user.getUid());
+
+            com.at.gmail.tomeofadventurers.Classes.FirebaseUser fireUser = new com.at.gmail.tomeofadventurers.Classes.FirebaseUser();
+
+            fireUser.setEmail( user.getEmail() );
+            fireUser.setUserName( user.getDisplayName() );
+            fireUser.setUserUID(user.getUid());
+            fireUser.setProfilePic( String.valueOf( user.getPhotoUrl()) );
+            fireUser.setCharName(myCharacterDBAccess.loadCharacterName());
+            fireUser.setCharRace(myCharacterDBAccess.loadCharacterRace());
+            fireUser.setCharClass(myCharacterDBAccess.loadCharacterClassName());
+            fireUser.setCharMaxHP(myCharacterDBAccess.loadCharacterMaxHP());
+            fireUser.setCharCurrentHP(myCharacterDBAccess.loadCharacterCurrentHP());
+
+            updateChar.set(fireUser);
+        }
+
     }
 }
