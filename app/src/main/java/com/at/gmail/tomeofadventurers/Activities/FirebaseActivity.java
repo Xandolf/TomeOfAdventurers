@@ -198,6 +198,7 @@ public class FirebaseActivity extends AppCompatActivity {
 
         fireUser.setEmail( user.getEmail() );
         fireUser.setUserName( user.getDisplayName() );
+        fireUser.setUserUID(user.getUid());
         fireUser.setProfilePic( String.valueOf( user.getPhotoUrl()) );
         fireUser.setCharName(charName);
         fireUser.setCharRace(charRace);
