@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,24 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.at.gmail.tomeofadventurers.Adapters.AbilityScoreAdapter;
 import com.at.gmail.tomeofadventurers.Adapters.SkillsListAdapter;
+import com.at.gmail.tomeofadventurers.Classes.BusProvider;
 import com.at.gmail.tomeofadventurers.Classes.Character;
 import com.at.gmail.tomeofadventurers.Classes.CharacterDBAccess;
+import com.at.gmail.tomeofadventurers.Classes.DnDClass;
 import com.at.gmail.tomeofadventurers.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.otto.Bus;
 
 import static java.sql.Types.NULL;
@@ -51,6 +64,7 @@ public class CharacterSheetFragment extends Fragment {
 
     //FIXME WOW
     boolean skillProficiencies[] = {true, false, true, false, false, true, true, true, false, true, false, true, false, true, true, false, true, false};
+
 
 
     int currentHitPoints;
@@ -160,6 +174,8 @@ public class CharacterSheetFragment extends Fragment {
                     currentHitPoints = progressBar.getProgress();
                     displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
+
+                    FirebaseUpdateHealth(currentHitPoints);
                 }
                 characterDBAccess.saveCurrentHP(currentHitPoints);
             }
@@ -170,9 +186,11 @@ public class CharacterSheetFragment extends Fragment {
             public void onClick(View v) {
                 if (progressBar != null) {
                     progressBar.incrementProgressBy(1);
-                    currentHitPoints = progressBar.getProgress();
-                    displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
+                    currentHitPoints =progressBar.getProgress(); //curretn hitpoints
+                    displayHitPoints = (Integer.toString(currentHitPoints)+ "/" + Integer.toString(maxHitPoints));
                     textViewHitPointValue.setText(displayHitPoints);
+
+                    FirebaseUpdateHealth(currentHitPoints);
                 }
                 characterDBAccess.saveCurrentHP(currentHitPoints);
             }
@@ -204,6 +222,8 @@ public class CharacterSheetFragment extends Fragment {
                             displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                             textViewHitPointValue.setText(displayHitPoints);
 
+                            FirebaseUpdateHealth(currentHitPoints);
+
                             healthEditDialog.dismiss();
                         }
                         characterDBAccess.saveCurrentHP(currentHitPoints);
@@ -225,6 +245,8 @@ public class CharacterSheetFragment extends Fragment {
                             currentHitPoints = progressBar.getProgress();
                             displayHitPoints = (Integer.toString(currentHitPoints) + "/" + Integer.toString(maxHitPoints));
                             textViewHitPointValue.setText(displayHitPoints);
+
+                            FirebaseUpdateHealth(currentHitPoints);
 
                             healthEditDialog.dismiss();
                         }
@@ -249,10 +271,27 @@ public class CharacterSheetFragment extends Fragment {
 
 
         return view;
-    }//end OnCreate
+    }
 
+    //Firebase stuff
+    public void FirebaseUpdateHealth(int cp){
 
-    //    @Override
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() != null){
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            Log.d("TAG","USER IS LOGGED IN");
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            //String userEmail = user.getEmail();
+            DocumentReference dr = db.collection("users").document(user.getUid());
+            dr.update("charCurrentHP", cp);
+        }
+    }
+
+    //end OnCreate
+//    @Override
 //    public void onResume(){
 //        super.onResume();
 //    }
